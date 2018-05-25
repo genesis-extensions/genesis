@@ -8,7 +8,6 @@
 
 #include <primitives/block.h>
 #include <txmempool.h>
-#include <validation.h>
 
 #include <stdint.h>
 #include <memory>
@@ -74,6 +73,21 @@ struct modifiedentry_iter {
     }
 };
 
+// This matches the calculation in CompareTxMemPoolEntryByAncestorFee,
+// except operating on CTxMemPoolModifiedEntry.
+// TODO: refactor to avoid duplication of this logic.
+struct CompareModifiedEntry {
+    bool operator()(const CTxMemPoolModifiedEntry &a, const CTxMemPoolModifiedEntry &b) const
+    {
+        double f1 = (double)a.nModFeesWithAncestors * b.nSizeWithAncestors;
+        double f2 = (double)b.nModFeesWithAncestors * a.nSizeWithAncestors;
+        if (f1 == f2) {
+            return CTxMemPool::CompareIteratorByHash()(a.iter, b.iter);
+        }
+        return f1 > f2;
+    }
+};
+
 // A comparator that sorts transactions based on number of ancestors.
 // This is sufficient to sort an ancestor package in an order that is valid
 // to appear in a block.
@@ -131,11 +145,13 @@ private:
 
     // Configuration parameters for the block size
     bool fIncludeWitness;
-    unsigned int nBlockMaxWeight;
+    unsigned int nBlockMaxWeight, nBlockMaxSize;
+    bool fNeedSizeAccounting;
     CFeeRate blockMinFeeRate;
 
     // Information on the current status of the block
     uint64_t nBlockWeight;
+    uint64_t nBlockSize;
     uint64_t nBlockTx;
     uint64_t nBlockSigOpsCost;
     CAmount nFees;
@@ -150,6 +166,7 @@ public:
     struct Options {
         Options();
         size_t nBlockMaxWeight;
+        size_t nBlockMaxSize;
         CFeeRate blockMinFeeRate;
     };
 
@@ -170,7 +187,7 @@ private:
     /** Add transactions based on feerate including unconfirmed ancestors
       * Increments nPackagesSelected / nDescendantsUpdated with corresponding
       * statistics from the package selection (for logging statistics). */
-    void addPackageTxs(int &nPackagesSelected, int &nDescendantsUpdated) EXCLUSIVE_LOCKS_REQUIRED(mempool.cs);
+    void addPackageTxs(int &nPackagesSelected, int &nDescendantsUpdated);
 
     // helper functions for addPackageTxs()
     /** Remove confirmed (inBlock) entries from given set */
@@ -184,13 +201,13 @@ private:
     bool TestPackageTransactions(const CTxMemPool::setEntries& package);
     /** Return true if given transaction from mapTx has already been evaluated,
       * or if the transaction's cached data in mapTx is incorrect. */
-    bool SkipMapTxEntry(CTxMemPool::txiter it, indexed_modified_transaction_set &mapModifiedTx, CTxMemPool::setEntries &failedTx) EXCLUSIVE_LOCKS_REQUIRED(mempool.cs);
+    bool SkipMapTxEntry(CTxMemPool::txiter it, indexed_modified_transaction_set &mapModifiedTx, CTxMemPool::setEntries &failedTx);
     /** Sort the package in an order that is valid to appear in a block */
-    void SortForBlock(const CTxMemPool::setEntries& package, std::vector<CTxMemPool::txiter>& sortedEntries);
+    void SortForBlock(const CTxMemPool::setEntries& package, CTxMemPool::txiter entry, std::vector<CTxMemPool::txiter>& sortedEntries);
     /** Add descendants of given transactions to mapModifiedTx with ancestor
       * state updated assuming given transactions are inBlock. Returns number
       * of updated descendants. */
-    int UpdatePackagesForAdded(const CTxMemPool::setEntries& alreadyAdded, indexed_modified_transaction_set &mapModifiedTx) EXCLUSIVE_LOCKS_REQUIRED(mempool.cs);
+    int UpdatePackagesForAdded(const CTxMemPool::setEntries& alreadyAdded, indexed_modified_transaction_set &mapModifiedTx);
 };
 
 /** Modify the extranonce in a block */

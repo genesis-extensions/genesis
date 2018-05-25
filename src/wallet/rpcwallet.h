@@ -10,7 +10,6 @@
 class CRPCTable;
 class CWallet;
 class JSONRPCRequest;
-class UniValue;
 
 void RegisterWalletRPCCommands(CRPCTable &t);
 
@@ -20,12 +19,10 @@ void RegisterWalletRPCCommands(CRPCTable &t);
  * @param[in] request JSONRPCRequest that wishes to access a wallet
  * @return nullptr if no wallet should be used, or a pointer to the CWallet
  */
-std::shared_ptr<CWallet> GetWalletForJSONRPCRequest(const JSONRPCRequest& request);
+CWallet *GetWalletForJSONRPCRequest(const JSONRPCRequest& request);
 
 std::string HelpRequiringPassphrase(CWallet *);
 void EnsureWalletIsUnlocked(CWallet *);
 bool EnsureWalletIsAvailable(CWallet *, bool avoidException);
 
-UniValue getaddressinfo(const JSONRPCRequest& request);
-UniValue signrawtransactionwithwallet(const JSONRPCRequest& request);
 #endif //BITCOIN_WALLET_RPCWALLET_H

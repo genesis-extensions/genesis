@@ -18,20 +18,20 @@ class CCoinControl
 public:
     //! Custom change destination, if not set an address is generated
     CTxDestination destChange;
-    //! Override the default change type if set, ignored if destChange is set
-    boost::optional<OutputType> m_change_type;
+    //! Custom change type, ignored if destChange is set, defaults to g_change_type
+    OutputType change_type;
     //! If false, allows unselected inputs, but requires all selected inputs be used
     bool fAllowOtherInputs;
     //! Includes watch only addresses which match the ISMINE_WATCH_SOLVABLE criteria
     bool fAllowWatchOnly;
     //! Override automatic min/max checks on fee, m_feerate must be set if true
     bool fOverrideFeeRate;
-    //! Override the wallet's m_pay_tx_fee if set
+    //! Override the default payTxFee if set
     boost::optional<CFeeRate> m_feerate;
     //! Override the default confirmation target if set
     boost::optional<unsigned int> m_confirm_target;
-    //! Override the wallet's m_signal_rbf if set
-    boost::optional<bool> m_signal_bip125_rbf;
+    //! Signal BIP-125 replace by fee.
+    bool signalRbf;
     //! Fee estimation mode to control arguments to estimateSmartFee
     FeeEstimateMode m_fee_mode;
 
@@ -43,14 +43,14 @@ public:
     void SetNull()
     {
         destChange = CNoDestination();
-        m_change_type.reset();
+        change_type = g_change_type;
         fAllowOtherInputs = false;
         fAllowWatchOnly = false;
         setSelected.clear();
         m_feerate.reset();
         fOverrideFeeRate = false;
         m_confirm_target.reset();
-        m_signal_bip125_rbf.reset();
+        signalRbf = fWalletRbf;
         m_fee_mode = FeeEstimateMode::UNSET;
     }
 

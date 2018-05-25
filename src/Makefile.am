@@ -4,10 +4,9 @@
 
 DIST_SUBDIRS = secp256k1 univalue
 
-AM_LDFLAGS = $(PTHREAD_CFLAGS) $(LIBTOOL_LDFLAGS) $(HARDENED_LDFLAGS) $(GPROF_LDFLAGS) $(SANITIZER_LDFLAGS)
-AM_CXXFLAGS = $(DEBUG_CXXFLAGS) $(HARDENED_CXXFLAGS) $(ERROR_CXXFLAGS) $(GPROF_CXXFLAGS) $(SANITIZER_CXXFLAGS)
-AM_CPPFLAGS = $(DEBUG_CPPFLAGS) $(HARDENED_CPPFLAGS)
-AM_LIBTOOLFLAGS = --preserve-dup-deps
+AM_LDFLAGS = $(PTHREAD_CFLAGS) $(LIBTOOL_LDFLAGS) $(HARDENED_LDFLAGS)
+AM_CXXFLAGS = $(HARDENED_CXXFLAGS) $(ERROR_CXXFLAGS)
+AM_CPPFLAGS = $(HARDENED_CPPFLAGS)
 EXTRA_LIBRARIES =
 
 if EMBEDDED_UNIVALUE
@@ -103,18 +102,12 @@ BITCOIN_CORE_H = \
   fs.h \
   httprpc.h \
   httpserver.h \
-  index/txindex.h \
   indirectmap.h \
   init.h \
-  interfaces/handler.h \
-  interfaces/node.h \
-  interfaces/wallet.h \
   key.h \
-  key_io.h \
   keystore.h \
   dbwrapper.h \
   limitedmap.h \
-  logging.h \
   memusage.h \
   merkleblock.h \
   miner.h \
@@ -137,15 +130,15 @@ BITCOIN_CORE_H = \
   rpc/client.h \
   rpc/mining.h \
   rpc/protocol.h \
+  rpc/safemode.h \
   rpc/server.h \
-  rpc/rawtransaction.h \
   rpc/register.h \
   rpc/util.h \
   scheduler.h \
-  script/ismine.h \
   script/sigcache.h \
   script/sign.h \
   script/standard.h \
+  script/ismine.h \
   streams.h \
   support/allocators/secure.h \
   support/allocators/zeroafterfree.h \
@@ -167,17 +160,16 @@ BITCOIN_CORE_H = \
   validation.h \
   validationinterface.h \
   versionbits.h \
-  walletinitinterface.h \
   wallet/coincontrol.h \
   wallet/crypter.h \
   wallet/db.h \
   wallet/feebumper.h \
   wallet/fees.h \
+  wallet/init.h \
   wallet/rpcwallet.h \
   wallet/wallet.h \
   wallet/walletdb.h \
   wallet/walletutil.h \
-  wallet/coinselection.h \
   warnings.h \
   zmq/zmqabstractnotifier.h \
   zmq/zmqconfig.h\
@@ -204,7 +196,6 @@ libbitcoin_server_a_SOURCES = \
   consensus/tx_verify.cpp \
   httprpc.cpp \
   httpserver.cpp \
-  index/txindex.cpp \
   init.cpp \
   dbwrapper.cpp \
   merkleblock.cpp \
@@ -222,8 +213,10 @@ libbitcoin_server_a_SOURCES = \
   rpc/misc.cpp \
   rpc/net.cpp \
   rpc/rawtransaction.cpp \
+  rpc/safemode.cpp \
   rpc/server.cpp \
   script/sigcache.cpp \
+  script/ismine.cpp \
   timedata.cpp \
   torcontrol.cpp \
   txdb.cpp \
@@ -249,7 +242,6 @@ endif
 libbitcoin_wallet_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
 libbitcoin_wallet_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
 libbitcoin_wallet_a_SOURCES = \
-  interfaces/wallet.cpp \
   wallet/crypter.cpp \
   wallet/db.cpp \
   wallet/feebumper.cpp \
@@ -260,7 +252,6 @@ libbitcoin_wallet_a_SOURCES = \
   wallet/wallet.cpp \
   wallet/walletdb.cpp \
   wallet/walletutil.cpp \
-  wallet/coinselection.cpp \
   $(BITCOIN_CORE_H)
 
 # crypto primitives library
@@ -272,6 +263,9 @@ crypto_libbitcoin_crypto_a_SOURCES = \
   crypto/chacha20.h \
   crypto/chacha20.cpp \
   crypto/common.h \
+  crypto/equihash/equihash.cpp \
+  crypto/equihash/equihash.h \
+  crypto/equihash/equihash.tcc \
   crypto/hmac_sha256.cpp \
   crypto/hmac_sha256.h \
   crypto/hmac_sha512.cpp \
@@ -317,7 +311,6 @@ libbitcoin_consensus_a_SOURCES = \
   script/script_error.cpp \
   script/script_error.h \
   serialize.h \
-  span.h \
   tinyformat.h \
   uint256.cpp \
   uint256.h \
@@ -337,14 +330,12 @@ libbitcoin_common_a_SOURCES = \
   core_read.cpp \
   core_write.cpp \
   key.cpp \
-  key_io.cpp \
   keystore.cpp \
   netaddress.cpp \
   netbase.cpp \
   policy/feerate.cpp \
   protocol.cpp \
   scheduler.cpp \
-  script/ismine.cpp \
   script/sign.cpp \
   script/standard.cpp \
   warnings.cpp \
@@ -363,9 +354,6 @@ libbitcoin_util_a_SOURCES = \
   compat/glibcxx_sanity.cpp \
   compat/strnlen.cpp \
   fs.cpp \
-  interfaces/handler.cpp \
-  interfaces/node.cpp \
-  logging.cpp \
   random.cpp \
   rpc/protocol.cpp \
   rpc/util.cpp \
@@ -404,10 +392,10 @@ endif
 
 bitcoind_LDADD = \
   $(LIBBITCOIN_SERVER) \
-  $(LIBBITCOIN_WALLET) \
   $(LIBBITCOIN_COMMON) \
   $(LIBUNIVALUE) \
   $(LIBBITCOIN_UTIL) \
+  $(LIBBITCOIN_WALLET) \
   $(LIBBITCOIN_ZMQ) \
   $(LIBBITCOIN_CONSENSUS) \
   $(LIBBITCOIN_CRYPTO) \
@@ -416,7 +404,7 @@ bitcoind_LDADD = \
   $(LIBMEMENV) \
   $(LIBSECP256K1)
 
-bitcoind_LDADD += $(BOOST_LIBS) $(BDB_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(MINIUPNPC_LIBS) $(EVENT_PTHREADS_LIBS) $(EVENT_LIBS) $(ZMQ_LIBS)
+bitcoind_LDADD += $(BOOST_LIBS) $(BDB_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(MINIUPNPC_LIBS) $(EVENT_PTHREADS_LIBS) $(EVENT_LIBS) $(ZMQ_LIBS) $(LIBEQUIHASH_LIBS)
 
 # bitcoin-cli binary #
 bitcoin_cli_SOURCES = bitcoin-cli.cpp
@@ -434,7 +422,7 @@ bitcoin_cli_LDADD = \
   $(LIBBITCOIN_UTIL) \
   $(LIBBITCOIN_CRYPTO)
 
-bitcoin_cli_LDADD += $(BOOST_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(EVENT_LIBS)
+bitcoin_cli_LDADD += $(BOOST_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(EVENT_LIBS) $(LIBEQUIHASH_LIBS)
 #
 
 # bitcoin-tx binary #
@@ -453,7 +441,8 @@ bitcoin_tx_LDADD = \
   $(LIBBITCOIN_UTIL) \
   $(LIBBITCOIN_CONSENSUS) \
   $(LIBBITCOIN_CRYPTO) \
-  $(LIBSECP256K1)
+  $(LIBSECP256K1) \
+  $(LIBEQUIHASH_LIBS)
 
 bitcoin_tx_LDADD += $(BOOST_LIBS) $(CRYPTO_LIBS)
 #
@@ -468,7 +457,7 @@ if GLIBC_BACK_COMPAT
 endif
 
 libbitcoinconsensus_la_LDFLAGS = $(AM_LDFLAGS) -no-undefined $(RELDFLAGS)
-libbitcoinconsensus_la_LIBADD = $(LIBSECP256K1)
+libbitcoinconsensus_la_LIBADD = $(LIBSECP256K1) $(LIBEQUIHASH_LIBS)
 libbitcoinconsensus_la_CPPFLAGS = $(AM_CPPFLAGS) -I$(builddir)/obj -I$(srcdir)/secp256k1/include -DBUILD_BITCOIN_INTERNAL
 libbitcoinconsensus_la_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
 

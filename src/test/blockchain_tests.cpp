@@ -8,12 +8,12 @@
 /* Equality between doubles is imprecise. Comparison should be done
  * with a small threshold of tolerance, rather than exact equality.
  */
-static bool DoubleEquals(double a, double b, double epsilon)
+bool DoubleEquals(double a, double b, double epsilon)
 {
     return std::abs(a - b) < epsilon;
 }
 
-static CBlockIndex* CreateBlockIndexWithNbits(uint32_t nbits)
+CBlockIndex* CreateBlockIndexWithNbits(uint32_t nbits)
 {
     CBlockIndex* block_index = new CBlockIndex();
     block_index->nHeight = 46367;
@@ -22,7 +22,7 @@ static CBlockIndex* CreateBlockIndexWithNbits(uint32_t nbits)
     return block_index;
 }
 
-static CChain CreateChainWithNbits(uint32_t nbits)
+CChain CreateChainWithNbits(uint32_t nbits)
 {
     CBlockIndex* block_index = CreateBlockIndexWithNbits(nbits);
     CChain chain;
@@ -30,7 +30,7 @@ static CChain CreateChainWithNbits(uint32_t nbits)
     return chain;
 }
 
-static void RejectDifficultyMismatch(double difficulty, double expected_difficulty) {
+void RejectDifficultyMismatch(double difficulty, double expected_difficulty) {
      BOOST_CHECK_MESSAGE(
         DoubleEquals(difficulty, expected_difficulty, 0.00001),
         "Difficulty was " + std::to_string(difficulty)
@@ -40,7 +40,7 @@ static void RejectDifficultyMismatch(double difficulty, double expected_difficul
 /* Given a BlockIndex with the provided nbits,
  * verify that the expected difficulty results.
  */
-static void TestDifficulty(uint32_t nbits, double expected_difficulty)
+void TestDifficulty(uint32_t nbits, double expected_difficulty)
 {
     CBlockIndex* block_index = CreateBlockIndexWithNbits(nbits);
     /* Since we are passing in block index explicitly,
@@ -54,7 +54,7 @@ static void TestDifficulty(uint32_t nbits, double expected_difficulty)
     RejectDifficultyMismatch(difficulty, expected_difficulty);
 }
 
-BOOST_FIXTURE_TEST_SUITE(blockchain_tests, BasicTestingSetup)
+BOOST_FIXTURE_TEST_SUITE(blockchain_difficulty_tests, BasicTestingSetup)
 
 BOOST_AUTO_TEST_CASE(get_difficulty_for_very_low_target)
 {

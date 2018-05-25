@@ -108,7 +108,7 @@ void SendCoinsEntry::clear()
     ui->memoTextLabel_s->clear();
     ui->payAmount_s->clear();
 
-    // update the display unit, to not use the default ("BTC")
+    // update the display unit, to not use the default ("SAFE")
     updateDisplayUnit();
 }
 
@@ -127,7 +127,7 @@ void SendCoinsEntry::useAvailableBalanceClicked()
     Q_EMIT useAvailableBalance(this);
 }
 
-bool SendCoinsEntry::validate(interfaces::Node& node)
+bool SendCoinsEntry::validate()
 {
     if (!model)
         return false;
@@ -158,7 +158,7 @@ bool SendCoinsEntry::validate(interfaces::Node& node)
     }
 
     // Reject dust outputs:
-    if (retval && GUIUtil::isDust(node, ui->payTo->text(), ui->payAmount->value())) {
+    if (retval && GUIUtil::isDust(ui->payTo->text(), ui->payAmount->value())) {
         ui->payAmount->setValid(false);
         retval = false;
     }

@@ -16,14 +16,14 @@
 class CCoinsViewCache;
 class CTxOut;
 
+/** Default for -blockmaxsize, which controls the maximum size of block the mining code will create **/
+static const unsigned int DEFAULT_BLOCK_MAX_SIZE = 750000;
 /** Default for -blockmaxweight, which controls the range of block weights the mining code will create **/
 static const unsigned int DEFAULT_BLOCK_MAX_WEIGHT = MAX_BLOCK_WEIGHT - 4000;
 /** Default for -blockmintxfee, which sets the minimum feerate for a transaction in blocks created by mining code **/
 static const unsigned int DEFAULT_BLOCK_MIN_TX_FEE = 1000;
 /** The maximum weight for transactions we're willing to relay/mine */
 static const unsigned int MAX_STANDARD_TX_WEIGHT = 400000;
-/** The minimum non-witness size for transactions we're willing to relay/mine (1 segwit input + 1 P2WPKH output = 82 bytes) */
-static const unsigned int MIN_STANDARD_TX_NONWITNESS_SIZE = 82;
 /** Maximum number of signature check operations in an IsStandard() P2SH script */
 static const unsigned int MAX_P2SH_SIGOPS = 15;
 /** The maximum number of sigops we're willing to relay/mine in a single tx */
@@ -65,8 +65,7 @@ static constexpr unsigned int STANDARD_SCRIPT_VERIFY_FLAGS = MANDATORY_SCRIPT_VE
                                                              SCRIPT_VERIFY_LOW_S |
                                                              SCRIPT_VERIFY_WITNESS |
                                                              SCRIPT_VERIFY_DISCOURAGE_UPGRADABLE_WITNESS_PROGRAM |
-                                                             SCRIPT_VERIFY_WITNESS_PUBKEYTYPE |
-                                                             SCRIPT_VERIFY_CONST_SCRIPTCODE;
+                                                             SCRIPT_VERIFY_WITNESS_PUBKEYTYPE;
 
 /** For convenience, standard but not mandatory verify flags. */
 static constexpr unsigned int STANDARD_NOT_MANDATORY_VERIFY_FLAGS = STANDARD_SCRIPT_VERIFY_FLAGS & ~MANDATORY_SCRIPT_VERIFY_FLAGS;
@@ -105,6 +104,5 @@ extern unsigned int nBytesPerSigOp;
 /** Compute the virtual transaction size (weight reinterpreted as bytes). */
 int64_t GetVirtualTransactionSize(int64_t nWeight, int64_t nSigOpCost);
 int64_t GetVirtualTransactionSize(const CTransaction& tx, int64_t nSigOpCost = 0);
-int64_t GetVirtualTransactionInputSize(const CTxIn& tx, int64_t nSigOpCost = 0);
 
 #endif // BITCOIN_POLICY_POLICY_H

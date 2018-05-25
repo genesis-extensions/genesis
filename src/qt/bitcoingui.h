@@ -18,8 +18,6 @@
 #include <QPoint>
 #include <QSystemTrayIcon>
 
-#include <memory>
-
 class ClientModel;
 class NetworkStyle;
 class Notificator;
@@ -33,14 +31,8 @@ class WalletModel;
 class HelpMessageDialog;
 class ModalOverlay;
 
-namespace interfaces {
-class Handler;
-class Node;
-}
-
 QT_BEGIN_NAMESPACE
 class QAction;
-class QComboBox;
 class QProgressBar;
 class QProgressDialog;
 QT_END_NAMESPACE
@@ -54,9 +46,10 @@ class BitcoinGUI : public QMainWindow
     Q_OBJECT
 
 public:
+    static const QString DEFAULT_WALLET;
     static const std::string DEFAULT_UIPLATFORM;
 
-    explicit BitcoinGUI(interfaces::Node& node, const PlatformStyle *platformStyle, const NetworkStyle *networkStyle, QWidget *parent = 0);
+    explicit BitcoinGUI(const PlatformStyle *platformStyle, const NetworkStyle *networkStyle, QWidget *parent = 0);
     ~BitcoinGUI();
 
     /** Set the client model.
@@ -69,7 +62,8 @@ public:
         The wallet model represents a bitcoin wallet, and offers access to the list of transactions, address book and sending
         functionality.
     */
-    bool addWallet(WalletModel *walletModel);
+    bool addWallet(const QString& name, WalletModel *walletModel);
+    bool setCurrentWallet(const QString& name);
     void removeAllWallets();
 #endif // ENABLE_WALLET
     bool enableWallet;
@@ -83,16 +77,12 @@ protected:
     bool eventFilter(QObject *object, QEvent *event);
 
 private:
-    interfaces::Node& m_node;
-    std::unique_ptr<interfaces::Handler> m_handler_message_box;
-    std::unique_ptr<interfaces::Handler> m_handler_question;
     ClientModel *clientModel;
     WalletFrame *walletFrame;
 
     UnitDisplayStatusBarControl *unitDisplayControl;
     QLabel *labelWalletEncryptionIcon;
     QLabel *labelWalletHDStatusIcon;
-    QLabel *labelProxyIcon;
     QLabel *connectionsControl;
     QLabel *labelBlocksIcon;
     QLabel *progressBarLabel;
@@ -100,7 +90,6 @@ private:
     QProgressDialog *progressDialog;
 
     QMenuBar *appMenuBar;
-    QToolBar *appToolBar;
     QAction *overviewAction;
     QAction *historyAction;
     QAction *quitAction;
@@ -122,9 +111,6 @@ private:
     QAction *openRPCConsoleAction;
     QAction *openAction;
     QAction *showHelpMessageAction;
-
-    QLabel *m_wallet_selector_label;
-    QComboBox *m_wallet_selector;
 
     QSystemTrayIcon *trayIcon;
     QMenu *trayIconMenu;
@@ -185,12 +171,6 @@ public Q_SLOTS:
     void message(const QString &title, const QString &message, unsigned int style, bool *ret = nullptr);
 
 #ifdef ENABLE_WALLET
-    bool setCurrentWallet(const QString& name);
-    /** Set the UI status indicators based on the currently selected wallet.
-    */
-    void updateWalletStatus();
-
-private:
     /** Set the encryption status as shown in the UI.
        @param[in] status            current encryption status
        @see WalletModel::EncryptionStatus
@@ -203,16 +183,11 @@ private:
      */
     void setHDStatus(int hdEnabled);
 
-public Q_SLOTS:
     bool handlePaymentRequest(const SendCoinsRecipient& recipient);
 
     /** Show incoming transaction notification for new transactions. */
-    void incomingTransaction(const QString& date, int unit, const CAmount& amount, const QString& type, const QString& address, const QString& label, const QString& walletName);
+    void incomingTransaction(const QString& date, int unit, const CAmount& amount, const QString& type, const QString& address, const QString& label);
 #endif // ENABLE_WALLET
-
-private:
-    /** Set the proxy-enabled icon as shown in the UI. */
-    void updateProxyIcon();
 
 private Q_SLOTS:
 #ifdef ENABLE_WALLET

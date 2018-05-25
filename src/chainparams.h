@@ -25,12 +25,6 @@ struct CCheckpointData {
     MapCheckpoints mapCheckpoints;
 };
 
-/**
- * Holds various statistics on transactions within a chain. Used to estimate
- * verification progress during chain sync.
- *
- * See also: CChainParams::TxData, GuessVerificationProgress.
- */
 struct ChainTxData {
     int64_t nTime;
     int64_t nTxCount;
@@ -67,12 +61,12 @@ public:
     /** Policy: Filter transactions that do not match well-defined patterns */
     bool RequireStandard() const { return fRequireStandard; }
     uint64_t PruneAfterHeight() const { return nPruneAfterHeight; }
+    unsigned int EquihashN() const { return nEquihashN; }
+    unsigned int EquihashK() const { return nEquihashK; }
     /** Make miner stop after a block is found. In RPC, don't return until nGenProcLimit blocks are generated */
     bool MineBlocksOnDemand() const { return fMineBlocksOnDemand; }
     /** Return the BIP70 network string (main, test or regtest) */
     std::string NetworkIDString() const { return strNetworkID; }
-    /** Return true if the fallback fee is by default enabled for this network */
-    bool IsFallbackFeeEnabled() const { return m_fallback_fee_enabled; }
     /** Return the list of hostnames to look up for DNS seeds */
     const std::vector<std::string>& DNSSeeds() const { return vSeeds; }
     const std::vector<unsigned char>& Base58Prefix(Base58Type type) const { return base58Prefixes[type]; }
@@ -88,6 +82,8 @@ protected:
     CMessageHeader::MessageStartChars pchMessageStart;
     int nDefaultPort;
     uint64_t nPruneAfterHeight;
+    unsigned int nEquihashN = 0;
+    unsigned int nEquihashK = 0;
     std::vector<std::string> vSeeds;
     std::vector<unsigned char> base58Prefixes[MAX_BASE58_TYPES];
     std::string bech32_hrp;
@@ -99,7 +95,6 @@ protected:
     bool fMineBlocksOnDemand;
     CCheckpointData checkpointData;
     ChainTxData chainTxData;
-    bool m_fallback_fee_enabled;
 };
 
 /**

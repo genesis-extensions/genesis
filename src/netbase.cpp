@@ -9,7 +9,6 @@
 #include <sync.h>
 #include <uint256.h>
 #include <random.h>
-#include <tinyformat.h>
 #include <util.h>
 #include <utilstrencodings.h>
 
@@ -22,7 +21,7 @@
 #include <boost/algorithm/string/case_conv.hpp> // for to_lower()
 #include <boost/algorithm/string/predicate.hpp> // for startswith() and endswith()
 
-#if !defined(MSG_NOSIGNAL)
+#if !defined(HAVE_MSG_NOSIGNAL)
 #define MSG_NOSIGNAL 0
 #endif
 
@@ -140,7 +139,7 @@ bool Lookup(const char *pszName, std::vector<CService>& vAddr, int portDefault, 
     if (pszName[0] == 0)
         return false;
     int port = portDefault;
-    std::string hostname;
+    std::string hostname = "";
     SplitHostPort(std::string(pszName), port, hostname);
 
     std::vector<CNetAddr> vIP;
@@ -289,7 +288,7 @@ struct ProxyCredentials
 };
 
 /** Convert SOCKS5 reply to an error message */
-static std::string Socks5ErrorString(uint8_t err)
+std::string Socks5ErrorString(uint8_t err)
 {
     switch(err) {
         case SOCKS5Reply::GENFAILURE:
@@ -469,17 +468,7 @@ SOCKET CreateSocket(const CService &addrConnect)
     return hSocket;
 }
 
-template<typename... Args>
-static void LogConnectFailure(bool manual_connection, const char* fmt, const Args&... args) {
-    std::string error_message = tfm::format(fmt, args...);
-    if (manual_connection) {
-        LogPrintf("%s\n", error_message);
-    } else {
-        LogPrint(BCLog::NET, "%s\n", error_message);
-    }
-}
-
-bool ConnectSocketDirectly(const CService &addrConnect, const SOCKET& hSocket, int nTimeout, bool manual_connection)
+bool ConnectSocketDirectly(const CService &addrConnect, const SOCKET& hSocket, int nTimeout)
 {
     struct sockaddr_storage sockaddr;
     socklen_t len = sizeof(sockaddr);
@@ -513,14 +502,18 @@ bool ConnectSocketDirectly(const CService &addrConnect, const SOCKET& hSocket, i
                 return false;
             }
             socklen_t nRetSize = sizeof(nRet);
-            if (getsockopt(hSocket, SOL_SOCKET, SO_ERROR, (sockopt_arg_type)&nRet, &nRetSize) == SOCKET_ERROR)
+#ifdef WIN32
+            if (getsockopt(hSocket, SOL_SOCKET, SO_ERROR, (char*)(&nRet), &nRetSize) == SOCKET_ERROR)
+#else
+            if (getsockopt(hSocket, SOL_SOCKET, SO_ERROR, &nRet, &nRetSize) == SOCKET_ERROR)
+#endif
             {
                 LogPrintf("getsockopt() for %s failed: %s\n", addrConnect.ToString(), NetworkErrorString(WSAGetLastError()));
                 return false;
             }
             if (nRet != 0)
             {
-                LogConnectFailure(manual_connection, "connect() to %s failed after select(): %s", addrConnect.ToString(), NetworkErrorString(nRet));
+                LogPrintf("connect() to %s failed after select(): %s\n", addrConnect.ToString(), NetworkErrorString(nRet));
                 return false;
             }
         }
@@ -530,7 +523,7 @@ bool ConnectSocketDirectly(const CService &addrConnect, const SOCKET& hSocket, i
         else
 #endif
         {
-            LogConnectFailure(manual_connection, "connect() to %s failed: %s", addrConnect.ToString(), NetworkErrorString(WSAGetLastError()));
+            LogPrintf("connect() to %s failed: %s\n", addrConnect.ToString(), NetworkErrorString(WSAGetLastError()));
             return false;
         }
     }
@@ -579,7 +572,7 @@ bool HaveNameProxy() {
 bool IsProxy(const CNetAddr &addr) {
     LOCK(cs_proxyInfos);
     for (int i = 0; i < NET_MAX; i++) {
-        if (addr == static_cast<CNetAddr>(proxyInfo[i].proxy))
+        if (addr == (CNetAddr)proxyInfo[i].proxy)
             return true;
     }
     return false;
@@ -588,7 +581,7 @@ bool IsProxy(const CNetAddr &addr) {
 bool ConnectThroughProxy(const proxyType &proxy, const std::string& strDest, int port, const SOCKET& hSocket, int nTimeout, bool *outProxyConnectionFailed)
 {
     // first connect to proxy server
-    if (!ConnectSocketDirectly(proxy.proxy, hSocket, nTimeout, true)) {
+    if (!ConnectSocketDirectly(proxy.proxy, hSocket, nTimeout)) {
         if (outProxyConnectionFailed)
             *outProxyConnectionFailed = true;
         return false;
@@ -608,7 +601,6 @@ bool ConnectThroughProxy(const proxyType &proxy, const std::string& strDest, int
     }
     return true;
 }
-
 bool LookupSubNet(const char* pszName, CSubNet& ret)
 {
     std::string strSubnet(pszName);

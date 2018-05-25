@@ -53,7 +53,6 @@ static std::map<std::string, unsigned int> mapFlagNames = {
     {std::string("WITNESS"), (unsigned int)SCRIPT_VERIFY_WITNESS},
     {std::string("DISCOURAGE_UPGRADABLE_WITNESS_PROGRAM"), (unsigned int)SCRIPT_VERIFY_DISCOURAGE_UPGRADABLE_WITNESS_PROGRAM},
     {std::string("WITNESS_PUBKEYTYPE"), (unsigned int)SCRIPT_VERIFY_WITNESS_PUBKEYTYPE},
-    {std::string("CONST_SCRIPTCODE"), (unsigned int)SCRIPT_VERIFY_CONST_SCRIPTCODE},
 };
 
 unsigned int ParseScriptFlags(std::string strFlags)
@@ -344,7 +343,7 @@ BOOST_AUTO_TEST_CASE(test_Get)
     BOOST_CHECK_EQUAL(coins.GetValueIn(t1), (50+21+22)*CENT);
 }
 
-static void CreateCreditAndSpend(const CKeyStore& keystore, const CScript& outscript, CTransactionRef& output, CMutableTransaction& input, bool success = true)
+void CreateCreditAndSpend(const CKeyStore& keystore, const CScript& outscript, CTransactionRef& output, CMutableTransaction& input, bool success = true)
 {
     CMutableTransaction outputm;
     outputm.nVersion = 1;
@@ -382,7 +381,7 @@ static void CreateCreditAndSpend(const CKeyStore& keystore, const CScript& outsc
     assert(input.vin[0].scriptWitness.stack == inputm.vin[0].scriptWitness.stack);
 }
 
-static void CheckWithFlag(const CTransactionRef& output, const CMutableTransaction& input, int flags, bool success)
+void CheckWithFlag(const CTransactionRef& output, const CMutableTransaction& input, int flags, bool success)
 {
     ScriptError error;
     CTransaction inputi(input);
@@ -405,10 +404,10 @@ static CScript PushAll(const std::vector<valtype>& values)
     return result;
 }
 
-static void ReplaceRedeemScript(CScript& script, const CScript& redeemScript)
+void ReplaceRedeemScript(CScript& script, const CScript& redeemScript)
 {
     std::vector<valtype> stack;
-    EvalScript(stack, script, SCRIPT_VERIFY_STRICTENC, BaseSignatureChecker(), SigVersion::BASE);
+    EvalScript(stack, script, SCRIPT_VERIFY_STRICTENC, BaseSignatureChecker(), SIGVERSION_BASE);
     assert(stack.size() > 0);
     stack.back() = std::vector<unsigned char>(redeemScript.begin(), redeemScript.end());
     script = PushAll(stack);

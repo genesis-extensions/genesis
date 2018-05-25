@@ -573,7 +573,7 @@ void CBlockPolicyEstimator::processTransaction(const CTxMemPoolEntry& entry, boo
     }
     trackedTxs++;
 
-    // Feerates are stored and reported as BTC-per-kb:
+    // Feerates are stored and reported as SAFE-per-kb:
     CFeeRate feeRate(entry.GetFee(), entry.GetTxSize());
 
     mapMemPoolTxs[hash].blockHeight = txHeight;
@@ -603,7 +603,7 @@ bool CBlockPolicyEstimator::processBlockTx(unsigned int nBlockHeight, const CTxM
         return false;
     }
 
-    // Feerates are stored and reported as BTC-per-kb:
+    // Feerates are stored and reported as SAFE-per-kb:
     CFeeRate feeRate(entry->GetFee(), entry->GetTxSize());
 
     feeStats->Record(blocksToConfirm, (double)feeRate.GetFeePerK());
@@ -981,17 +981,16 @@ bool CBlockPolicyEstimator::Read(CAutoFile& filein)
     return true;
 }
 
-void CBlockPolicyEstimator::FlushUnconfirmed() {
+void CBlockPolicyEstimator::FlushUnconfirmed(CTxMemPool& pool) {
     int64_t startclear = GetTimeMicros();
+    std::vector<uint256> txids;
+    pool.queryHashes(txids);
     LOCK(cs_feeEstimator);
-    size_t num_entries = mapMemPoolTxs.size();
-    // Remove every entry in mapMemPoolTxs
-    while (!mapMemPoolTxs.empty()) {
-        auto mi = mapMemPoolTxs.begin();
-        removeTx(mi->first, false); // this calls erase() on mapMemPoolTxs
+    for (auto& txid : txids) {
+        removeTx(txid, false);
     }
     int64_t endclear = GetTimeMicros();
-    LogPrint(BCLog::ESTIMATEFEE, "Recorded %u unconfirmed txs from mempool in %gs\n", num_entries, (endclear - startclear)*0.000001);
+    LogPrint(BCLog::ESTIMATEFEE, "Recorded %u unconfirmed txs from mempool in %gs\n",txids.size(), (endclear - startclear)*0.000001);
 }
 
 FeeFilterRounder::FeeFilterRounder(const CFeeRate& minIncrementalFee)

@@ -49,8 +49,8 @@ struct BIP9Deployment {
 struct Params {
     uint256 hashGenesisBlock;
     int nSubsidyHalvingInterval;
-    /* Block hash that is excepted from BIP16 enforcement */
-    uint256 BIP16Exception;
+    /** Block height at which BIP16 becomes active */
+    int BIP16Height;
     /** Block height and hash at which BIP34 becomes active */
     int BIP34Height;
     uint256 BIP34Hash;
@@ -75,6 +75,12 @@ struct Params {
     int64_t DifficultyAdjustmentInterval() const { return nPowTargetTimespan / nPowTargetSpacing; }
     uint256 nMinimumChainWork;
     uint256 defaultAssumeValid;
+    int64_t nPowAveragingWindow;
+    int64_t nPowMaxAdjustDown;
+    int64_t nPowMaxAdjustUp;
+    int64_t AveragingWindowTimespan() const { return nPowAveragingWindow * nPowTargetSpacing; }
+    int64_t MinActualTimespan() const { return (AveragingWindowTimespan() * (100 - nPowMaxAdjustUp  )) / 100; }
+    int64_t MaxActualTimespan() const { return (AveragingWindowTimespan() * (100 + nPowMaxAdjustDown)) / 100; }
 };
 } // namespace Consensus
 

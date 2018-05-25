@@ -33,14 +33,14 @@ CScript ParseScript(const std::string& s)
             if (op < OP_NOP && op != OP_RESERVED)
                 continue;
 
-            const char* name = GetOpName(static_cast<opcodetype>(op));
+            const char* name = GetOpName((opcodetype)op);
             if (strcmp(name, "OP_UNKNOWN") == 0)
                 continue;
             std::string strName(name);
-            mapOpNames[strName] = static_cast<opcodetype>(op);
+            mapOpNames[strName] = (opcodetype)op;
             // Convenience: OP_ADD and just ADD are both recognized:
             boost::algorithm::replace_first(strName, "OP_", "");
-            mapOpNames[strName] = static_cast<opcodetype>(op);
+            mapOpNames[strName] = (opcodetype)op;
         }
     }
 
@@ -88,7 +88,7 @@ CScript ParseScript(const std::string& s)
 }
 
 // Check that all of the input and output scripts of a transaction contains valid opcodes
-static bool CheckTxScriptsSanity(const CMutableTransaction& tx)
+bool CheckTxScriptsSanity(const CMutableTransaction& tx)
 {
     // Check input scripts for non-coinbase txs
     if (!CTransaction(tx).IsCoinBase()) {

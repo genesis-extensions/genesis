@@ -123,8 +123,8 @@ class ListSinceBlockTest (BitcoinTestFramework):
 
         Problematic case:
 
-        1. User 1 receives BTC in tx1 from utxo1 in block aa1.
-        2. User 2 receives BTC in tx2 from utxo1 (same) in block bb1
+        1. User 1 receives SAFE in tx1 from utxo1 in block aa1.
+        2. User 2 receives SAFE in tx2 from utxo1 (same) in block bb1
         3. User 1 sees 2 confirmations at block aa3.
         4. Reorg into bb chain.
         5. User 1 asks `listsinceblock aa3` and does not see that tx1 is now
@@ -149,26 +149,26 @@ class ListSinceBlockTest (BitcoinTestFramework):
 
         # send from nodes[1] using utxo to nodes[0]
         change = '%.8f' % (float(utxo['amount']) - 1.0003)
-        recipient_dict = {
+        recipientDict = {
             self.nodes[0].getnewaddress(): 1,
             self.nodes[1].getnewaddress(): change,
         }
-        utxo_dicts = [{
+        utxoDicts = [{
             'txid': utxo['txid'],
             'vout': utxo['vout'],
         }]
         txid1 = self.nodes[1].sendrawtransaction(
-            self.nodes[1].signrawtransactionwithwallet(
-                self.nodes[1].createrawtransaction(utxo_dicts, recipient_dict))['hex'])
+            self.nodes[1].signrawtransaction(
+                self.nodes[1].createrawtransaction(utxoDicts, recipientDict))['hex'])
 
         # send from nodes[2] using utxo to nodes[3]
-        recipient_dict2 = {
+        recipientDict2 = {
             self.nodes[3].getnewaddress(): 1,
             self.nodes[2].getnewaddress(): change,
         }
         self.nodes[2].sendrawtransaction(
-            self.nodes[2].signrawtransactionwithwallet(
-                self.nodes[2].createrawtransaction(utxo_dicts, recipient_dict2))['hex'])
+            self.nodes[2].signrawtransaction(
+                self.nodes[2].createrawtransaction(utxoDicts, recipientDict2))['hex'])
 
         # generate on both sides
         lastblockhash = self.nodes[1].generate(3)[2]
@@ -211,7 +211,7 @@ class ListSinceBlockTest (BitcoinTestFramework):
         1. tx1 is listed in listsinceblock.
         2. It is included in 'removed' as it was removed, even though it is now
            present in a different block.
-        3. It is listed with a confirmation count of 2 (bb3, bb4), not
+        3. It is listed with a confirmations count of 2 (bb3, bb4), not
            3 (aa1, aa2, aa3).
         '''
 
@@ -224,16 +224,16 @@ class ListSinceBlockTest (BitcoinTestFramework):
         utxos = self.nodes[2].listunspent()
         utxo = utxos[0]
         change = '%.8f' % (float(utxo['amount']) - 1.0003)
-        recipient_dict = {
+        recipientDict = {
             self.nodes[0].getnewaddress(): 1,
             self.nodes[2].getnewaddress(): change,
         }
-        utxo_dicts = [{
+        utxoDicts = [{
             'txid': utxo['txid'],
             'vout': utxo['vout'],
         }]
-        signedtxres = self.nodes[2].signrawtransactionwithwallet(
-            self.nodes[2].createrawtransaction(utxo_dicts, recipient_dict))
+        signedtxres = self.nodes[2].signrawtransaction(
+                self.nodes[2].createrawtransaction(utxoDicts, recipientDict))
         assert signedtxres['complete']
 
         signedtx = signedtxres['hex']

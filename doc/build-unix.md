@@ -2,8 +2,7 @@ UNIX BUILD NOTES
 ====================
 Some notes on how to build Bitcoin Core in Unix.
 
-(For BSD specific instructions, see [build-openbsd.md](build-openbsd.md) and/or
-[build-netbsd.md](build-netbsd.md))
+(for OpenBSD specific instructions, see [build-openbsd.md](build-openbsd.md))
 
 Note
 ---------------------
@@ -62,16 +61,11 @@ tuned to conserve memory with additional CXXFLAGS:
 
     ./configure CXXFLAGS="--param ggc-min-expand=1 --param ggc-min-heapsize=32768"
 
-
-## Linux Distribution Specific Instructions
-
-### Ubuntu & Debian
-
-#### Dependency Build Instructions
-
+Dependency Build Instructions: Ubuntu & Debian
+----------------------------------------------
 Build requirements:
 
-    sudo apt-get install build-essential libtool autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils python3
+    sudo apt-get install build-essential libtool autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils python3 libsodium-dev
 
 Options when installing required Boost library files:
 
@@ -110,7 +104,24 @@ ZMQ dependencies (provides ZMQ API 4.x):
 
     sudo apt-get install libzmq3-dev
 
-#### Dependencies for the GUI
+3. On Ubuntu 16.04.3 you need to install the newest libsodium (at least 1.0.13)
+
+    configure: error: Wrong libsodium: version >= 1.0.13 required
+
+I tested it with version 1.0.15 (from the `depends` directory) at it works.
+
+    $ cd BTCGPU
+    $ cd depends
+    $ make
+    $ cd ..
+    $ ./autogen.sh
+    $ ./configure --prefix=`pwd`/depends/x86_64-pc-linux-gnu
+    $ make
+    $ make install
+
+The command `make install` installs the executables in the `./depends/x86_64-pc-linux-gnu/bin/` directory.
+Dependencies for the GUI: Ubuntu & Debian
+-----------------------------------------
 
 If you want to build Bitcoin-Qt, make sure that the required packages for Qt development
 are installed. Either Qt 5 or Qt 4 are necessary to build the GUI.
@@ -132,11 +143,8 @@ libqrencode (optional) can be installed with:
 Once these are installed, they will be found by configure and a bitcoin-qt executable will be
 built by default.
 
-
-### Fedora
-
-#### Dependency Build Instructions
-
+Dependency Build Instructions: Fedora
+-------------------------------------
 Build requirements:
 
     sudo dnf install gcc-c++ libtool make autoconf automake openssl-devel libevent-devel boost-devel libdb4-devel libdb4-cxx-devel python3
@@ -326,7 +334,6 @@ For the wallet (optional):
 Then build using:
 
     ./autogen.sh
-    ./configure --disable-wallet # OR
     ./configure BDB_CFLAGS="-I${BDB_PREFIX}/include" BDB_LIBS="-L${BDB_PREFIX}/lib -ldb_cxx"
     gmake
 

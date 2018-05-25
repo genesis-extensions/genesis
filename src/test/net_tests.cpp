@@ -13,8 +13,6 @@
 #include <chainparams.h>
 #include <util.h>
 
-#include <memory>
-
 class CAddrManSerializationMock : public CAddrMan
 {
 public:
@@ -63,10 +61,10 @@ public:
     }
 };
 
-static CDataStream AddrmanToStream(CAddrManSerializationMock& _addrman)
+CDataStream AddrmanToStream(CAddrManSerializationMock& _addrman)
 {
     CDataStream ssPeersIn(SER_DISK, CLIENT_VERSION);
-    ssPeersIn << Params().MessageStart();
+    ssPeersIn << FLATDATA(Params().MessageStart());
     ssPeersIn << _addrman;
     std::string str = ssPeersIn.str();
     std::vector<unsigned char> vchData(str.begin(), str.end());
@@ -93,13 +91,13 @@ BOOST_AUTO_TEST_CASE(caddrdb_read)
     addrmanUncorrupted.MakeDeterministic();
 
     CService addr1, addr2, addr3;
-    Lookup("250.7.1.1", addr1, 8333, false);
+    Lookup("250.7.1.1", addr1, 7233, false);
     Lookup("250.7.2.2", addr2, 9999, false);
     Lookup("250.7.3.3", addr3, 9999, false);
 
     // Add three addresses to new table.
     CService source;
-    Lookup("252.5.1.1", source, 8333, false);
+    Lookup("252.5.1.1", source, 7233, false);
     addrmanUncorrupted.Add(CAddress(addr1, NODE_NONE), source);
     addrmanUncorrupted.Add(CAddress(addr2, NODE_NONE), source);
     addrmanUncorrupted.Add(CAddress(addr3, NODE_NONE), source);
@@ -112,7 +110,7 @@ BOOST_AUTO_TEST_CASE(caddrdb_read)
     BOOST_CHECK(addrman1.size() == 0);
     try {
         unsigned char pchMsgTmp[4];
-        ssPeers1 >> pchMsgTmp;
+        ssPeers1 >> FLATDATA(pchMsgTmp);
         ssPeers1 >> addrman1;
     } catch (const std::exception& e) {
         exceptionThrown = true;
@@ -144,7 +142,7 @@ BOOST_AUTO_TEST_CASE(caddrdb_read_corrupted)
     BOOST_CHECK(addrman1.size() == 0);
     try {
         unsigned char pchMsgTmp[4];
-        ssPeers1 >> pchMsgTmp;
+        ssPeers1 >> FLATDATA(pchMsgTmp);
         ssPeers1 >> addrman1;
     } catch (const std::exception& e) {
         exceptionThrown = true;
@@ -173,7 +171,7 @@ BOOST_AUTO_TEST_CASE(cnode_simple_test)
     ipv4Addr.s_addr = 0xa0b0c001;
     
     CAddress addr = CAddress(CService(ipv4Addr, 7777), NODE_NETWORK);
-    std::string pszDest;
+    std::string pszDest = "";
     bool fInboundIn = false;
 
     // Test that fFeeler is false by default.

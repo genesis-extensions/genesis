@@ -7,26 +7,24 @@
 
 #include <qt/walletmodel.h>
 
-#include <memory>
-
 #include <QObject>
 
 class SendCoinsRecipient;
 
-namespace interfaces {
-class Node;
-class PendingWalletTx;
-}
+class CReserveKey;
+class CWallet;
+class CWalletTx;
 
 /** Data model for a walletmodel transaction. */
 class WalletModelTransaction
 {
 public:
     explicit WalletModelTransaction(const QList<SendCoinsRecipient> &recipients);
+    ~WalletModelTransaction();
 
     QList<SendCoinsRecipient> getRecipients() const;
 
-    std::unique_ptr<interfaces::PendingWalletTx>& getWtx();
+    CWalletTx *getTransaction() const;
     unsigned int getTransactionSize();
 
     void setTransactionFee(const CAmount& newFee);
@@ -34,11 +32,15 @@ public:
 
     CAmount getTotalTransactionAmount() const;
 
+    void newPossibleKeyChange(CWallet *wallet);
+    CReserveKey *getPossibleKeyChange();
+
     void reassignAmounts(int nChangePosRet); // needed for the subtract-fee-from-amount feature
 
 private:
     QList<SendCoinsRecipient> recipients;
-    std::unique_ptr<interfaces::PendingWalletTx> wtx;
+    CWalletTx *walletTransaction;
+    std::unique_ptr<CReserveKey> keyChange;
     CAmount fee;
 };
 
