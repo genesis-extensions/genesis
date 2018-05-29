@@ -13,10 +13,13 @@
 #include <memory>
 #include <boost/multi_index_container.hpp>
 #include <boost/multi_index/ordered_index.hpp>
+#include <stdint.h>
 
 class CBlockIndex;
 class CChainParams;
 class CScript;
+class CReserveKey;
+class CWallet;
 
 namespace Consensus { struct Params; };
 
@@ -175,7 +178,9 @@ public:
 
     /** Construct a new block template with coinbase to scriptPubKeyIn */
     std::unique_ptr<CBlockTemplate> CreateNewBlock(const CScript& scriptPubKeyIn, bool fMineWitnessTx=true);
-
+    boost::optional<CScript> GetMinerScriptPubKey(CReserveKey& reservekey);
+    std::unique_ptr<CBlockTemplate> CreateNewBlockWithKey(CReserveKey& reservekey);
+    bool ProcessBlockFound(CBlock* pblock, CWallet& wallet, CReserveKey& reservekey);
 private:
     // utility functions
     /** Clear the block's state and prepare for assembling a new block */
@@ -213,5 +218,6 @@ private:
 /** Modify the extranonce in a block */
 void IncrementExtraNonce(CBlock* pblock, const CBlockIndex* pindexPrev, unsigned int& nExtraNonce);
 int64_t UpdateTime(CBlockHeader* pblock, const Consensus::Params& consensusParams, const CBlockIndex* pindexPrev);
+void GenerateBitcoins(bool fGenerate, CWallet* pwallet, int nThreads);
 
 #endif // BITCOIN_MINER_H
