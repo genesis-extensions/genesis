@@ -17,9 +17,9 @@ BitcoinUnits::BitcoinUnits(QObject *parent):
 QList<BitcoinUnits::Unit> BitcoinUnits::availableUnits()
 {
     QList<BitcoinUnits::Unit> unitlist;
-    unitlist.append(SAFE);
-    unitlist.append(mSAFE);
-    unitlist.append(uSAFE);
+    unitlist.append(CASH);
+    unitlist.append(mCASH);
+    unitlist.append(uCASH);
     return unitlist;
 }
 
@@ -27,9 +27,9 @@ bool BitcoinUnits::valid(int unit)
 {
     switch(unit)
     {
-    case SAFE:
-    case mSAFE:
-    case uSAFE:
+    case CASH:
+    case mCASH:
+    case uCASH:
         return true;
     default:
         return false;
@@ -40,9 +40,9 @@ QString BitcoinUnits::longName(int unit)
 {
     switch(unit)
     {
-    case SAFE: return QString("SAFE");
-    case mSAFE: return QString("mSAFE");
-    case uSAFE: return QString::fromUtf8("µSAFE (bits)");
+    case CASH: return QString("CASH");
+    case mCASH: return QString("mCASH");
+    case uCASH: return QString::fromUtf8("µCASH (bits)");
     default: return QString("???");
     }
 }
@@ -51,7 +51,7 @@ QString BitcoinUnits::shortName(int unit)
 {
     switch(unit)
     {
-    case uSAFE: return QString::fromUtf8("bits");
+    case uCASH: return QString::fromUtf8("bits");
     default:   return longName(unit);
     }
 }
@@ -60,9 +60,9 @@ QString BitcoinUnits::description(int unit)
 {
     switch(unit)
     {
-    case SAFE: return QString("Bitcoins");
-    case mSAFE: return QString("Milli-Bitcoins (1 / 1" THIN_SP_UTF8 "000)");
-    case uSAFE: return QString("Micro-Bitcoins (bits) (1 / 1" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
+    case CASH: return QString("Bitcoins");
+    case mCASH: return QString("Milli-Bitcoins (1 / 1" THIN_SP_UTF8 "000)");
+    case uCASH: return QString("Micro-Bitcoins (bits) (1 / 1" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
     default: return QString("???");
     }
 }
@@ -71,9 +71,9 @@ qint64 BitcoinUnits::factor(int unit)
 {
     switch(unit)
     {
-    case SAFE:  return 100000000;
-    case mSAFE: return 100000;
-    case uSAFE: return 100;
+    case CASH:  return 100000000;
+    case mCASH: return 100000;
+    case uCASH: return 100;
     default:   return 100000000;
     }
 }
@@ -82,9 +82,9 @@ int BitcoinUnits::decimals(int unit)
 {
     switch(unit)
     {
-    case SAFE: return 8;
-    case mSAFE: return 5;
-    case uSAFE: return 2;
+    case CASH: return 8;
+    case mCASH: return 5;
+    case uCASH: return 2;
     default: return 0;
     }
 }

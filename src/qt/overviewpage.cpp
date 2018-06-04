@@ -26,7 +26,7 @@ class TxViewDelegate : public QAbstractItemDelegate
     Q_OBJECT
 public:
     explicit TxViewDelegate(const PlatformStyle *_platformStyle, QObject *parent=nullptr):
-        QAbstractItemDelegate(parent), unit(BitcoinUnits::SAFE),
+        QAbstractItemDelegate(parent), unit(BitcoinUnits::CASH),
         platformStyle(_platformStyle)
     {
 
@@ -241,7 +241,7 @@ void OverviewPage::setWalletModel(WalletModel *model)
         connect(model, SIGNAL(notifyWatchonlyChanged(bool)), this, SLOT(updateWatchOnlyLabels(bool)));
     }
 
-    // update the display unit, to not use the default ("SAFE")
+    // update the display unit, to not use the default ("CASH")
     updateDisplayUnit();
 }
 

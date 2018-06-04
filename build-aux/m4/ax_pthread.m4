@@ -213,7 +213,7 @@ case $host_os in
         ;;
 
         aix*)
-        ax_pthread_check_macro="_THREAD_SAFE"
+        ax_pthread_check_macro="_THREAD_CASH"
         ;;
 
         *)
