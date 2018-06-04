@@ -195,7 +195,33 @@ std::unique_ptr<CBlockTemplate> BlockAssembler::CreateNewBlock(const CScript& sc
     coinbaseTx.vin[0].prevout.SetNull();
     coinbaseTx.vout.resize(1);
     coinbaseTx.vout[0].scriptPubKey = scriptPubKeyIn;
-    coinbaseTx.vout[0].nValue = nFees + GetBlockSubsidy(nHeight, chainparams.GetConsensus());
+    coinbaseTx.vout[0].nValue = GetBlockSubsidy(nHeight, chainparams.GetConsensus());
+
+    // Block deductions - account for slippage in block height
+    if ((nHeight > 0) && (nHeight <= chainparams.GetConsensus().GetLastFoundersRewardBlockHeight() || pblock->nTime <= chainparams.GetConsensus().GetLastFoundersRewardBlockTime()) ) 
+    {
+        // Deductions total 50% of the block subsidy
+        auto vBlockDeductionTotal = coinbaseTx.vout[0].nValue / 2;
+        // Take some reward away from the block value
+        coinbaseTx.vout[0].nValue -= vBlockDeductionTotal;
+
+        // And give it to the beneficiaries:
+        // Founders : 20% of deduction (10% of total block)
+        auto vFounders = (vBlockDeductionTotal / 10) * 2;
+        coinbaseTx.vout.push_back(CTxOut(vFounders, chainparams.GetFounderScriptAtHeight(nHeight)));
+        // Infrastructure (Dev / Community Management / Outsourcing / Exchange Fees / Hosting) : 10% of deduction (5% of total block)
+        auto vInfrastructure = (vBlockDeductionTotal / 10) * 1;
+        coinbaseTx.vout.push_back(CTxOut(vInfrastructure, chainparams.GetInfrastructureScriptAtHeight(nHeight)));
+        // Giveaways (Bounties, Airdrops, Ad Hoc Giveaways) : 30% of deduction (15% of total block)
+        auto vGiveaways = (vBlockDeductionTotal / 10) * 3;
+        coinbaseTx.vout.push_back(CTxOut(vGiveaways, chainparams.GetGiveawayScriptAtHeight(nHeight)));
+        // Lock Reward : 40% of deduction (20% of total block)
+        auto vLocks = (vBlockDeductionTotal / 10) * 4;
+        coinbaseTx.vout.push_back(CTxOut(vLocks, chainparams.GetLockRewardScriptAtHeight(nHeight)));        
+    }
+    // Add fees
+    coinbaseTx.vout[0].nValue += nFees;
+
     coinbaseTx.vin[0].scriptSig = CScript() << nHeight << OP_0;
     pblock->vtx[0] = MakeTransactionRef(std::move(coinbaseTx));
     pblocktemplate->vchCoinbaseCommitment = GenerateCoinbaseCommitment(*pblock, pindexPrev, chainparams.GetConsensus());

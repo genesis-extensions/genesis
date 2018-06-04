@@ -886,7 +886,7 @@ UniValue getblocksubsidy(const JSONRPCRequest& request)
   if (request.fHelp || request.params.size() > 1)
     throw std::runtime_error(
       "getblocksubsidy height\n"
-      "\nReturns block subsidy reward of block at index provided.\n"
+      "\nReturns block subsidy reward of block at index provided, taking block deductions into account.\n"
       "\nArguments:\n"
       "1. height          (numeric, optional) The block height. If not provided, defaults to the current height of the chain.\n"
       "\nResult:\n"
@@ -909,7 +909,7 @@ UniValue getblocksubsidy(const JSONRPCRequest& request)
   UniValue result(UniValue::VOBJ);
 
   CAmount nReward = GetBlockSubsidy(nHeight, Params().GetConsensus());
-  result.push_back(Pair("miner", nReward));
+  result.push_back(Pair("miner", nReward / 2));
   result.push_back(Pair("founders", 0));
 
   return result;

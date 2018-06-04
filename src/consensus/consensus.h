@@ -29,4 +29,13 @@ static constexpr unsigned int LOCKTIME_VERIFY_SEQUENCE = (1 << 0);
 /** Use GetMedianTimePast() instead of nTime for end point timestamp. */
 static constexpr unsigned int LOCKTIME_MEDIAN_TIME_PAST = (1 << 1);
 
+/** SafeCash Values */
+static const int BLOCK_REWARD_MAX = 1000;
+static const int BLOCK_REWARD_MIN = 10;
+static const int HOURS_IN_DAY = 24;
+static const int DAYS_IN_WEEK = 7;
+static const int WEEKS_IN_MONTH = 4;
+static const int MONTHS_IN_YEAR = 12;
+static const int BONUS_DIVISOR = 100; // Bonus blocks pay out 1% of the max reward of the preceding blocks
+
 #endif // BITCOIN_CONSENSUS_CONSENSUS_H

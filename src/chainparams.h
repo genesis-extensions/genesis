@@ -77,6 +77,23 @@ public:
     const CCheckpointData& Checkpoints() const { return checkpointData; }
     const ChainTxData& TxData() const { return chainTxData; }
     void UpdateVersionBitsParameters(Consensus::DeploymentPos d, int64_t nStartTime, int64_t nTimeout);
+    /** Return the founder's address and script for a given block height */
+    std::string GetFounderAddressAtHeight(int height) const;
+    CScript GetFounderScriptAtHeight(int height) const;
+    std::string GetFounderAddressAtIndex(int i) const;
+    /** Return the infrastucture address and script for a given block height */
+    std::string GetInfrastructureAddressAtHeight(int height) const;
+    CScript GetInfrastructureScriptAtHeight(int height) const;
+    std::string GetInfrastructureAddressAtIndex(int i) const;
+    /** Return the giveaway address and script for a given block height */
+    std::string GetGiveawayAddressAtHeight(int height) const;
+    CScript GetGiveawayScriptAtHeight(int height) const;
+    std::string GetGiveawayAddressAtIndex(int i) const;
+    /** Return the lock reward address and script for a given block height */
+    std::string GetLockRewardAddressAtHeight(int height) const;
+    CScript GetLockRewardScriptAtHeight(int height) const;
+    std::string GetLockRewardAddressAtIndex(int i) const;
+    
 protected:
     CChainParams() {}
 
@@ -98,6 +115,11 @@ protected:
     bool fMineBlocksOnDemand;
     CCheckpointData checkpointData;
     ChainTxData chainTxData;
+    std::vector<std::string> vFounderAddress;
+    std::vector<std::string> vInfrastructureAddress;
+    std::vector<std::string> vGiveawayAddress;
+    std::vector<std::string> vLockAddress;
+
 };
 
 /**

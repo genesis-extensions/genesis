@@ -46,6 +46,7 @@
 #include <boost/algorithm/string/replace.hpp>
 #include <boost/algorithm/string/join.hpp>
 #include <boost/thread.hpp>
+#include <boost/foreach.hpp>
 
 #if defined(NDEBUG)
 # error "Bitcoin cannot be compiled without assertions."
@@ -1131,14 +1132,79 @@ bool ReadBlockFromDisk(CBlock& block, const CBlockIndex* pindex, const Consensus
 
 CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams)
 {
-    int halvings = nHeight / consensusParams.nSubsidyHalvingInterval;
-    // Force block reward to zero when right shift is undefined.
-    if (halvings >= 64)
-        return 0;
+    int subsidy = 0;
 
-    CAmount nSubsidy = 50 * COIN;
-    // Subsidy is cut in half every 210,000 blocks which will occur approximately every 4 years.
-    nSubsidy >>= halvings;
+    // Ignore the genesis block, which has no value
+    if (nHeight == 0)
+    {
+        subsidy = 0;
+    }
+    else if (nHeight > 0 && nHeight <= COINBASE_MATURITY)
+    {
+        // There are no mature blocks yet...
+        subsidy = BLOCK_REWARD_MAX;
+    }
+    else
+    {
+        int ultraBlockInterval = consensusParams.nSuperBlockInterval * DAYS_IN_WEEK * WEEKS_IN_MONTH * MONTHS_IN_YEAR;
+        int megaBlockInterval = consensusParams.nSuperBlockInterval * DAYS_IN_WEEK * WEEKS_IN_MONTH;
+        int superBlockInterval = consensusParams.nSuperBlockInterval * DAYS_IN_WEEK;
+        int bonusBlockInterval = consensusParams.nSuperBlockInterval;
+
+        // Is this a superblock?
+        if (nHeight > ultraBlockInterval && (nHeight % ultraBlockInterval) == 0)
+        {
+            // ultra block (once a lunar year +/- 354 days)
+            subsidy = (ultraBlockInterval * BLOCK_REWARD_MAX) / BONUS_DIVISOR;
+        }
+        else if (nHeight > megaBlockInterval && (nHeight % megaBlockInterval) == 0)
+        {
+            // a mega block (once a lunar month +/- 28 days) 
+            subsidy = (megaBlockInterval * BLOCK_REWARD_MAX) / BONUS_DIVISOR;
+        }
+        else if (nHeight > superBlockInterval && (nHeight % superBlockInterval) == 0)
+        {
+            // a weekly super block (+/- 7 days)
+            subsidy = (superBlockInterval * BLOCK_REWARD_MAX) / BONUS_DIVISOR;
+        }
+        else if (nHeight > bonusBlockInterval && (nHeight % bonusBlockInterval) == 0)
+        {
+            // a daily bonus block
+            subsidy = (bonusBlockInterval * BLOCK_REWARD_MAX) / BONUS_DIVISOR;
+        }
+        else
+        {
+            // A normal block...
+            // Get the most recent confirmed block's hash
+            CBlockIndex* pblockindex = chainActive[nHeight - COINBASE_MATURITY];
+            uint256  confirmedHash = pblockindex->GetBlockHash();
+            // Get a sum of the significant bytes
+            // 7 23 3 2 27 4
+            unsigned int total = 0;
+            // Dialpad digits of safecash...
+            total += confirmedHash.GetUint64(7); 
+            total += confirmedHash.GetUint64(23);
+            total += confirmedHash.GetUint64(3); 
+            total += confirmedHash.GetUint64(2); 
+            total += confirmedHash.GetUint64(27); 
+            total += confirmedHash.GetUint64(4);
+            // Get the percentage that this value represents
+            unsigned int payPercent = ((total * 100) / (255*6));
+            // Return the matching percentage of the max payout to actually pay
+            subsidy = (BLOCK_REWARD_MAX / 100) * payPercent;
+            // sanity check... make sure it is not too little or too much
+            if (subsidy < BLOCK_REWARD_MIN)
+            {
+                subsidy = BLOCK_REWARD_MIN;
+            }
+            else if (subsidy > BLOCK_REWARD_MAX)
+            {
+                subsidy = BLOCK_REWARD_MAX;
+            }
+        }
+    }
+
+    CAmount nSubsidy = subsidy * COIN;
     return nSubsidy;
 }
 
@@ -3210,6 +3276,74 @@ static bool ContextualCheckBlock(const CBlock& block, CValidationState& state, c
     if (GetBlockWeight(block) > MAX_BLOCK_WEIGHT) {
         return state.DoS(100, false, REJECT_INVALID, "bad-blk-weight", false, strprintf("%s : weight limit failed", __func__));
     }
+
+    // Coinbase transaction must include an output sending a specified % of
+    // the block reward to various scripts, until the last founders
+    // reward block or time is reached, with exception of the genesis block.
+    if ((nHeight > 0) && (nHeight <= consensusParams.GetLastFoundersRewardBlockHeight() || block.nTime <= consensusParams.GetLastFoundersRewardBlockTime()) ) 
+    {
+        bool found = false;
+
+        auto vBlockDeductionTotal =  GetBlockSubsidy(nHeight, consensusParams) / 2;
+
+        // Founders Reward
+        BOOST_FOREACH(const CTxOut& output, block.vtx[0]->vout) {
+            if (output.scriptPubKey == Params().GetFounderScriptAtHeight(nHeight)) {
+                if (output.nValue == (vBlockDeductionTotal / 10) * 2) {
+                    found = true;
+                    break;
+                }
+            }
+        }
+
+        if (!found) {
+            return state.DoS(100, error("%s: founders payment missing", __func__), REJECT_INVALID, "cb-no-founders-payment");
+        }
+
+        // Infrastructure
+        BOOST_FOREACH(const CTxOut& output, block.vtx[0]->vout) {
+            if (output.scriptPubKey == Params().GetInfrastructureScriptAtHeight(nHeight)) {
+                if (output.nValue == (vBlockDeductionTotal / 10) * 1) {
+                    found = true;
+                    break;
+                }
+            }
+        }
+
+        if (!found) {
+            return state.DoS(100, error("%s: infrastructure payment missing", __func__), REJECT_INVALID, "cb-no-infrastructure-payment");
+        }
+
+        // Giveaways
+        BOOST_FOREACH(const CTxOut& output, block.vtx[0]->vout) {
+            if (output.scriptPubKey == Params().GetGiveawayScriptAtHeight(nHeight)) {
+                if (output.nValue == (vBlockDeductionTotal / 10) * 3) {
+                    found = true;
+                    break;
+                }
+            }
+        }
+
+        if (!found) {
+            return state.DoS(100, error("%s: giveaways payment missing", __func__), REJECT_INVALID, "cb-no-giveaways-payment");
+        }
+
+        // Lock Rewards
+        BOOST_FOREACH(const CTxOut& output, block.vtx[0]->vout) {
+            if (output.scriptPubKey == Params().GetLockRewardScriptAtHeight(nHeight)) {
+                if (output.nValue == (vBlockDeductionTotal / 10) * 4) {
+                    found = true;
+                    break;
+                }
+            }
+        }
+
+        if (!found) {
+            return state.DoS(100, error("%s: lock reward payment missing", __func__), REJECT_INVALID, "cb-no-lockreward-payment");
+        }
+
+    }
+
 
     return true;
 }

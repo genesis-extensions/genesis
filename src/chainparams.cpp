@@ -137,7 +137,7 @@ public:
         nDefaultPort = 7233;
         nPruneAfterHeight = 100000;
 
-	// Equihash
+	    // Equihash
         const size_t N = 200, K = 9;
         BOOST_STATIC_ASSERT(equihash_parameters_acceptable(N, K));
         nEquihashN = N;
@@ -146,6 +146,8 @@ public:
         assert(maxUint/UintToArith256(consensus.powLimit) >= consensus.nPowAveragingWindow);
         consensus.nPowMaxAdjustDown = 32; // 32% adjustment down
         consensus.nPowMaxAdjustUp = 16; // 16% adjustment up
+        // SafeCash PoW
+        consensus.nSuperBlockInterval = 10080; // Once a week
 
         genesis = CreateGenesisBlock(
             // nTime
@@ -162,10 +164,7 @@ public:
             0); 
 
         consensus.hashGenesisBlock = genesis.GetHash();
-
-        std::__cxx11::string foo = consensus.hashGenesisBlock.ToString();
-        std::__cxx11::string bar = genesis.hashMerkleRoot.ToString();
-        std::__cxx11::string genesisString = genesis.ToString();
+        consensus.timeGenesisBlock = genesis.nTime;
 
         assert(consensus.hashGenesisBlock == uint256S("00028cfb5aa39c474b7d7d27f053dc7351cf5839da15ee1fdc837cc09ec2f6df"));
         assert(genesis.hashMerkleRoot == uint256S("0x5417bdbcd952fc057e254498df7c83bbb8a5986e73d0055c37ad74b8ad349de6"));
@@ -201,6 +200,31 @@ public:
             0,
             0
         };
+
+        // Founders Addresses: A vector of 2-of-3 multisig addresses
+        vFounderAddress = 
+        {
+            "", // Name
+        };
+        
+        // Infrastructure Addresses: A vector of 2-of-3 multisig addresses
+        vInfrastructureAddress = 
+        {
+            "", // Name
+        };
+        
+        // Giveaway Addresses: A vector of 2-of-3 multisig addresses
+        vGiveawayAddress = 
+        {
+            "", // Name
+        };
+        
+        // Lock Reward Addresses: A vector of 2-of-3 multisig addresses
+        vLockAddress = 
+        {
+            "", // Name
+        };
+        
     }
 };
 
@@ -251,7 +275,7 @@ public:
         nDefaultPort = 17233;
         nPruneAfterHeight = 1000;
 
-	// Equihash
+	    // Equihash
         const size_t N = 200, K = 9;
         BOOST_STATIC_ASSERT(equihash_parameters_acceptable(N, K));
         nEquihashN = N;
@@ -260,6 +284,8 @@ public:
         assert(maxUint/UintToArith256(consensus.powLimit) >= consensus.nPowAveragingWindow);
         consensus.nPowMaxAdjustDown = 32; // 32% adjustment down
         consensus.nPowMaxAdjustUp = 16; // 16% adjustment up
+        // SafeCash PoW
+        consensus.nSuperBlockInterval = 10; 
 
         genesis = CreateGenesisBlock(
             // nTime
@@ -276,6 +302,7 @@ public:
             0); 
 
         consensus.hashGenesisBlock = genesis.GetHash();
+        consensus.timeGenesisBlock = genesis.nTime;
         assert(consensus.hashGenesisBlock == uint256S("05465adce5ff77fe67e3fd5fb35e01b022580582795782dc29db4f9a6cda324c"));
         assert(genesis.hashMerkleRoot == uint256S("5417bdbcd952fc057e254498df7c83bbb8a5986e73d0055c37ad74b8ad349de6"));
 
@@ -308,6 +335,30 @@ public:
             0,
             0,
             0
+        };
+
+        // Founders Addresses: A vector of 2-of-3 multisig addresses
+        vFounderAddress = 
+        {
+            "", // Name
+        };
+        
+        // Infrastructure Addresses: A vector of 2-of-3 multisig addresses
+        vInfrastructureAddress = 
+        {
+            "", // Name
+        };
+        
+        // Giveaway Addresses: A vector of 2-of-3 multisig addresses
+        vGiveawayAddress = 
+        {
+            "", // Name
+        };
+        
+        // Lock Reward Addresses: A vector of 2-of-3 multisig addresses
+        vLockAddress = 
+        {
+            "", // Name
         };
 
     }
@@ -356,7 +407,7 @@ public:
         nDefaultPort = 27233;
         nPruneAfterHeight = 1000;
 
-	// Equihash
+    	// Equihash
         const size_t N = 48, K = 5;
         BOOST_STATIC_ASSERT(equihash_parameters_acceptable(N, K));
         nEquihashN = N;
@@ -365,6 +416,8 @@ public:
         assert(maxUint/UintToArith256(consensus.powLimit) >= consensus.nPowAveragingWindow);
         consensus.nPowMaxAdjustDown = 0; // Turn off adjustment down
         consensus.nPowMaxAdjustUp = 0; // Turn off adjustment up
+        // SafeCash PoW
+        consensus.nSuperBlockInterval = 10; 
 
         genesis = CreateGenesisBlock(
             // nTime
@@ -380,6 +433,7 @@ public:
             // Reward
             0); 
         consensus.hashGenesisBlock = genesis.GetHash();
+        consensus.timeGenesisBlock = genesis.nTime;
         assert(consensus.hashGenesisBlock == uint256S("0ace1aceae2ae42aa51795a8a0313ed717e29e4890a4296a41d236b79e71f135"));
         assert(genesis.hashMerkleRoot == uint256S("5417bdbcd952fc057e254498df7c83bbb8a5986e73d0055c37ad74b8ad349de6"));
 
@@ -409,6 +463,31 @@ public:
         base58Prefixes[EXT_SECRET_KEY] = { 0x53, 0x6f, 0x75, 0x6c };// 
         
         bech32_hrp = "scrt";
+
+        // Founders Addresses: A vector of 2-of-3 multisig addresses
+        vFounderAddress = 
+        {
+            "", // Name
+        };
+        
+        // Infrastructure Addresses: A vector of 2-of-3 multisig addresses
+        vInfrastructureAddress = 
+        {
+            "", // Name
+        };
+        
+        // Giveaway Addresses: A vector of 2-of-3 multisig addresses
+        vGiveawayAddress = 
+        {
+            "", // Name
+        };
+        
+        // Lock Reward Addresses: A vector of 2-of-3 multisig addresses
+        vLockAddress = 
+        {
+            "", // Name
+        };
+        
     }
 };
 
@@ -439,4 +518,131 @@ void SelectParams(const std::string& network)
 void UpdateVersionBitsParameters(Consensus::DeploymentPos d, int64_t nStartTime, int64_t nTimeout)
 {
     globalChainParams->UpdateVersionBitsParameters(d, nStartTime, nTimeout);
+}
+
+// Sustainability
+// Separated logic, in case individual rules change
+
+// Block height must be >0 and <=last founders reward block height 
+// or block time must be within 1 year of the genesis block time
+// Index variable i ranges from 0 - (vFounderAddress.size()-1)
+std::string CChainParams::GetFounderAddressAtHeight(int nHeight) const {
+    int maxHeight = consensus.GetLastFoundersRewardBlockHeight();
+    assert(nHeight > 0 && nHeight <= maxHeight);
+
+    size_t addressChangeInterval = (maxHeight + vFounderAddress.size()) / vFounderAddress.size();
+    size_t i = nHeight / addressChangeInterval;
+    return vFounderAddress[i];
+}
+
+// Block height must be >0 and <=last founders reward block height
+// or block time must be within 1 year of the genesis block time
+// The address is expected to be a multisig (P2SH) address
+CScript CChainParams::GetFounderScriptAtHeight(int nHeight) const {
+    assert(nHeight > 0 && nHeight <= consensus.GetLastFoundersRewardBlockHeight());
+
+    CTxDestination address = DecodeDestination(GetFounderAddressAtHeight(nHeight).c_str());
+    assert(IsValidDestination(address));
+    assert(boost::get<CScriptID>(&address) != nullptr);
+    CScriptID scriptID = boost::get<CScriptID>(address); // address is a boost variant
+    CScript script = CScript() << OP_HASH160 << ToByteVector(scriptID) << OP_EQUAL;
+    return script;
+}
+
+std::string CChainParams::GetFounderAddressAtIndex(int i) const {
+    assert(i >= 0 && i < vFounderAddress.size());
+    return vFounderAddress[i];
+}
+
+// Block height must be >0 and <=last founders reward block height 
+// or block time must be within 1 year of the genesis block time
+// Index variable i ranges from 0 - (vFoundersRewardAddress.size()-1)
+std::string CChainParams::GetInfrastructureAddressAtHeight(int nHeight) const {
+    int maxHeight = consensus.GetLastFoundersRewardBlockHeight();
+    assert(nHeight > 0 && nHeight <= maxHeight);
+
+    size_t addressChangeInterval = (maxHeight + vInfrastructureAddress.size()) / vInfrastructureAddress.size();
+    size_t i = nHeight / addressChangeInterval;
+    return vInfrastructureAddress[i];
+}
+
+// Block height must be >0 and <=last founders reward block height
+// or block time must be within 1 year of the genesis block time
+// The address is expected to be a multisig (P2SH) address
+CScript CChainParams::GetInfrastructureScriptAtHeight(int nHeight) const {
+    assert(nHeight > 0 && nHeight <= consensus.GetLastFoundersRewardBlockHeight());
+
+    CTxDestination address = DecodeDestination(GetInfrastructureAddressAtHeight(nHeight).c_str());
+    assert(IsValidDestination(address));
+    assert(boost::get<CScriptID>(&address) != nullptr);
+    CScriptID scriptID = boost::get<CScriptID>(address); // address is a boost variant
+    CScript script = CScript() << OP_HASH160 << ToByteVector(scriptID) << OP_EQUAL;
+    return script;
+}
+
+std::string CChainParams::GetInfrastructureAddressAtIndex(int i) const {
+    assert(i >= 0 && i < vInfrastructureAddress.size());
+    return vInfrastructureAddress[i];
+}
+
+// Block height must be >0 and <=last founders reward block height 
+// or block time must be within 1 year of the genesis block time
+// Index variable i ranges from 0 - (vFoundersRewardAddress.size()-1)
+std::string CChainParams::GetGiveawayAddressAtHeight(int nHeight) const {
+    int maxHeight = consensus.GetLastFoundersRewardBlockHeight();
+    assert(nHeight > 0 && nHeight <= maxHeight);
+
+    size_t addressChangeInterval = (maxHeight + vGiveawayAddress.size()) / vGiveawayAddress.size();
+    size_t i = nHeight / addressChangeInterval;
+    return vGiveawayAddress[i];
+}
+
+// Block height must be >0 and <=last founders reward block height
+// or block time must be within 1 year of the genesis block time
+// The address is expected to be a multisig (P2SH) address
+CScript CChainParams::GetGiveawayScriptAtHeight(int nHeight) const {
+    assert(nHeight > 0 && nHeight <= consensus.GetLastFoundersRewardBlockHeight());
+
+    CTxDestination address = DecodeDestination(GetGiveawayAddressAtHeight(nHeight).c_str());
+    assert(IsValidDestination(address));
+    assert(boost::get<CScriptID>(&address) != nullptr);
+    CScriptID scriptID = boost::get<CScriptID>(address); // address is a boost variant
+    CScript script = CScript() << OP_HASH160 << ToByteVector(scriptID) << OP_EQUAL;
+    return script;
+}
+
+std::string CChainParams::GetGiveawayAddressAtIndex(int i) const {
+    assert(i >= 0 && i < vGiveawayAddress.size());
+    return vGiveawayAddress[i];
+}
+
+// Block height must be >0 and <=last founders reward block height 
+// or block time must be within 1 year of the genesis block time
+// Index variable i ranges from 0 - (vFoundersRewardAddress.size()-1)
+std::string CChainParams::GetLockRewardAddressAtHeight(int nHeight) const {
+    int maxHeight = consensus.GetLastFoundersRewardBlockHeight();
+    assert(nHeight > 0 && nHeight <= maxHeight);
+
+    size_t addressChangeInterval = (maxHeight + vLockAddress.size()) / vLockAddress.size();
+    size_t i = nHeight / addressChangeInterval;
+    return vLockAddress[i];
+}
+
+// Block height must be >0 and <=last founders reward block height
+// or block time must be within 1 year of the genesis block time
+// The address is expected to be a multisig (P2SH) address
+CScript CChainParams::GetLockRewardScriptAtHeight(int nHeight) const {
+    assert(nHeight > 0 && nHeight <= consensus.GetLastFoundersRewardBlockHeight());
+
+    CTxDestination address = DecodeDestination(GetLockRewardAddressAtHeight(nHeight).c_str());
+    assert(IsValidDestination(address));
+    assert(boost::get<CScriptID>(&address) != nullptr);
+    CScriptID scriptID = boost::get<CScriptID>(address); // address is a boost variant
+    CScript script = CScript() << OP_HASH160 << ToByteVector(scriptID) << OP_EQUAL;
+    return script;
+}
+
+std::string CChainParams::GetLockRewardAddressAtIndex(int i) const {
+    assert(i >= 0 && i < vLockAddress.size());
+    return vLockAddress[i];
 }

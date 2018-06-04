@@ -48,6 +48,7 @@ struct BIP9Deployment {
  */
 struct Params {
     uint256 hashGenesisBlock;
+    uint32_t timeGenesisBlock;
     int nSubsidyHalvingInterval;
     /** Block height at which BIP16 becomes active */
     int BIP16Height;
@@ -81,6 +82,16 @@ struct Params {
     int64_t AveragingWindowTimespan() const { return nPowAveragingWindow * nPowTargetSpacing; }
     int64_t MinActualTimespan() const { return (AveragingWindowTimespan() * (100 - nPowMaxAdjustUp  )) / 100; }
     int64_t MaxActualTimespan() const { return (AveragingWindowTimespan() * (100 + nPowMaxAdjustDown)) / 100; }
+    // SafeCash PoW
+    int nSuperBlockInterval;
+    int GetLastFoundersRewardBlockHeight() const 
+    {
+        return 483840; // 1 year's worth of blocks
+    }    
+    uint32_t GetLastFoundersRewardBlockTime() const 
+    {
+        return timeGenesisBlock + 31536000; // 1 year from genesis block time
+    }    
 };
 } // namespace Consensus
 
