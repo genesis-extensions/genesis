@@ -123,7 +123,7 @@ The command `make install` installs the executables in the `./depends/x86_64-pc-
 Dependencies for the GUI: Ubuntu & Debian
 -----------------------------------------
 
-If you want to build Bitcoin-Qt, make sure that the required packages for Qt development
+If you want to build SafeCash-Qt, make sure that the required packages for Qt development
 are installed. Either Qt 5 or Qt 4 are necessary to build the GUI.
 If both Qt 4 and Qt 5 are installed, Qt 5 will be used. Pass `--with-gui=qt4` to configure to choose Qt4.
 To build without GUI pass `--without-gui`.
