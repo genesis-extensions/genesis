@@ -327,7 +327,7 @@ public:
 
         checkpointData = {
             {
-                {0, uint256S("05465adce5ff77fe67e3fd5fb35e01b022580582795782dc29db4f9a6cda324c")},
+                {0, consensus.hashGenesisBlock},
             }
         };
 
@@ -446,7 +446,7 @@ public:
 
         checkpointData = {
             {
-                {0, uint256S("0ace1aceae2ae42aa51795a8a0313ed717e29e4890a4296a41d236b79e71f135")},
+                {0, consensus.hashGenesisBlock},
             }
         };
 
