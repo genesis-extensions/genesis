@@ -29,7 +29,7 @@ LIBBITCOIN_CONSENSUS=libbitcoin_consensus.a
 LIBBITCOIN_CLI=libsafecash_cli.a
 LIBBITCOIN_UTIL=libbitcoin_util.a
 LIBBITCOIN_CRYPTO=crypto/libbitcoin_crypto.a
-LIBBITCOINQT=qt/libbitcoinqt.a
+LIBBITCOINQT=qt/libsafecashqt.a
 LIBSECP256K1=secp256k1/libsecp256k1.la
 
 if ENABLE_ZMQ
@@ -183,7 +183,7 @@ obj/build.h: FORCE
 	  "$(abs_top_srcdir)"
 libbitcoin_util_a-clientversion.$(OBJEXT): obj/build.h
 
-# server: shared between safecashd and bitcoin-qt
+# server: shared between safecashd and safecash-qt
 libbitcoin_server_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(MINIUPNPC_CPPFLAGS) $(EVENT_CFLAGS) $(EVENT_PTHREADS_CFLAGS)
 libbitcoin_server_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
 libbitcoin_server_a_SOURCES = \
@@ -237,7 +237,7 @@ libbitcoin_zmq_a_SOURCES = \
 endif
 
 
-# wallet: shared between safecashd and bitcoin-qt, but only linked
+# wallet: shared between safecashd and safecash-qt, but only linked
 # when wallet enabled
 libbitcoin_wallet_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
 libbitcoin_wallet_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
@@ -318,7 +318,7 @@ libbitcoin_consensus_a_SOURCES = \
   utilstrencodings.h \
   version.h
 
-# common: shared between safecashd, and bitcoin-qt and non-server tools
+# common: shared between safecashd, and safecash-qt and non-server tools
 libbitcoin_common_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
 libbitcoin_common_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
 libbitcoin_common_a_SOURCES = \
@@ -370,7 +370,7 @@ if GLIBC_BACK_COMPAT
 libbitcoin_util_a_SOURCES += compat/glibc_compat.cpp
 endif
 
-# cli: shared between safecash-cli and bitcoin-qt
+# cli: shared between safecash-cli and safecash-qt
 libsafecash_cli_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
 libsafecash_cli_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
 libsafecash_cli_a_SOURCES = \
