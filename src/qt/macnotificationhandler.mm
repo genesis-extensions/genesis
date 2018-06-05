@@ -13,7 +13,7 @@
 - (NSString *)__bundleIdentifier
 {
     if (self == [NSBundle mainBundle]) {
-        return @"org.bitcoinfoundation.SafeCash-Qt";
+        return @"io.safecash.SafeCash-Qt";
     } else {
         return [self __bundleIdentifier];
     }

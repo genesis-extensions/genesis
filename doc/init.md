@@ -109,13 +109,13 @@ setting the BITCOIND and FLAGS environment variables in the file
 
 ### Mac OS X
 
-Copy org.bitcoin.safecashd.plist into ~/Library/LaunchAgents. Load the launch agent by
-running `launchctl load ~/Library/LaunchAgents/org.bitcoin.safecashd.plist`.
+Copy io.safecash.safecashd.plist into ~/Library/LaunchAgents. Load the launch agent by
+running `launchctl load ~/Library/LaunchAgents/io.safecash.safecashd.plist`.
 
 This Launch Agent will cause safecashd to start whenever the user logs in.
 
 NOTE: This approach is intended for those wanting to run safecashd as the current user.
-You will need to modify org.bitcoin.safecashd.plist if you intend to use it as a
+You will need to modify io.safecash.safecashd.plist if you intend to use it as a
 Launch Daemon with a dedicated bitcoin user.
 
 Auto-respawn
