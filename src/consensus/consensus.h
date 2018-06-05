@@ -31,7 +31,7 @@ static constexpr unsigned int LOCKTIME_MEDIAN_TIME_PAST = (1 << 1);
 
 /** SafeCash Values */
 static const int BLOCK_REWARD_MAX = 1000;
-static const int BLOCK_REWARD_MIN = 10;
+static const int BLOCK_REWARD_MIN = 20;
 static const int HOURS_IN_DAY = 24;
 static const int DAYS_IN_WEEK = 7;
 static const int WEEKS_IN_MONTH = 4;

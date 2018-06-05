@@ -147,7 +147,7 @@ public:
         consensus.nPowMaxAdjustDown = 32; // 32% adjustment down
         consensus.nPowMaxAdjustUp = 16; // 16% adjustment up
         // SafeCash PoW
-        consensus.nSuperBlockInterval = 10080; // Once a week
+        consensus.nSuperBlockInterval = 1440; // Once a day
 
         genesis = CreateGenesisBlock(
             // nTime
@@ -343,25 +343,25 @@ public:
         // Founders Addresses: A vector of 2-of-3 multisig addresses
         vFounderAddress = 
         {
-            "", // Name
+            "cNDXaC8JfPpSD1e3v8ziYjiz264x7g1Ku3", // Name
         };
         
         // Infrastructure Addresses: A vector of 2-of-3 multisig addresses
         vInfrastructureAddress = 
         {
-            "", // Name
+            "cNDXaC8JfPpSD1e3v8ziYjiz264x7g1Ku3", // Name
         };
         
         // Giveaway Addresses: A vector of 2-of-3 multisig addresses
         vGiveawayAddress = 
         {
-            "", // Name
+            "cNDXaC8JfPpSD1e3v8ziYjiz264x7g1Ku3", // Name
         };
         
         // Lock Reward Addresses: A vector of 2-of-3 multisig addresses
         vLockAddress = 
         {
-            "", // Name
+            "cNDXaC8JfPpSD1e3v8ziYjiz264x7g1Ku3", // Name
         };
 
     }

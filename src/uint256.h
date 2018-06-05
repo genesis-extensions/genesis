@@ -78,6 +78,12 @@ public:
         return sizeof(data);
     }
 
+    uint64_t GetUint64Char(int pos) const
+    {
+        std::string hex = GetHex().substr(pos * 2, 2);
+        return (uint64_t)std::stoul(hex, nullptr, 16);
+    }
+
     uint64_t GetUint64(int pos) const
     {
         const uint8_t* ptr = data + pos * 8;

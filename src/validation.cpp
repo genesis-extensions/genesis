@@ -1178,32 +1178,38 @@ CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams)
             // Get the most recent confirmed block's hash
             CBlockIndex* pblockindex = chainActive[nHeight - COINBASE_MATURITY];
             uint256  confirmedHash = pblockindex->GetBlockHash();
+            //LogPrintf("Confirmed Hash for block %i: %s \n", nHeight - COINBASE_MATURITY, confirmedHash.GetHex());
+            
             // Get a sum of the significant bytes
             // 7 23 3 2 27 4
             unsigned int total = 0;
-            // Dialpad digits of safecash...
-            total += confirmedHash.GetUint64(7); 
-            total += confirmedHash.GetUint64(23);
-            total += confirmedHash.GetUint64(3); 
-            total += confirmedHash.GetUint64(2); 
-            total += confirmedHash.GetUint64(27); 
-            total += confirmedHash.GetUint64(4);
-            // Get the percentage that this value represents
-            unsigned int payPercent = ((total * 100) / (255*6));
-            // Return the matching percentage of the max payout to actually pay
-            subsidy = (BLOCK_REWARD_MAX / 100) * payPercent;
+            // Dialpad digits of safecash... from the literal hex of the hash
+            total += confirmedHash.GetUint64Char(7); 
+            total += confirmedHash.GetUint64Char(23);
+            total += confirmedHash.GetUint64Char(3); 
+            total += confirmedHash.GetUint64Char(2); 
+            total += confirmedHash.GetUint64Char(27); 
+            total += confirmedHash.GetUint64Char(4);
+
+            subsidy = total;
+
             // sanity check... make sure it is not too little or too much
-            if (subsidy < BLOCK_REWARD_MIN)
+            if (subsidy <= BLOCK_REWARD_MIN)
             {
-                subsidy = BLOCK_REWARD_MIN;
+                //LogPrintf("Subsidy %i too low, resetting to %i \n", subsidy, subsidy * BLOCK_REWARD_MIN);
+                subsidy = subsidy * BLOCK_REWARD_MIN;
             }
             else if (subsidy > BLOCK_REWARD_MAX)
             {
-                subsidy = BLOCK_REWARD_MAX;
+                //LogPrintf("Subsidy %i too high, resetting to %i \n", subsidy, subsidy / 10);
+                subsidy = subsidy / 10;
             }
         }
     }
+    // Make sure the subsidy divides by 20 to make the rest of the math work better
+    subsidy -= subsidy % 20;
 
+    //LogPrintf("Subsidy %i acceptable for block %i \n", subsidy, nHeight);
     CAmount nSubsidy = subsidy * COIN;
     return nSubsidy;
 }
@@ -3292,6 +3298,10 @@ static bool ContextualCheckBlock(const CBlock& block, CValidationState& state, c
                 if (output.nValue == (vBlockDeductionTotal / 10) * 2) {
                     found = true;
                     break;
+                }
+                else
+                {
+                    LogPrintf("Wrong founders value: %i should be %i \n", output.nValue, (vBlockDeductionTotal / 10) * 2);
                 }
             }
         }
