@@ -5,5 +5,5 @@ clean: FORCE
 	$(MAKE) -C .. bitcoin_qt_clean test_bitcoin_qt_clean
 check: FORCE
 	$(MAKE) -C .. test_bitcoin_qt_check
-bitcoin-qt bitcoin-qt.exe: FORCE
+safecash-qt safecash-qt.exe: FORCE
 	 $(MAKE) -C .. bitcoin_qt

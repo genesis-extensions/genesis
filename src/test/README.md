@@ -5,18 +5,18 @@ and tests weren't explicitly disabled.
 
 After configuring, they can be run with `make check`.
 
-To run the bitcoind tests manually, launch `src/test/test_bitcoin`. To recompile
+To run the safecashd tests manually, launch `src/test/test_bitcoin`. To recompile
 after a test file was modified, run `make` and then run the test again. If you
 modify a non-test file, use `make -C src/test` to recompile only what's needed
-to run the bitcoind tests.
+to run the safecashd tests.
 
-To add more bitcoind tests, add `BOOST_AUTO_TEST_CASE` functions to the existing
+To add more safecashd tests, add `BOOST_AUTO_TEST_CASE` functions to the existing
 .cpp files in the `test/` directory or add new .cpp files that
 implement new BOOST_AUTO_TEST_SUITE sections.
 
-To run the bitcoin-qt tests manually, launch `src/qt/test/test_bitcoin-qt`
+To run the safecash-qt tests manually, launch `src/qt/test/test_safecash-qt`
 
-To add more bitcoin-qt tests, add them to the `src/qt/test/` directory and
+To add more safecash-qt tests, add them to the `src/qt/test/` directory and
 the `src/qt/test/test_main.cpp` file.
 
 ### Running individual tests
