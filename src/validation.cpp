@@ -1229,9 +1229,9 @@ bool IsInitialBlockDownload()
         return true;
     if (chainActive.Tip() == nullptr)
         return true;
-    if (chainActive.Tip()->nChainWork < nMinimumChainWork)
+    if (chainActive.Tip()->nHeight > 0  && chainActive.Tip()->nChainWork < nMinimumChainWork)
         return true;
-    if (chainActive.Tip()->GetBlockTime() < (GetTime() - nMaxTipAge))
+    if (chainActive.Tip()->nHeight > 0  && chainActive.Tip()->GetBlockTime() < (GetTime() - nMaxTipAge))
         return true;
     LogPrintf("Leaving InitialBlockDownload (latching to false)\n");
     latchToFalse.store(true, std::memory_order_relaxed);

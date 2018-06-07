@@ -109,7 +109,7 @@ protected:
     std::string strNetworkID;
     CBlock genesis;
     std::vector<SeedSpec6> vFixedSeeds;
-    bool fMiningRequiresPeers = false;
+    bool fMiningRequiresPeers = true;
     bool fDefaultConsistencyChecks;
     bool fRequireStandard;
     bool fMineBlocksOnDemand;
