@@ -1,14 +1,12 @@
-// Copyright (c) 2011-2017 The Bitcoin Core developers
+// Copyright (c) 2011-2015 The Bitcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #ifndef BITCOIN_QT_SPLASHSCREEN_H
 #define BITCOIN_QT_SPLASHSCREEN_H
 
-#include <functional>
 #include <QSplashScreen>
 
-class CWallet;
 class NetworkStyle;
 
 /** Class for the splashscreen with information of the running client.
@@ -17,13 +15,14 @@ class NetworkStyle;
  * can take a long time, and in that case a progress window that cannot be
  * moved around and minimized has turned out to be frustrating to the user.
  */
-class SplashScreen : public QWidget
+class SplashScreen : public QSplashScreen
 {
     Q_OBJECT
 
 public:
-    explicit SplashScreen(Qt::WindowFlags f, const NetworkStyle *networkStyle);
-    ~SplashScreen();
+    explicit SplashScreen(const QPixmap &pixmap = QPixmap(), Qt::WindowFlags f = 0);
+//    explicit SplashScreen(Qt::WindowFlags f, const NetworkStyle *networkStyle);
+//    ~SplashScreen();
 
 protected:
     void paintEvent(QPaintEvent *event);
@@ -36,23 +35,16 @@ public Q_SLOTS:
     /** Show message and progress */
     void showMessage(const QString &message, int alignment, const QColor &color);
 
-protected:
-    bool eventFilter(QObject * obj, QEvent * ev);
-
 private:
     /** Connect core signals to splash screen */
     void subscribeToCoreSignals();
     /** Disconnect core signals to splash screen */
     void unsubscribeFromCoreSignals();
-    /** Connect wallet signals to splash screen */
-    void ConnectWallet(CWallet*);
 
     QPixmap pixmap;
     QString curMessage;
     QColor curColor;
     int curAlignment;
-
-    QList<CWallet*> connectedWallets;
 };
 
 #endif // BITCOIN_QT_SPLASHSCREEN_H

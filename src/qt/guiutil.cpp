@@ -76,6 +76,15 @@ extern double NSAppKitVersionNumber;
 
 namespace GUIUtil {
 
+// Check whether a theme is not build-in
+bool isExternal(QString theme)
+{
+   if (theme.isEmpty())
+      return false;
+
+   return (theme.operator!=("default"));
+}
+
 QString dateTimeStr(const QDateTime &date)
 {
     return date.date().toString(Qt::SystemLocaleShortDate) + QString(" ") + date.toString("hh:mm");
@@ -100,6 +109,42 @@ QFont fixedPitchFont()
     return font;
 #endif
 }
+
+// Open CSS when configured
+QString loadStyleSheet()
+{
+   QString styleSheet;
+   QSettings settings;
+   QString cssName;
+   QString theme = settings.value("theme", "").toString();
+
+   if (isExternal(theme)) {
+      // External CSS
+      settings.setValue("fCSSexternal", true);
+      boost::filesystem::path pathAddr = GetDataDir() / "themes/";
+      cssName = pathAddr.string().c_str() + theme + "/css/theme.css";
+   }
+   
+   else {
+      // Build-in CSS
+      settings.setValue("fCSSexternal", false);
+      if (!theme.isEmpty()) {
+         cssName = QString(":/css/") + theme;
+      }
+      else {
+         cssName = QString(":/css/default");
+         settings.setValue("theme", "default");
+      }
+   }
+
+   QFile qFile(cssName);
+   if (qFile.open(QFile::ReadOnly)) {
+      styleSheet = QLatin1String(qFile.readAll());
+   }
+
+   return styleSheet;
+}
+
 
 // Just some dummy data to generate an convincing random-looking (but consistent) address
 static const uint8_t dummydata[] = {0xeb,0x15,0x23,0x1d,0xfc,0xeb,0x60,0x92,0x58,0x86,0xb6,0x7d,0x06,0x52,0x99,0x92,0x59,0x15,0xae,0xb1,0x72,0xc0,0x66,0x47};
@@ -854,11 +899,36 @@ bool SetStartOnSystemStartup(bool fAutoStart)
     CFRelease(bitcoinAppUrl);
     return true;
 }
+
+
 #pragma GCC diagnostic pop
 #else
 
 bool GetStartOnSystemStartup() { return false; }
 bool SetStartOnSystemStartup(bool fAutoStart) { return false; }
+
+void saveWindowGeometry(const QString& strSetting, QWidget *parent)
+{
+    QSettings settings;
+    settings.setValue(strSetting + "Pos", parent->pos());
+    settings.setValue(strSetting + "Size", parent->size());
+}
+
+void restoreWindowGeometry(const QString& strSetting, const QSize& defaultSize, QWidget *parent)
+{
+    QSettings settings;
+    QPoint pos = settings.value(strSetting + "Pos").toPoint();
+    QSize size = settings.value(strSetting + "Size", defaultSize).toSize();
+
+    if (!pos.x() && !pos.y()) {
+        QRect screen = QApplication::desktop()->screenGeometry();
+        pos.setX((screen.width() - size.width()) / 2);
+        pos.setY((screen.height() - size.height()) / 2);
+    }
+
+    parent->resize(size);
+    parent->move(pos);
+}
 
 #endif
 
