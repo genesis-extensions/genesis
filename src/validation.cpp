@@ -3338,20 +3338,6 @@ static bool ContextualCheckBlock(const CBlock& block, CValidationState& state, c
             return state.DoS(100, error("%s: giveaways payment missing", __func__), REJECT_INVALID, "cb-no-giveaways-payment");
         }
 
-        // Lock Rewards
-        BOOST_FOREACH(const CTxOut& output, block.vtx[0]->vout) {
-            if (output.scriptPubKey == Params().GetLockRewardScriptAtHeight(nHeight)) {
-                if (output.nValue == (vBlockDeductionTotal / 10) * 4) {
-                    found = true;
-                    break;
-                }
-            }
-        }
-
-        if (!found) {
-            return state.DoS(100, error("%s: lock reward payment missing", __func__), REJECT_INVALID, "cb-no-lockreward-payment");
-        }
-
     }
 
 

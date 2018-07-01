@@ -215,9 +215,6 @@ std::unique_ptr<CBlockTemplate> BlockAssembler::CreateNewBlock(const CScript& sc
         // Giveaways (Bounties, Airdrops, Ad Hoc Giveaways) : 30% of deduction (15% of total block)
         auto vGiveaways = (vBlockDeductionTotal / 10) * 3;
         coinbaseTx.vout.push_back(CTxOut(vGiveaways, chainparams.GetGiveawayScriptAtHeight(nHeight)));
-        // Lock Reward : 40% of deduction (20% of total block)
-        auto vLocks = (vBlockDeductionTotal / 10) * 4;
-        coinbaseTx.vout.push_back(CTxOut(vLocks, chainparams.GetLockRewardScriptAtHeight(nHeight)));        
     }
     // Add fees
     coinbaseTx.vout[0].nValue += nFees;

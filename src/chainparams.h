@@ -89,10 +89,6 @@ public:
     std::string GetGiveawayAddressAtHeight(int height) const;
     CScript GetGiveawayScriptAtHeight(int height) const;
     std::string GetGiveawayAddressAtIndex(int i) const;
-    /** Return the lock reward address and script for a given block height */
-    std::string GetLockRewardAddressAtHeight(int height) const;
-    CScript GetLockRewardScriptAtHeight(int height) const;
-    std::string GetLockRewardAddressAtIndex(int i) const;
     
 protected:
     CChainParams() {}
@@ -118,8 +114,6 @@ protected:
     std::vector<std::string> vFounderAddress;
     std::vector<std::string> vInfrastructureAddress;
     std::vector<std::string> vGiveawayAddress;
-    std::vector<std::string> vLockAddress;
-
 };
 
 /**

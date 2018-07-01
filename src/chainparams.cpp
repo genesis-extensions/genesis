@@ -219,13 +219,6 @@ public:
         {
             "", // Name
         };
-        
-        // Lock Reward Addresses: A vector of 2-of-3 multisig addresses
-        vLockAddress = 
-        {
-            "", // Name
-        };
-        
     }
 };
 
@@ -357,12 +350,6 @@ public:
         {
             "cNDXaC8JfPpSD1e3v8ziYjiz264x7g1Ku3", // Name
         };
-        
-        // Lock Reward Addresses: A vector of 2-of-3 multisig addresses
-        vLockAddress = 
-        {
-            "cNDXaC8JfPpSD1e3v8ziYjiz264x7g1Ku3", // Name
-        };
 
     }
 };
@@ -481,12 +468,6 @@ public:
         
         // Giveaway Addresses: A vector of 2-of-3 multisig addresses
         vGiveawayAddress = 
-        {
-            "", // Name
-        };
-        
-        // Lock Reward Addresses: A vector of 2-of-3 multisig addresses
-        vLockAddress = 
         {
             "", // Name
         };
@@ -617,35 +598,4 @@ CScript CChainParams::GetGiveawayScriptAtHeight(int nHeight) const {
 std::string CChainParams::GetGiveawayAddressAtIndex(int i) const {
     assert(i >= 0 && i < vGiveawayAddress.size());
     return vGiveawayAddress[i];
-}
-
-// Block height must be >0 and <=last founders reward block height 
-// or block time must be within 1 year of the genesis block time
-// Index variable i ranges from 0 - (vFoundersRewardAddress.size()-1)
-std::string CChainParams::GetLockRewardAddressAtHeight(int nHeight) const {
-    int maxHeight = consensus.GetLastFoundersRewardBlockHeight();
-    assert(nHeight > 0 && nHeight <= maxHeight);
-
-    size_t addressChangeInterval = (maxHeight + vLockAddress.size()) / vLockAddress.size();
-    size_t i = nHeight / addressChangeInterval;
-    return vLockAddress[i];
-}
-
-// Block height must be >0 and <=last founders reward block height
-// or block time must be within 1 year of the genesis block time
-// The address is expected to be a multisig (P2SH) address
-CScript CChainParams::GetLockRewardScriptAtHeight(int nHeight) const {
-    assert(nHeight > 0 && nHeight <= consensus.GetLastFoundersRewardBlockHeight());
-
-    CTxDestination address = DecodeDestination(GetLockRewardAddressAtHeight(nHeight).c_str());
-    assert(IsValidDestination(address));
-    assert(boost::get<CScriptID>(&address) != nullptr);
-    CScriptID scriptID = boost::get<CScriptID>(address); // address is a boost variant
-    CScript script = CScript() << OP_HASH160 << ToByteVector(scriptID) << OP_EQUAL;
-    return script;
-}
-
-std::string CChainParams::GetLockRewardAddressAtIndex(int i) const {
-    assert(i >= 0 && i < vLockAddress.size());
-    return vLockAddress[i];
 }
