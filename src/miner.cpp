@@ -200,7 +200,7 @@ std::unique_ptr<CBlockTemplate> BlockAssembler::CreateNewBlock(const CScript& sc
     // Block deductions - account for slippage in block height
     if ((nHeight > 0) && (nHeight <= chainparams.GetConsensus().GetLastFoundersRewardBlockHeight() || pblock->nTime <= chainparams.GetConsensus().GetLastFoundersRewardBlockTime()) ) 
     {
-        // Deductions total 50% of the block subsidy
+        // Deductions total 25% of the block subsidy
         auto vBlockDeductionTotal = coinbaseTx.vout[0].nValue / 4;
         // Take some reward away from the block value
         coinbaseTx.vout[0].nValue -= vBlockDeductionTotal;

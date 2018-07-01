@@ -1206,8 +1206,8 @@ CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams)
             }
         }
     }
-    // Make sure the subsidy divides by 20 to make the rest of the math work better
-    subsidy -= subsidy % 20;
+    // Make sure the subsidy divides by 4 to make the rest of the math work better
+    subsidy -= subsidy % 4;
 
     //LogPrintf("Subsidy %i acceptable for block %i \n", subsidy, nHeight);
     CAmount nSubsidy = subsidy * COIN;
