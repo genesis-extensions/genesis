@@ -909,7 +909,7 @@ UniValue getblocksubsidy(const JSONRPCRequest& request)
   UniValue result(UniValue::VOBJ);
 
   CAmount nReward = GetBlockSubsidy(nHeight, Params().GetConsensus());
-  result.push_back(Pair("miner", (nReward / 4) * 3);
+  result.push_back(Pair("miner", (nReward / 4) * 3));
   result.push_back(Pair("founders", 0));
 
   return result;
