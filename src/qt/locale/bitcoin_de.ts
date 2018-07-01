@@ -692,7 +692,7 @@
     </message>
     <message>
         <source>Can vary +/- %1 scashi(s) per input.</source>
-        <translation>Kann pro Eingabe um +/- %1 Satoshi(s) abweichen.</translation>
+        <translation>Kann pro Eingabe um +/- %1 scashi(s) abweichen.</translation>
     </message>
     <message>
         <source>(no label)</source>
