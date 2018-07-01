@@ -23,11 +23,11 @@ def make_utxo(node, amount, confirmed=True, scriptPubKey=CScript([1])):
                 unconfirmed otherwise.
     """
     fee = 1*COIN
-    while node.getbalance() < satoshi_round((amount + fee)/COIN):
+    while node.getbalance() < scashi_round((amount + fee)/COIN):
         node.generate(100)
 
     new_addr = node.getnewaddress()
-    txid = node.sendtoaddress(new_addr, satoshi_round((amount+fee)/COIN))
+    txid = node.sendtoaddress(new_addr, scashi_round((amount+fee)/COIN))
     tx1 = node.getrawtransaction(txid, 1)
     txid = int(txid, 16)
     i = None

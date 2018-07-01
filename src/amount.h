@@ -8,13 +8,13 @@
 
 #include <stdint.h>
 
-/** Amount in satoshis (Can be negative) */
+/** Amount in scashis (Can be negative) */
 typedef int64_t CAmount;
 
 static const CAmount COIN = 100000000;
 static const CAmount CENT = 1000000;
 
-/** No amount larger than this (in satoshi) is valid.
+/** No amount larger than this (in scashi) is valid.
  *
  * Note that this constant is *not* the total money supply, which in SafeCash
  * currently happens to be less than 4'127'721'000 SCASH for various reasons, but

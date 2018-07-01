@@ -687,8 +687,8 @@
         <translation>Este texto fica vermelho se qualquer destinatário receber uma quantidade menor que que o dust.</translation>
     </message>
     <message>
-        <source>Can vary +/- %1 satoshi(s) per input.</source>
-        <translation>Pode variar +/- %1 satoshi(s) por entrada</translation>
+        <source>Can vary +/- %1 scashi(s) per input.</source>
+        <translation>Pode variar +/- %1 scashi(s) por entrada</translation>
     </message>
     <message>
         <source>(no label)</source>
@@ -2086,8 +2086,8 @@ Esta sincronização inicial é muito exigente e pode expor problemas de hardwar
         <translation>por kilobyte</translation>
     </message>
     <message>
-        <source>If the custom fee is set to 1000 satoshis and the transaction is only 250 bytes, then "per kilobyte" only pays 250 satoshis in fee, while "total at least" pays 1000 satoshis. For transactions bigger than a kilobyte both pay by kilobyte.</source>
-        <translation>Se a taxa personalizada for definida em 1000 satoshis e a transação tiver somente 250 bytes, então "por kilobyte" somente paga 250 satoshis de taxa, enquanto "pelo menos" paga 1000 satoshis. Se a transação for maior que 1 kilobyte, ambos pagam por kilobyte.</translation>
+        <source>If the custom fee is set to 1000 scashis and the transaction is only 250 bytes, then "per kilobyte" only pays 250 scashis in fee, while "total at least" pays 1000 scashis. For transactions bigger than a kilobyte both pay by kilobyte.</source>
+        <translation>Se a taxa personalizada for definida em 1000 scashis e a transação tiver somente 250 bytes, então "por kilobyte" somente paga 250 scashis de taxa, enquanto "pelo menos" paga 1000 scashis. Se a transação for maior que 1 kilobyte, ambos pagam por kilobyte.</translation>
     </message>
     <message>
         <source>Hide</source>

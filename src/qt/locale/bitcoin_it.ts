@@ -691,8 +691,8 @@
         <translation>Questa etichetta diventerà rossa se uno qualsiasi dei destinatari riceverà un importo inferiore alla corrente soglia minima per la movimentazione della valuta.</translation>
     </message>
     <message>
-        <source>Can vary +/- %1 satoshi(s) per input.</source>
-        <translation>Può variare di +/- %1 satoshi per input.</translation>
+        <source>Can vary +/- %1 scashi(s) per input.</source>
+        <translation>Può variare di +/- %1 scashi per input.</translation>
     </message>
     <message>
         <source>(no label)</source>
@@ -2106,8 +2106,8 @@ Per specificare più URL separarli con una barra verticale "|".</translation>
         <translation>per kilobyte</translation>
     </message>
     <message>
-        <source>If the custom fee is set to 1000 satoshis and the transaction is only 250 bytes, then "per kilobyte" only pays 250 satoshis in fee, while "total at least" pays 1000 satoshis. For transactions bigger than a kilobyte both pay by kilobyte.</source>
-        <translation>Se la commissione personalizzata è impostata su 1000 satoshi e la transazione è di soli 250 byte, allora "per kilobyte" paga solo 250 satoshi di commissione, mentre "somma almeno" paga 1000 satoshi. Per transazioni più grandi di un kilobyte, entrambe le opzioni pagano al kilobyte.</translation>
+        <source>If the custom fee is set to 1000 scashis and the transaction is only 250 bytes, then "per kilobyte" only pays 250 scashis in fee, while "total at least" pays 1000 scashis. For transactions bigger than a kilobyte both pay by kilobyte.</source>
+        <translation>Se la commissione personalizzata è impostata su 1000 scashi e la transazione è di soli 250 byte, allora "per kilobyte" paga solo 250 scashi di commissione, mentre "somma almeno" paga 1000 scashi. Per transazioni più grandi di un kilobyte, entrambe le opzioni pagano al kilobyte.</translation>
     </message>
     <message>
         <source>Hide</source>

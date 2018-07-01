@@ -687,8 +687,8 @@
         <translation>Ta etykieta staje się czerwona jeżeli którykolwiek odbiorca otrzymuje kwotę mniejszą niż obecny próg pyłu.</translation>
     </message>
     <message>
-        <source>Can vary +/- %1 satoshi(s) per input.</source>
-        <translation>Waha się +/- %1 satoshi na wejście.</translation>
+        <source>Can vary +/- %1 scashi(s) per input.</source>
+        <translation>Waha się +/- %1 scashi na wejście.</translation>
     </message>
     <message>
         <source>(no label)</source>
@@ -2057,8 +2057,8 @@
         <translation>za kilobajt</translation>
     </message>
     <message>
-        <source>If the custom fee is set to 1000 satoshis and the transaction is only 250 bytes, then "per kilobyte" only pays 250 satoshis in fee, while "total at least" pays 1000 satoshis. For transactions bigger than a kilobyte both pay by kilobyte.</source>
-        <translation>Jeżeli własna opłata zostanie ustawiona na 1000 satoshi, a transakcja będzie miała tylko 250 bajtów, to "za kilobajt" płaci tylko 250 satoshi, podczas gdy, "razem przynajmniej" płaci 1000 satoshi. Przy transakcjach większych niż kilobajt, w obu przypadkach płaci za każdy kilobajt.</translation>
+        <source>If the custom fee is set to 1000 scashis and the transaction is only 250 bytes, then "per kilobyte" only pays 250 scashis in fee, while "total at least" pays 1000 scashis. For transactions bigger than a kilobyte both pay by kilobyte.</source>
+        <translation>Jeżeli własna opłata zostanie ustawiona na 1000 scashi, a transakcja będzie miała tylko 250 bajtów, to "za kilobajt" płaci tylko 250 scashi, podczas gdy, "razem przynajmniej" płaci 1000 scashi. Przy transakcjach większych niż kilobajt, w obu przypadkach płaci za każdy kilobajt.</translation>
     </message>
     <message>
         <source>Hide</source>

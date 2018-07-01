@@ -692,8 +692,8 @@ Var vänlig och försök igen.</translation>
         <translation>Denna etikett blir röd om någon mottagare får en betalning som är mindre än aktuella dammtröskeln.</translation>
     </message>
     <message>
-        <source>Can vary +/- %1 satoshi(s) per input.</source>
-        <translation>Kan variera +/- %1 satoshi per inmatning.</translation>
+        <source>Can vary +/- %1 scashi(s) per input.</source>
+        <translation>Kan variera +/- %1 scashi per inmatning.</translation>
     </message>
     <message>
         <source>(no label)</source>
@@ -2050,8 +2050,8 @@ Var vänlig och försök igen.</translation>
         <translation>per kilobyte</translation>
     </message>
     <message>
-        <source>If the custom fee is set to 1000 satoshis and the transaction is only 250 bytes, then "per kilobyte" only pays 250 satoshis in fee, while "total at least" pays 1000 satoshis. For transactions bigger than a kilobyte both pay by kilobyte.</source>
-        <translation>Om den anpassad avgiften är satt till 1000 satoshi och transaktionen bara är 250 byte, betalar "per kilobyte" bara 250 satoshi i avgift, medans "totalt minst" betalar 1000 satoshi. För transaktioner större än en kilobyte betalar både per kilobyte.</translation>
+        <source>If the custom fee is set to 1000 scashis and the transaction is only 250 bytes, then "per kilobyte" only pays 250 scashis in fee, while "total at least" pays 1000 scashis. For transactions bigger than a kilobyte both pay by kilobyte.</source>
+        <translation>Om den anpassad avgiften är satt till 1000 scashi och transaktionen bara är 250 byte, betalar "per kilobyte" bara 250 scashi i avgift, medans "totalt minst" betalar 1000 scashi. För transaktioner större än en kilobyte betalar både per kilobyte.</translation>
     </message>
     <message>
         <source>Hide</source>

@@ -691,8 +691,8 @@
         <translation>少なくともひとつの受取額が現在のダスト閾値を下回る場合にはこのラベルは赤くなります。</translation>
     </message>
     <message>
-        <source>Can vary +/- %1 satoshi(s) per input.</source>
-        <translation>ひとつの入力につき %1 satoshi 前後ずれることがあります。</translation>
+        <source>Can vary +/- %1 scashi(s) per input.</source>
+        <translation>ひとつの入力につき %1 scashi 前後ずれることがあります。</translation>
     </message>
     <message>
         <source>(no label)</source>
@@ -2105,8 +2105,8 @@
         <translation>1キロバイトあたり手数料</translation>
     </message>
     <message>
-        <source>If the custom fee is set to 1000 satoshis and the transaction is only 250 bytes, then "per kilobyte" only pays 250 satoshis in fee, while "total at least" pays 1000 satoshis. For transactions bigger than a kilobyte both pay by kilobyte.</source>
-        <translation>カスタム手数料が1000satoshiに設定されている場合、トランザクションサイズが250バイトとすると、「1キロバイトあたり手数料」では250satoshiの手数料のみを支払いますが、「最小手数料」では1000satoshiを支払います。1キロバイトを超えるトランザクションの場合には、どちらの方法を選択したとしても1キロバイトあたりで支払われます。</translation>
+        <source>If the custom fee is set to 1000 scashis and the transaction is only 250 bytes, then "per kilobyte" only pays 250 scashis in fee, while "total at least" pays 1000 scashis. For transactions bigger than a kilobyte both pay by kilobyte.</source>
+        <translation>カスタム手数料が1000scashiに設定されている場合、トランザクションサイズが250バイトとすると、「1キロバイトあたり手数料」では250scashiの手数料のみを支払いますが、「最小手数料」では1000scashiを支払います。1キロバイトを超えるトランザクションの場合には、どちらの方法を選択したとしても1キロバイトあたりで支払われます。</translation>
     </message>
     <message>
         <source>Hide</source>
