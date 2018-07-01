@@ -3290,12 +3290,12 @@ static bool ContextualCheckBlock(const CBlock& block, CValidationState& state, c
     {
         bool found = false;
 
-        auto vBlockDeductionTotal =  GetBlockSubsidy(nHeight, consensusParams) / 2;
+        auto vBlockDeductionTotal =  GetBlockSubsidy(nHeight, consensusParams) / 4;
 
         // Founders Reward
         BOOST_FOREACH(const CTxOut& output, block.vtx[0]->vout) {
             if (output.scriptPubKey == Params().GetFounderScriptAtHeight(nHeight)) {
-                if (output.nValue == (vBlockDeductionTotal / 10) * 2) {
+                if (output.nValue == (vBlockDeductionTotal / 5) * 2) {
                     found = true;
                     break;
                 }
@@ -3313,7 +3313,7 @@ static bool ContextualCheckBlock(const CBlock& block, CValidationState& state, c
         // Infrastructure
         BOOST_FOREACH(const CTxOut& output, block.vtx[0]->vout) {
             if (output.scriptPubKey == Params().GetInfrastructureScriptAtHeight(nHeight)) {
-                if (output.nValue == (vBlockDeductionTotal / 10) * 1) {
+                if (output.nValue == (vBlockDeductionTotal / 5) * 1) {
                     found = true;
                     break;
                 }
@@ -3327,7 +3327,7 @@ static bool ContextualCheckBlock(const CBlock& block, CValidationState& state, c
         // Giveaways
         BOOST_FOREACH(const CTxOut& output, block.vtx[0]->vout) {
             if (output.scriptPubKey == Params().GetGiveawayScriptAtHeight(nHeight)) {
-                if (output.nValue == (vBlockDeductionTotal / 10) * 3) {
+                if (output.nValue == (vBlockDeductionTotal / 5) * 2) {
                     found = true;
                     break;
                 }

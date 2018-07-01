@@ -201,19 +201,19 @@ std::unique_ptr<CBlockTemplate> BlockAssembler::CreateNewBlock(const CScript& sc
     if ((nHeight > 0) && (nHeight <= chainparams.GetConsensus().GetLastFoundersRewardBlockHeight() || pblock->nTime <= chainparams.GetConsensus().GetLastFoundersRewardBlockTime()) ) 
     {
         // Deductions total 50% of the block subsidy
-        auto vBlockDeductionTotal = coinbaseTx.vout[0].nValue / 2;
+        auto vBlockDeductionTotal = coinbaseTx.vout[0].nValue / 4;
         // Take some reward away from the block value
         coinbaseTx.vout[0].nValue -= vBlockDeductionTotal;
 
         // And give it to the beneficiaries:
-        // Founders : 20% of deduction (10% of total block)
-        auto vFounders = (vBlockDeductionTotal / 10) * 2;
+        // Founders : 40% of deduction (10% of total block)
+        auto vFounders = (vBlockDeductionTotal / 5) * 2;
         coinbaseTx.vout.push_back(CTxOut(vFounders, chainparams.GetFounderScriptAtHeight(nHeight)));
-        // Infrastructure (Dev / Community Management / Outsourcing / Exchange Fees / Hosting) : 10% of deduction (5% of total block)
-        auto vInfrastructure = (vBlockDeductionTotal / 10) * 1;
+        // Infrastructure (Dev / Community Management / Outsourcing / Exchange Fees / Hosting) : 20% of deduction (5% of total block)
+        auto vInfrastructure = (vBlockDeductionTotal / 5) * 1;
         coinbaseTx.vout.push_back(CTxOut(vInfrastructure, chainparams.GetInfrastructureScriptAtHeight(nHeight)));
-        // Giveaways (Bounties, Airdrops, Ad Hoc Giveaways) : 30% of deduction (15% of total block)
-        auto vGiveaways = (vBlockDeductionTotal / 10) * 3;
+        // Giveaways (Bounties, Airdrops, Ad Hoc Giveaways) : 40% of deduction (10% of total block)
+        auto vGiveaways = (vBlockDeductionTotal / 5) * 2;
         coinbaseTx.vout.push_back(CTxOut(vGiveaways, chainparams.GetGiveawayScriptAtHeight(nHeight)));
     }
     // Add fees

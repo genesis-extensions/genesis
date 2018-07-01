@@ -891,7 +891,7 @@ UniValue getblocksubsidy(const JSONRPCRequest& request)
       "1. height          (numeric, optional) The block height. If not provided, defaults to the current height of the chain.\n"
       "\nResult:\n"
       "{\n"
-      "\"miner\": n,    (numeric) The mining reward amount in satoshis.\n"
+      "\"miner\": n,    (numeric) The mining reward amount in scashis.\n"
       "\"founders\": f, (numeric) Always 0, for Zcash mining compatibility.\n"
       "}\n"
       "\nExamples:\n"
@@ -909,7 +909,7 @@ UniValue getblocksubsidy(const JSONRPCRequest& request)
   UniValue result(UniValue::VOBJ);
 
   CAmount nReward = GetBlockSubsidy(nHeight, Params().GetConsensus());
-  result.push_back(Pair("miner", nReward / 2));
+  result.push_back(Pair("miner", (nReward / 4) * 3);
   result.push_back(Pair("founders", 0));
 
   return result;
