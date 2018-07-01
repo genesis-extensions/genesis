@@ -20,4 +20,5 @@ Initial Release
 Credits
 =======
 
-Thanks to the Bitcoin Core Development team and everyone who directly contributed to this release:
+- Thanks to the Bitcoin Core Development team
+- Thanks to [Bulwark](https://github.com/bulwark-crypto/Bulwark) for the great README templates
