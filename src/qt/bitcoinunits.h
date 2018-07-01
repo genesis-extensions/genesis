@@ -56,9 +56,9 @@ public:
      */
     enum Unit
     {
-        CASH,
-        mCASH,
-        uCASH
+        SCASH,
+        mSCASH,
+        uSCASH
     };
 
     enum SeparatorStyle

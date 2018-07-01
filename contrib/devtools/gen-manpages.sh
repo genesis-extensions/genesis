@@ -12,7 +12,7 @@ BITCOINQT=${BITCOINQT:-$SRCDIR/qt/safecash-qt}
 [ ! -x $BITCOIND ] && echo "$BITCOIND not found or not executable." && exit 1
 
 # The autodetected version git tag can screw up manpage output a little bit
-CASHVER=($($BITCOINCLI --version | head -n1 | awk -F'[ -]' '{ print $6, $7 }'))
+SCASHVER=($($BITCOINCLI --version | head -n1 | awk -F'[ -]' '{ print $6, $7 }'))
 
 # Create a footer file with copyright content.
 # This gets autodetected fine for safecashd if --version-string is not set,
@@ -22,8 +22,8 @@ $BITCOIND --version | sed -n '1!p' >> footer.h2m
 
 for cmd in $BITCOIND $BITCOINCLI $BITCOINTX $BITCOINQT; do
   cmdname="${cmd##*/}"
-  help2man -N --version-string=${CASHVER[0]} --include=footer.h2m -o ${MANDIR}/${cmdname}.1 ${cmd}
-  sed -i "s/\\\-${CASHVER[1]}//g" ${MANDIR}/${cmdname}.1
+  help2man -N --version-string=${SCASHVER[0]} --include=footer.h2m -o ${MANDIR}/${cmdname}.1 ${cmd}
+  sed -i "s/\\\-${SCASHVER[1]}//g" ${MANDIR}/${cmdname}.1
 done
 
 rm -f footer.h2m
