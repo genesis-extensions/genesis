@@ -98,6 +98,9 @@
         <layout class="QVBoxLayout" name="verticalLayout_2">
          <item>
           <widget class="QLabel" name="aboutMessage">
+		    <property name="styleSheet">
+             <string notr="true">QLabel { color: #2c2b3b; }</string>
+            </property>			  
            <property name="cursor">
             <cursorShape>IBeamCursor</cursorShape>
            </property>
