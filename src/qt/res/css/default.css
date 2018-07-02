@@ -19,6 +19,10 @@ QStatusBar {
 	color: #fff !important;
 }
 
+UnitDisplayStatusBarControl {
+ 	color: #e4e642 !important;
+}
+
 .QFrame {
     
 	border: 0px solid #ffffff;
