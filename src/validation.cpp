@@ -1146,31 +1146,26 @@ CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams)
     }
     else
     {
-        int ultraBlockInterval = consensusParams.nSuperBlockInterval * DAYS_IN_WEEK * WEEKS_IN_MONTH * MONTHS_IN_YEAR;
-        int megaBlockInterval = consensusParams.nSuperBlockInterval * DAYS_IN_WEEK * WEEKS_IN_MONTH;
-        int superBlockInterval = consensusParams.nSuperBlockInterval * DAYS_IN_WEEK;
-        int bonusBlockInterval = consensusParams.nSuperBlockInterval;
-
         // Is this a superblock?
-        if (nHeight > ultraBlockInterval && (nHeight % ultraBlockInterval) == 0)
+        if (nHeight > consensusParams.GetUltraBlockInterval() && (nHeight % consensusParams.GetUltraBlockInterval()) == 0)
         {
             // ultra block (once a lunar year +/- 354 days)
-            subsidy = (ultraBlockInterval * BLOCK_REWARD_MAX) / BONUS_DIVISOR;
+            subsidy = (consensusParams.GetUltraBlockInterval() * BLOCK_REWARD_MAX) / BONUS_DIVISOR;
         }
-        else if (nHeight > megaBlockInterval && (nHeight % megaBlockInterval) == 0)
+        else if (nHeight > consensusParams.GetMegaBlockInterval() && (nHeight % consensusParams.GetMegaBlockInterval()) == 0)
         {
             // a mega block (once a lunar month +/- 28 days) 
-            subsidy = (megaBlockInterval * BLOCK_REWARD_MAX) / BONUS_DIVISOR;
+            subsidy = (consensusParams.GetMegaBlockInterval() * BLOCK_REWARD_MAX) / BONUS_DIVISOR;
         }
-        else if (nHeight > superBlockInterval && (nHeight % superBlockInterval) == 0)
+        else if (nHeight > consensusParams.GetSuperBlockInterval() && (nHeight % consensusParams.GetSuperBlockInterval()) == 0)
         {
             // a weekly super block (+/- 7 days)
-            subsidy = (superBlockInterval * BLOCK_REWARD_MAX) / BONUS_DIVISOR;
+            subsidy = (consensusParams.GetSuperBlockInterval() * BLOCK_REWARD_MAX) / BONUS_DIVISOR;
         }
-        else if (nHeight > bonusBlockInterval && (nHeight % bonusBlockInterval) == 0)
+        else if (nHeight > consensusParams.GetBonusBlockInterval() && (nHeight % consensusParams.GetBonusBlockInterval()) == 0)
         {
             // a daily bonus block
-            subsidy = (bonusBlockInterval * BLOCK_REWARD_MAX) / BONUS_DIVISOR;
+            subsidy = (consensusParams.GetBonusBlockInterval() * BLOCK_REWARD_MAX) / BONUS_DIVISOR;
         }
         else
         {
@@ -3293,15 +3288,55 @@ static bool ContextualCheckBlock(const CBlock& block, CValidationState& state, c
         auto vBlockDeductionTotal =  GetBlockSubsidy(nHeight, consensusParams) / 4;
 
         // Founders Reward
-        BOOST_FOREACH(const CTxOut& output, block.vtx[0]->vout) {
-            if (output.scriptPubKey == Params().GetFounderScriptAtHeight(nHeight)) {
-                if (output.nValue == (vBlockDeductionTotal / 5) * 2) {
-                    found = true;
-                    break;
+        if (consensusParams.IsBigBlock(nHeight))
+        {
+            auto vFounders = (vBlockDeductionTotal / 5) * 2;
+            // for "big" blocks we need to find all the founders payments to be valid
+            std::vector<CScript> allFounderScripts = Params().GetAllFounderScripts();
+            // Check the division... see if we'll have any change left after the division
+            auto foundersChange = vFounders % allFounderScripts.size();
+            if (foundersChange != 0)
+            {
+                vFounders -= foundersChange;
+            }
+            // Calculate the individual founder's reward
+            auto ifr = vFounders / allFounderScripts.size();
+            // create the transactions
+            auto foundScripts = 0;
+            for (auto &founderScript : allFounderScripts)
+            {
+                BOOST_FOREACH(const CTxOut& output, block.vtx[0]->vout) {
+                    if (output.scriptPubKey == founderScript) {
+                        if (output.nValue == ifr) 
+                        {
+                            foundScripts++;
+                            break;
+                        }
+                        else
+                        {
+                            LogPrintf("Wrong big block founders value: %i should be %i \n", output.nValue, ifr);
+                        }
+                    }
                 }
-                else
-                {
-                    LogPrintf("Wrong founders value: %i should be %i \n", output.nValue, (vBlockDeductionTotal / 10) * 2);
+            }
+            if (foundScripts == allFounderScripts.size())
+            {
+                found = true;
+            }
+        }
+        else
+        {
+            // for normal blocks it is a little simpler
+            BOOST_FOREACH(const CTxOut& output, block.vtx[0]->vout) {
+                if (output.scriptPubKey == Params().GetFounderScriptAtHeight(nHeight)) {
+                    if (output.nValue == (vBlockDeductionTotal / 5) * 2) {
+                        found = true;
+                        break;
+                    }
+                    else
+                    {
+                        LogPrintf("Wrong founders value: %i should be %i \n", output.nValue, (vBlockDeductionTotal / 5) * 2);
+                    }
                 }
             }
         }

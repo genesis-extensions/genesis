@@ -504,13 +504,25 @@ void UpdateVersionBitsParameters(Consensus::DeploymentPos d, int64_t nStartTime,
     globalChainParams->UpdateVersionBitsParameters(d, nStartTime, nTimeout);
 }
 
+// Convenience Functions
+CScript CChainParams::AddressToScript(std::string inAddress) const
+{
+    CTxDestination address = DecodeDestination(inAddress.c_str());
+    assert(IsValidDestination(address));
+    assert(boost::get<CScriptID>(&address) != nullptr);
+    CScriptID scriptID = boost::get<CScriptID>(address); // address is a boost variant
+    CScript script = CScript() << OP_HASH160 << ToByteVector(scriptID) << OP_EQUAL;
+    return script;
+}
+
 // Sustainability
 // Separated logic, in case individual rules change
 
 // Block height must be >0 and <=last founders reward block height 
 // or block time must be within 1 year of the genesis block time
 // Index variable i ranges from 0 - (vFounderAddress.size()-1)
-std::string CChainParams::GetFounderAddressAtHeight(int nHeight) const {
+std::string CChainParams::GetFounderAddressAtHeight(int nHeight) const 
+{
     int maxHeight = consensus.GetLastFoundersRewardBlockHeight();
     assert(nHeight > 0 && nHeight <= maxHeight);
 
@@ -522,26 +534,33 @@ std::string CChainParams::GetFounderAddressAtHeight(int nHeight) const {
 // Block height must be >0 and <=last founders reward block height
 // or block time must be within 1 year of the genesis block time
 // The address is expected to be a multisig (P2SH) address
-CScript CChainParams::GetFounderScriptAtHeight(int nHeight) const {
+CScript CChainParams::GetFounderScriptAtHeight(int nHeight) const 
+{
     assert(nHeight > 0 && nHeight <= consensus.GetLastFoundersRewardBlockHeight());
-
-    CTxDestination address = DecodeDestination(GetFounderAddressAtHeight(nHeight).c_str());
-    assert(IsValidDestination(address));
-    assert(boost::get<CScriptID>(&address) != nullptr);
-    CScriptID scriptID = boost::get<CScriptID>(address); // address is a boost variant
-    CScript script = CScript() << OP_HASH160 << ToByteVector(scriptID) << OP_EQUAL;
-    return script;
+    return AddressToScript(GetFounderAddressAtHeight(nHeight).c_str());
 }
 
-std::string CChainParams::GetFounderAddressAtIndex(int i) const {
+std::string CChainParams::GetFounderAddressAtIndex(int i) const 
+{
     assert(i >= 0 && i < vFounderAddress.size());
     return vFounderAddress[i];
+}
+
+std::vector<CScript> CChainParams::GetAllFounderScripts() const
+{
+    std::vector<CScript> output;
+    for (auto &address : vFounderAddress)
+    {
+        output.push_back(AddressToScript(address));
+    }
+    return output;
 }
 
 // Block height must be >0 and <=last founders reward block height 
 // or block time must be within 1 year of the genesis block time
 // Index variable i ranges from 0 - (vFoundersRewardAddress.size()-1)
-std::string CChainParams::GetInfrastructureAddressAtHeight(int nHeight) const {
+std::string CChainParams::GetInfrastructureAddressAtHeight(int nHeight) const 
+{
     int maxHeight = consensus.GetLastFoundersRewardBlockHeight();
     assert(nHeight > 0 && nHeight <= maxHeight);
 
@@ -553,18 +572,14 @@ std::string CChainParams::GetInfrastructureAddressAtHeight(int nHeight) const {
 // Block height must be >0 and <=last founders reward block height
 // or block time must be within 1 year of the genesis block time
 // The address is expected to be a multisig (P2SH) address
-CScript CChainParams::GetInfrastructureScriptAtHeight(int nHeight) const {
+CScript CChainParams::GetInfrastructureScriptAtHeight(int nHeight) const 
+{
     assert(nHeight > 0 && nHeight <= consensus.GetLastFoundersRewardBlockHeight());
-
-    CTxDestination address = DecodeDestination(GetInfrastructureAddressAtHeight(nHeight).c_str());
-    assert(IsValidDestination(address));
-    assert(boost::get<CScriptID>(&address) != nullptr);
-    CScriptID scriptID = boost::get<CScriptID>(address); // address is a boost variant
-    CScript script = CScript() << OP_HASH160 << ToByteVector(scriptID) << OP_EQUAL;
-    return script;
+    return AddressToScript(GetInfrastructureAddressAtHeight(nHeight).c_str());
 }
 
-std::string CChainParams::GetInfrastructureAddressAtIndex(int i) const {
+std::string CChainParams::GetInfrastructureAddressAtIndex(int i) const 
+{
     assert(i >= 0 && i < vInfrastructureAddress.size());
     return vInfrastructureAddress[i];
 }
@@ -572,7 +587,8 @@ std::string CChainParams::GetInfrastructureAddressAtIndex(int i) const {
 // Block height must be >0 and <=last founders reward block height 
 // or block time must be within 1 year of the genesis block time
 // Index variable i ranges from 0 - (vFoundersRewardAddress.size()-1)
-std::string CChainParams::GetGiveawayAddressAtHeight(int nHeight) const {
+std::string CChainParams::GetGiveawayAddressAtHeight(int nHeight) const 
+{
     int maxHeight = consensus.GetLastFoundersRewardBlockHeight();
     assert(nHeight > 0 && nHeight <= maxHeight);
 
@@ -584,18 +600,14 @@ std::string CChainParams::GetGiveawayAddressAtHeight(int nHeight) const {
 // Block height must be >0 and <=last founders reward block height
 // or block time must be within 1 year of the genesis block time
 // The address is expected to be a multisig (P2SH) address
-CScript CChainParams::GetGiveawayScriptAtHeight(int nHeight) const {
+CScript CChainParams::GetGiveawayScriptAtHeight(int nHeight) const 
+{
     assert(nHeight > 0 && nHeight <= consensus.GetLastFoundersRewardBlockHeight());
-
-    CTxDestination address = DecodeDestination(GetGiveawayAddressAtHeight(nHeight).c_str());
-    assert(IsValidDestination(address));
-    assert(boost::get<CScriptID>(&address) != nullptr);
-    CScriptID scriptID = boost::get<CScriptID>(address); // address is a boost variant
-    CScript script = CScript() << OP_HASH160 << ToByteVector(scriptID) << OP_EQUAL;
-    return script;
+    return AddressToScript(GetGiveawayAddressAtHeight(nHeight).c_str());
 }
 
-std::string CChainParams::GetGiveawayAddressAtIndex(int i) const {
+std::string CChainParams::GetGiveawayAddressAtIndex(int i) const 
+{
     assert(i >= 0 && i < vGiveawayAddress.size());
     return vGiveawayAddress[i];
 }

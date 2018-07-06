@@ -81,6 +81,7 @@ public:
     std::string GetFounderAddressAtHeight(int height) const;
     CScript GetFounderScriptAtHeight(int height) const;
     std::string GetFounderAddressAtIndex(int i) const;
+    std::vector<CScript> GetAllFounderScripts() const;
     /** Return the infrastucture address and script for a given block height */
     std::string GetInfrastructureAddressAtHeight(int height) const;
     CScript GetInfrastructureScriptAtHeight(int height) const;
@@ -89,7 +90,8 @@ public:
     std::string GetGiveawayAddressAtHeight(int height) const;
     CScript GetGiveawayScriptAtHeight(int height) const;
     std::string GetGiveawayAddressAtIndex(int i) const;
-    
+    /* Convenience Functions*/
+    CScript AddressToScript(std::string inAddress) const;
 protected:
     CChainParams() {}
 

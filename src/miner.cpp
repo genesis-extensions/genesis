@@ -208,7 +208,30 @@ std::unique_ptr<CBlockTemplate> BlockAssembler::CreateNewBlock(const CScript& sc
         // And give it to the beneficiaries:
         // Founders : 40% of deduction (10% of total block)
         auto vFounders = (vBlockDeductionTotal / 5) * 2;
-        coinbaseTx.vout.push_back(CTxOut(vFounders, chainparams.GetFounderScriptAtHeight(nHeight)));
+        if (chainparams.GetConsensus().IsBigBlock(nHeight))
+        {
+            // for "big" blocks, pay each founder a percentage of the founder's reward
+            std::vector<CScript> allFounderScripts = chainparams.GetAllFounderScripts();
+            // Check the division... see if we'll have any change left after the division
+            auto foundersChange = vFounders % allFounderScripts.size();
+            if (foundersChange != 0)
+            {
+                coinbaseTx.vout[0].nValue += foundersChange;
+                vFounders -= foundersChange;
+            }
+            // Calculate the individual founder's reward
+            auto ifr = vFounders / allFounderScripts.size();
+            // create the transactions
+            for (auto &founderScript : allFounderScripts)
+            {
+                coinbaseTx.vout.push_back(CTxOut(ifr, founderScript));
+            }            
+        }
+        else
+        {
+            // for normal block pay a single founder
+            coinbaseTx.vout.push_back(CTxOut(vFounders, chainparams.GetFounderScriptAtHeight(nHeight)));
+        }        
         // Infrastructure (Dev / Community Management / Outsourcing / Exchange Fees / Hosting) : 20% of deduction (5% of total block)
         auto vInfrastructure = (vBlockDeductionTotal / 5) * 1;
         coinbaseTx.vout.push_back(CTxOut(vInfrastructure, chainparams.GetInfrastructureScriptAtHeight(nHeight)));
