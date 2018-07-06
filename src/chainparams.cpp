@@ -271,7 +271,7 @@ public:
         nPruneAfterHeight = 1000;
 
 	    // Equihash
-        const size_t N = 200, K = 9;
+        const size_t N = 192, K = 7;
         BOOST_STATIC_ASSERT(equihash_parameters_acceptable(N, K));
         nEquihashN = N;
         nEquihashK = K;
