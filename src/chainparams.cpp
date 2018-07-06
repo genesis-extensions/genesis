@@ -175,8 +175,8 @@ public:
         // service bits we want, but we should get them updated to support all service bits wanted by any
         // release ASAP to avoid it where possible.
 
-        base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1, 63);// 
-        base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1, 28);// 
+        base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1, 28);// 
+        base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1, 63);// 
         base58Prefixes[SECRET_KEY] = std::vector<unsigned char>(1, 48);// 
         base58Prefixes[EXT_PUBLIC_KEY] = { 0x53, 0x41, 0x46, 0x45 };// 
         base58Prefixes[EXT_SECRET_KEY] = { 0x53, 0x61, 0x66, 0x65 };// 
@@ -184,7 +184,8 @@ public:
         bech32_hrp = "sc";
 
         vFixedSeeds = std::vector<SeedSpec6>(pnSeed6_main, pnSeed6_main + ARRAYLEN(pnSeed6_main));
-        vSeeds.emplace_back("mainnet.safecash.io", true);
+        vSeeds.emplace_back("mainnet1.safecash.io", true);
+        vSeeds.emplace_back("mainnet2.safecash.io", true);
 
         fDefaultConsistencyChecks = false;
         fRequireStandard = true;
@@ -303,7 +304,8 @@ public:
         vFixedSeeds.clear();
         vSeeds.clear();
         // nodes with support for servicebits filtering should be at the top
-        vSeeds.emplace_back("testnet.safecash.io", true);
+        vSeeds.emplace_back("testnet1.safecash.io", true);
+        vSeeds.emplace_back("testnet2.safecash.io", true);
 
 
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1, 125);// 
