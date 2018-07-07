@@ -1147,22 +1147,22 @@ CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams)
     else
     {
         // Is this a superblock?
-        if (nHeight > consensusParams.GetUltraBlockInterval() && (nHeight % consensusParams.GetUltraBlockInterval()) == 0)
+        if (nHeight >= consensusParams.GetUltraBlockInterval() && (nHeight % consensusParams.GetUltraBlockInterval()) == 0)
         {
             // ultra block (once a lunar year +/- 354 days)
             subsidy = (consensusParams.GetUltraBlockInterval() * BLOCK_REWARD_MAX) / BONUS_DIVISOR;
         }
-        else if (nHeight > consensusParams.GetMegaBlockInterval() && (nHeight % consensusParams.GetMegaBlockInterval()) == 0)
+        else if (nHeight >= consensusParams.GetMegaBlockInterval() && (nHeight % consensusParams.GetMegaBlockInterval()) == 0)
         {
             // a mega block (once a lunar month +/- 28 days) 
             subsidy = (consensusParams.GetMegaBlockInterval() * BLOCK_REWARD_MAX) / BONUS_DIVISOR;
         }
-        else if (nHeight > consensusParams.GetSuperBlockInterval() && (nHeight % consensusParams.GetSuperBlockInterval()) == 0)
+        else if (nHeight >= consensusParams.GetSuperBlockInterval() && (nHeight % consensusParams.GetSuperBlockInterval()) == 0)
         {
             // a weekly super block (+/- 7 days)
             subsidy = (consensusParams.GetSuperBlockInterval() * BLOCK_REWARD_MAX) / BONUS_DIVISOR;
         }
-        else if (nHeight > consensusParams.GetBonusBlockInterval() && (nHeight % consensusParams.GetBonusBlockInterval()) == 0)
+        else if (nHeight >= consensusParams.GetBonusBlockInterval() && (nHeight % consensusParams.GetBonusBlockInterval()) == 0)
         {
             // a daily bonus block
             subsidy = (consensusParams.GetBonusBlockInterval() * BLOCK_REWARD_MAX) / BONUS_DIVISOR;
@@ -3286,11 +3286,13 @@ static bool ContextualCheckBlock(const CBlock& block, CValidationState& state, c
         bool found = false;
 
         auto vBlockDeductionTotal =  GetBlockSubsidy(nHeight, consensusParams) / 4;
+        auto deductionChange = vBlockDeductionTotal % 5;
+        vBlockDeductionTotal -= deductionChange;
 
         // Founders Reward
+        auto vFounders = (vBlockDeductionTotal / 5) * 2;
         if (consensusParams.IsBigBlock(nHeight))
         {
-            auto vFounders = (vBlockDeductionTotal / 5) * 2;
             // for "big" blocks we need to find all the founders payments to be valid
             std::vector<CScript> allFounderScripts = Params().GetAllFounderScripts();
             // Check the division... see if we'll have any change left after the division
@@ -3329,13 +3331,13 @@ static bool ContextualCheckBlock(const CBlock& block, CValidationState& state, c
             // for normal blocks it is a little simpler
             BOOST_FOREACH(const CTxOut& output, block.vtx[0]->vout) {
                 if (output.scriptPubKey == Params().GetFounderScriptAtHeight(nHeight)) {
-                    if (output.nValue == (vBlockDeductionTotal / 5) * 2) {
+                    if (output.nValue == vFounders) {
                         found = true;
                         break;
                     }
                     else
                     {
-                        LogPrintf("Wrong founders value: %i should be %i \n", output.nValue, (vBlockDeductionTotal / 5) * 2);
+                        LogPrintf("Wrong founders value: %i should be %i \n", output.nValue, vFounders);
                     }
                 }
             }

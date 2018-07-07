@@ -121,10 +121,10 @@ struct Params {
     }
     bool IsBigBlock(int nHeight) const
     {
-        if  ((nHeight > GetUltraBlockInterval() && (nHeight % GetUltraBlockInterval()) == 0) ||
-            (nHeight > GetMegaBlockInterval() && (nHeight % GetMegaBlockInterval()) == 0) ||
-            (nHeight > GetSuperBlockInterval() && (nHeight % GetSuperBlockInterval()) == 0) ||
-            (nHeight > GetBonusBlockInterval() && (nHeight % GetBonusBlockInterval()) == 0))
+        if  ((nHeight >= GetUltraBlockInterval() && (nHeight % GetUltraBlockInterval()) == 0) ||
+            (nHeight >= GetMegaBlockInterval() && (nHeight % GetMegaBlockInterval()) == 0) ||
+            (nHeight >= GetSuperBlockInterval() && (nHeight % GetSuperBlockInterval()) == 0) ||
+            (nHeight >= GetBonusBlockInterval() && (nHeight % GetBonusBlockInterval()) == 0))
         {
             return true;
         }

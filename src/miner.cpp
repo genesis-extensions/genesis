@@ -197,12 +197,18 @@ std::unique_ptr<CBlockTemplate> BlockAssembler::CreateNewBlock(const CScript& sc
     coinbaseTx.vout[0].scriptPubKey = scriptPubKeyIn;
     coinbaseTx.vout[0].nValue = GetBlockSubsidy(nHeight, chainparams.GetConsensus());
 
-    // Block deductions - account for slippage in block height
+    // Block deductions - must also account for slippage in block height
     if ((nHeight > 0) && (nHeight <= chainparams.GetConsensus().GetLastFoundersRewardBlockHeight() || pblock->nTime <= chainparams.GetConsensus().GetLastFoundersRewardBlockTime()) ) 
     {
         // Deductions total 25% of the block subsidy
         auto vBlockDeductionTotal = coinbaseTx.vout[0].nValue / 4;
-        // Take some reward away from the block value
+        // Ensure more reliable validation later, by rounding
+        auto deductionChange = vBlockDeductionTotal % 5;
+        // The change (remainder) gets re-added to the miner
+        coinbaseTx.vout[0].nValue += deductionChange;
+        // And removed from the deduction
+        vBlockDeductionTotal -= deductionChange;
+        // Now, make the main deduction
         coinbaseTx.vout[0].nValue -= vBlockDeductionTotal;
 
         // And give it to the beneficiaries:
@@ -229,7 +235,7 @@ std::unique_ptr<CBlockTemplate> BlockAssembler::CreateNewBlock(const CScript& sc
         }
         else
         {
-            // for normal block pay a single founder
+            // for normal blocks, pay a single founder
             coinbaseTx.vout.push_back(CTxOut(vFounders, chainparams.GetFounderScriptAtHeight(nHeight)));
         }        
         // Infrastructure (Dev / Community Management / Outsourcing / Exchange Fees / Hosting) : 20% of deduction (5% of total block)
