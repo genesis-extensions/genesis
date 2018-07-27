@@ -10,20 +10,20 @@ SafeCa$h Official
 
 ## Specifications
 
-| Specification         | Descriptor                              |
-|-----------------------|-----------------------------------------|
-| Ticker                | SCASH                                   |
-| Algorithm             | Equihash 192.7                          |
-| RPC Port              | 12345                                   |
-| P2P Port              | 12345                                   |
-| Block Time            | 60 Seconds                              |
-| Difficulty Algorithm  | xxxxxxxxxxxxxxxxxxxxxx                  |
-| Block Size            | 2MB                                     |
-| Confirmation          | x Blocks (x Minutes)                    |
-| Block Reward          | Randomized                              |
-| Circulation (1 year)  | Min: xxxxx Max: xxxxx                   |
-| Protocol Support      | IPV4, IPV6, TOR                         |
-| PoW - PoS - MNs       | Yes - Planned - Planned                 |
+| Specification         | Descriptor                                    |
+|-----------------------|-----------------------------------------------|
+| Ticker                | SCASH                                         |
+| Algorithm             | Equihash 192.7                                |
+| RPC Port              | 7423                                          |
+| P2P Port              | 7233                                          |
+| Block Time            | 60 Seconds                                    |
+| Difficulty Algorithm  | Dark Gravity Wave                             |
+| Block Size            | 2MB                                           |
+| Confirmation          | 100 Blocks (100 Minutes)                      |
+| Block Reward          | Randomized                                    |
+| Circulation (1 year)  | Theo. Min: 10'512'000 Theo. Max: 525'600'000  |
+| Protocol Support      | IPV4, IPV6, TOR                               |
+| PoW - PoS - MNs       | Yes - Planned - Planned                       |
 
 ## Resources
 
