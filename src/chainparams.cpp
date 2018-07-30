@@ -341,7 +341,7 @@ public:
         vFounderAddress = 
         {
             "c7K6smvBBNN4CFxAWnQFptmyWk1DtEtGNT", // Chris
-            "cGgQXHR7r9VDLCLR9bvS9piVvvcog6aipW", // Jimmy
+            "cAuzzQVDS9dx2jE7djxf43empta65XTwHv", // Jimmy
             "c5ct7dDyE1VecU1Ji35TSGkbdz3PxqrR6V", // Scott
             "c1Y5aJ78mqgQpCFEo8cwjL4275EkEt4zWp", // Shelby
             "cMtfpvRk7TpXr88a7CT1g9BJwi9hFi1ecE", // Loki
