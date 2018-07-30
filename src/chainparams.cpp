@@ -193,7 +193,9 @@ public:
 
         checkpointData = {
             {
-                {0, consensus.hashGenesisBlock},
+                {
+                    0, consensus.hashGenesisBlock
+                },
             }
         };
 
@@ -338,19 +340,23 @@ public:
         // Founders Addresses: A vector of 2-of-3 multisig addresses
         vFounderAddress = 
         {
-            "cNDXaC8JfPpSD1e3v8ziYjiz264x7g1Ku3", // Name
+            "c7K6smvBBNN4CFxAWnQFptmyWk1DtEtGNT", // Chris
+            "cGgQXHR7r9VDLCLR9bvS9piVvvcog6aipW", // Jimmy
+            "c5ct7dDyE1VecU1Ji35TSGkbdz3PxqrR6V", // Scott
+            "c1Y5aJ78mqgQpCFEo8cwjL4275EkEt4zWp", // Shelby
+            "cMtfpvRk7TpXr88a7CT1g9BJwi9hFi1ecE", // Loki
         };
         
         // Infrastructure Addresses: A vector of 2-of-3 multisig addresses
         vInfrastructureAddress = 
         {
-            "cNDXaC8JfPpSD1e3v8ziYjiz264x7g1Ku3", // Name
+            "cCf9iVx6xNiSMPvhw2d9zFffBPGrH4qoys", // Name
         };
         
         // Giveaway Addresses: A vector of 2-of-3 multisig addresses
         vGiveawayAddress = 
         {
-            "cNDXaC8JfPpSD1e3v8ziYjiz264x7g1Ku3", // Name
+            "cMUW4Fh4K4GuS5nFELruFpu45qCSgHMD4Y", // Name
         };
 
     }
@@ -438,7 +444,9 @@ public:
 
         checkpointData = {
             {
-                {0, consensus.hashGenesisBlock},
+                {
+                    0, consensus.hashGenesisBlock
+                },
             }
         };
 
