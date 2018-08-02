@@ -337,26 +337,26 @@ public:
             0
         };
 
-        // Founders Addresses: A vector of 2-of-3 multisig addresses
+        // Founders Addresses: 
         vFounderAddress = 
         {
             "c7K6smvBBNN4CFxAWnQFptmyWk1DtEtGNT", // Chris
             "cAuzzQVDS9dx2jE7djxf43empta65XTwHv", // Jimmy
-            "c5ct7dDyE1VecU1Ji35TSGkbdz3PxqrR6V", // Scott
+            "c8SQXUgr7sFfSaRLFuo852iwGqjENRwvyY", // Scott
             "c1Y5aJ78mqgQpCFEo8cwjL4275EkEt4zWp", // Shelby
-            "cMtfpvRk7TpXr88a7CT1g9BJwi9hFi1ecE", // Loki
+            "cMPZiLacQTfRqwSrG137NaGmVyZkSJQJf8", // Loki
         };
         
-        // Infrastructure Addresses: A vector of 2-of-3 multisig addresses
+        // Infrastructure Addresses:
         vInfrastructureAddress = 
         {
-            "cCf9iVx6xNiSMPvhw2d9zFffBPGrH4qoys", // Name
+            "cMVFs7e43DAMR6Bds6NPPcvMr5wJB2BEwm", // Infrastructure
         };
         
-        // Giveaway Addresses: A vector of 2-of-3 multisig addresses
+        // Giveaway Addresses:
         vGiveawayAddress = 
         {
-            "cMUW4Fh4K4GuS5nFELruFpu45qCSgHMD4Y", // Name
+            "cDuFBwJ82XocLG3ZHoJqd5XsswSqEZhJou", // Giveaways
         };
 
     }

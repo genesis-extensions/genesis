@@ -195,7 +195,8 @@ std::unique_ptr<CBlockTemplate> BlockAssembler::CreateNewBlock(const CScript& sc
     coinbaseTx.vin[0].prevout.SetNull();
     coinbaseTx.vout.resize(1);
     coinbaseTx.vout[0].scriptPubKey = scriptPubKeyIn;
-    coinbaseTx.vout[0].nValue = GetBlockSubsidy(nHeight, chainparams.GetConsensus());
+    auto totalSubsidy = GetBlockSubsidy(nHeight, chainparams.GetConsensus());
+    coinbaseTx.vout[0].nValue = totalSubsidy;
 
     // Block deductions - must also account for slippage in block height
     if ((nHeight > 0) && (nHeight <= chainparams.GetConsensus().GetLastFoundersRewardBlockHeight() || pblock->nTime <= chainparams.GetConsensus().GetLastFoundersRewardBlockTime()) ) 
@@ -214,36 +215,32 @@ std::unique_ptr<CBlockTemplate> BlockAssembler::CreateNewBlock(const CScript& sc
         // And give it to the beneficiaries:
         // Founders : 40% of deduction (10% of total block)
         auto vFounders = (vBlockDeductionTotal / 5) * 2;
-        if (chainparams.GetConsensus().IsBigBlock(nHeight))
+        // Each founder gets paid on each block
+        std::vector<CScript> allFounderScripts = chainparams.GetAllFounderScripts();
+        // Check the division... see if we'll have any change left after the division
+        auto foundersChange = vFounders % allFounderScripts.size();
+        if (foundersChange != 0)
         {
-            // for "big" blocks, pay each founder a percentage of the founder's reward
-            std::vector<CScript> allFounderScripts = chainparams.GetAllFounderScripts();
-            // Check the division... see if we'll have any change left after the division
-            auto foundersChange = vFounders % allFounderScripts.size();
-            if (foundersChange != 0)
-            {
-                coinbaseTx.vout[0].nValue += foundersChange;
-                vFounders -= foundersChange;
-            }
-            // Calculate the individual founder's reward
-            auto ifr = vFounders / allFounderScripts.size();
-            // create the transactions
-            for (auto &founderScript : allFounderScripts)
-            {
-                coinbaseTx.vout.push_back(CTxOut(ifr, founderScript));
-            }            
+            coinbaseTx.vout[0].nValue += foundersChange;
+            vFounders -= foundersChange;
         }
-        else
+        // Calculate the individual founder's reward
+        auto ifr = vFounders / allFounderScripts.size();
+        // create the transactions
+        for (auto &founderScript : allFounderScripts)
         {
-            // for normal blocks, pay a single founder
-            coinbaseTx.vout.push_back(CTxOut(vFounders, chainparams.GetFounderScriptAtHeight(nHeight)));
-        }        
+            coinbaseTx.vout.push_back(CTxOut(ifr, founderScript));
+        }            
+
         // Infrastructure (Dev / Community Management / Outsourcing / Exchange Fees / Hosting) : 20% of deduction (5% of total block)
         auto vInfrastructure = (vBlockDeductionTotal / 5) * 1;
         coinbaseTx.vout.push_back(CTxOut(vInfrastructure, chainparams.GetInfrastructureScriptAtHeight(nHeight)));
         // Giveaways (Bounties, Airdrops, Ad Hoc Giveaways) : 40% of deduction (10% of total block)
         auto vGiveaways = (vBlockDeductionTotal / 5) * 2;
         coinbaseTx.vout.push_back(CTxOut(vGiveaways, chainparams.GetGiveawayScriptAtHeight(nHeight)));
+        // Sanity check
+        assert(vInfrastructure + vGiveaways + vFounders + coinbaseTx.vout[0].nValue == totalSubsidy);
+        LogPrintf("Sanity Check Values:\nTotal Subsidy = %f\nTotal Deduction = %f\nMiner = %f\nFounder = %f\nInfrastructure = %f\nGiveaways = %f\n", totalSubsidy / COIN, vBlockDeductionTotal / COIN, coinbaseTx.vout[0].nValue / COIN, vFounders / COIN, vInfrastructure / COIN, vGiveaways / COIN);
     }
     // Add fees
     coinbaseTx.vout[0].nValue += nFees;

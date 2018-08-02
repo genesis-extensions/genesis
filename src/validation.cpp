@@ -3291,56 +3291,36 @@ static bool ContextualCheckBlock(const CBlock& block, CValidationState& state, c
 
         // Founders Reward
         auto vFounders = (vBlockDeductionTotal / 5) * 2;
-        if (consensusParams.IsBigBlock(nHeight))
+        std::vector<CScript> allFounderScripts = Params().GetAllFounderScripts();
+        // Check the division... see if we'll have any change left after the division
+        auto foundersChange = vFounders % allFounderScripts.size();
+        if (foundersChange != 0)
         {
-            // for "big" blocks we need to find all the founders payments to be valid
-            std::vector<CScript> allFounderScripts = Params().GetAllFounderScripts();
-            // Check the division... see if we'll have any change left after the division
-            auto foundersChange = vFounders % allFounderScripts.size();
-            if (foundersChange != 0)
-            {
-                vFounders -= foundersChange;
-            }
-            // Calculate the individual founder's reward
-            auto ifr = vFounders / allFounderScripts.size();
-            // create the transactions
-            auto foundScripts = 0;
-            for (auto &founderScript : allFounderScripts)
-            {
-                BOOST_FOREACH(const CTxOut& output, block.vtx[0]->vout) {
-                    if (output.scriptPubKey == founderScript) {
-                        if (output.nValue == ifr) 
-                        {
-                            foundScripts++;
-                            break;
-                        }
-                        else
-                        {
-                            LogPrintf("Wrong big block founders value: %i should be %i \n", output.nValue, ifr);
-                        }
-                    }
-                }
-            }
-            if (foundScripts == allFounderScripts.size())
-            {
-                found = true;
-            }
+            vFounders -= foundersChange;
         }
-        else
+        // Calculate the individual founder's reward
+        auto ifr = vFounders / allFounderScripts.size();
+        // create the transactions
+        auto foundScripts = 0;
+        for (auto &founderScript : allFounderScripts)
         {
-            // for normal blocks it is a little simpler
             BOOST_FOREACH(const CTxOut& output, block.vtx[0]->vout) {
-                if (output.scriptPubKey == Params().GetFounderScriptAtHeight(nHeight)) {
-                    if (output.nValue == vFounders) {
-                        found = true;
+                if (output.scriptPubKey == founderScript) {
+                    if (output.nValue == ifr) 
+                    {
+                        foundScripts++;
                         break;
                     }
                     else
                     {
-                        LogPrintf("Wrong founders value: %i should be %i \n", output.nValue, vFounders);
+                        LogPrintf("Wrong big block founders value: %i should be %i \n", output.nValue, ifr);
                     }
                 }
             }
+        }
+        if (foundScripts == allFounderScripts.size())
+        {
+            found = true;
         }
 
         if (!found) {
