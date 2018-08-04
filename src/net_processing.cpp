@@ -33,7 +33,7 @@
 #include <memory>
 
 #if defined(NDEBUG)
-# error "Bitcoin cannot be compiled without assertions."
+# error "SafeCash Official cannot be compiled without assertions."
 #endif
 
 std::atomic<int64_t> nTimeBestReceived(0); // Used only to inform the wallet of when we last received a block
@@ -474,9 +474,21 @@ void FindNextBlocksToDownload(NodeId nodeid, unsigned int count, std::vector<con
     // Make sure pindexBestKnownBlock is up to date, we'll need it.
     ProcessBlockAvailability(nodeid);
 
-    if (state->pindexBestKnownBlock == nullptr || state->pindexBestKnownBlock->nChainWork < chainActive.Tip()->nChainWork || state->pindexBestKnownBlock->nChainWork < nMinimumChainWork) {
-        // This peer has nothing interesting.
+    // expanded for clarity
+    if (state->pindexBestKnownBlock == nullptr)
+    {
+        //LogPrintf("Node (%s) has a null index for the best known block \n", state->name);
         return;
+    }
+    else if (state->pindexBestKnownBlock->nChainWork < chainActive.Tip()->nChainWork)
+    {
+        //LogPrintf("Node (%s) best known block's chain work is less than the current tip's chain work \n", state->name);
+        return;        
+    } 
+    else if (state->pindexBestKnownBlock->nChainWork < nMinimumChainWork) 
+    {
+        //LogPrintf("Node (%s) best known block's chain work is less than the minimum allowed chain work \n", state->name);
+        return;                
     }
 
     if (state->pindexLastCommonBlock == nullptr) {

@@ -6,7 +6,7 @@
 
 #include <qt/addressbookpage.h>
 #include <qt/askpassphrasedialog.h>
-#include <qt/bitcoingui.h>
+#include <qt/safecashgui.h>
 #include <qt/clientmodel.h>
 #include <qt/guiutil.h>
 #include <qt/optionsmodel.h>
@@ -46,7 +46,7 @@ WalletView::WalletView(const PlatformStyle *_platformStyle, QWidget *parent):
     QPushButton *exportButton = new QPushButton(tr("&Export"), this);
     exportButton->setToolTip(tr("Export the data in the current tab to a file"));
     if (platformStyle->getImagesOnButtons()) {
-        exportButton->setIcon(platformStyle->SingleColorIcon(":/icons/export"));
+        exportButton->setIcon(QIcon(":/icons/export"));
     }
     hbox_buttons->addStretch();
     hbox_buttons->addWidget(exportButton);
@@ -84,7 +84,7 @@ WalletView::~WalletView()
 {
 }
 
-void WalletView::setBitcoinGUI(BitcoinGUI *gui)
+void WalletView::setSafeCashGUI(SafeCashGUI *gui)
 {
     if (gui)
     {
@@ -219,11 +219,6 @@ void WalletView::gotoVerifyMessageTab(QString addr)
 bool WalletView::handlePaymentRequest(const SendCoinsRecipient& recipient)
 {
     return sendCoinsPage->handlePaymentRequest(recipient);
-}
-
-void WalletView::showOutOfSyncWarning(bool fShow)
-{
-    overviewPage->showOutOfSyncWarning(fShow);
 }
 
 void WalletView::updateEncryptionStatus()

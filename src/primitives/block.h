@@ -3,8 +3,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef BITCOIN_PRIMITIVES_BLOCK_H
-#define BITCOIN_PRIMITIVES_BLOCK_H
+#ifndef SAFECASH_PRIMITIVES_BLOCK_H
+#define SAFECASH_PRIMITIVES_BLOCK_H
 
 #include <primitives/transaction.h>
 #include <serialize.h>
@@ -21,12 +21,17 @@ class CBlockHeader
 {
 public:
     // header
-    int32_t nVersion;
-    uint256 hashPrevBlock;
-    uint256 hashMerkleRoot;
-    uint32_t nTime;
-    uint32_t nBits;
-    uint32_t nNonce;
+    static const size_t HEADER_SIZE=4+32+32+32+4+4+32; // excluding Equihash solution
+    static const int32_t CURRENT_VERSION=4;
+    int32_t nVersion; // 4
+    uint256 hashPrevBlock; // 32
+    uint256 hashMerkleRoot; // 32
+    uint256 hashReserved; // 32
+    uint32_t nHeight; // 4
+    uint32_t nTime; // 4
+    uint32_t nBits; // 4
+    uint256 nNonce; // 32
+    std::vector<unsigned char> nSolution;
 
     CBlockHeader()
     {
@@ -40,19 +45,25 @@ public:
         READWRITE(this->nVersion);
         READWRITE(hashPrevBlock);
         READWRITE(hashMerkleRoot);
+        READWRITE(hashReserved);
+        //READWRITE(nHeight);
         READWRITE(nTime);
         READWRITE(nBits);
         READWRITE(nNonce);
+        READWRITE(nSolution);
     }
 
     void SetNull()
     {
-        nVersion = 0;
+        nVersion = CBlockHeader::CURRENT_VERSION;
         hashPrevBlock.SetNull();
         hashMerkleRoot.SetNull();
+        hashReserved.SetNull();
+        //nHeight = 0;
         nTime = 0;
         nBits = 0;
-        nNonce = 0;
+        nNonce.SetNull();
+        nSolution.clear();
     }
 
     bool IsNull() const
@@ -110,9 +121,12 @@ public:
         block.nVersion       = nVersion;
         block.hashPrevBlock  = hashPrevBlock;
         block.hashMerkleRoot = hashMerkleRoot;
+        block.hashReserved   = hashReserved;
+        //block.nHeight        = nHeight;
         block.nTime          = nTime;
         block.nBits          = nBits;
         block.nNonce         = nNonce;
+        block.nSolution      = nSolution;
         return block;
     }
 
@@ -150,6 +164,39 @@ struct CBlockLocator
     {
         return vHave.empty();
     }
+    
+    friend bool operator==(const CBlockLocator& a, const CBlockLocator& b) {
+        return (a.vHave == b.vHave);
+    }
+
 };
 
-#endif // BITCOIN_PRIMITIVES_BLOCK_H
+/**
+ * Custom serializer for CBlockHeader that omits the nonce and solution, for use
+ * as input to Equihash.
+ */
+class CEquihashInput : private CBlockHeader
+{
+public:
+    CEquihashInput(const CBlockHeader &header)
+    {
+        CBlockHeader::SetNull();
+        *((CBlockHeader*)this) = header;
+    }
+
+    ADD_SERIALIZE_METHODS;
+
+    template <typename Stream, typename Operation>
+    inline void SerializationOp(Stream& s, Operation ser_action) {
+        READWRITE(this->nVersion);
+        READWRITE(hashPrevBlock);
+        READWRITE(hashMerkleRoot);
+        READWRITE(hashReserved);
+        //READWRITE(nHeight);
+        READWRITE(nTime);
+        READWRITE(nBits);
+    }
+};
+
+
+#endif // SAFECASH_PRIMITIVES_BLOCK_H

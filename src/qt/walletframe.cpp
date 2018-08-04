@@ -4,7 +4,7 @@
 
 #include <qt/walletframe.h>
 
-#include <qt/bitcoingui.h>
+#include <qt/safecashgui.h>
 #include <qt/walletview.h>
 
 #include <cassert>
@@ -13,7 +13,7 @@
 #include <QHBoxLayout>
 #include <QLabel>
 
-WalletFrame::WalletFrame(const PlatformStyle *_platformStyle, BitcoinGUI *_gui) :
+WalletFrame::WalletFrame(const PlatformStyle *_platformStyle, SafeCashGUI *_gui) :
     QFrame(_gui),
     gui(_gui),
     platformStyle(_platformStyle)
@@ -45,10 +45,10 @@ bool WalletFrame::addWallet(const QString& name, WalletModel *walletModel)
         return false;
 
     WalletView *walletView = new WalletView(platformStyle, this);
-    walletView->setBitcoinGUI(gui);
+    walletView->setSafeCashGUI(gui);
     walletView->setClientModel(clientModel);
     walletView->setWalletModel(walletModel);
-    walletView->showOutOfSyncWarning(bOutOfSync);
+
 
      /* TODO we should goto the currently selected page once dynamically adding wallets is supported */
     walletView->gotoOverviewPage();
@@ -102,13 +102,6 @@ bool WalletFrame::handlePaymentRequest(const SendCoinsRecipient &recipient)
     return walletView->handlePaymentRequest(recipient);
 }
 
-void WalletFrame::showOutOfSyncWarning(bool fShow)
-{
-    bOutOfSync = fShow;
-    QMap<QString, WalletView*>::const_iterator i;
-    for (i = mapWalletViews.constBegin(); i != mapWalletViews.constEnd(); ++i)
-        i.value()->showOutOfSyncWarning(fShow);
-}
 
 void WalletFrame::gotoOverviewPage()
 {

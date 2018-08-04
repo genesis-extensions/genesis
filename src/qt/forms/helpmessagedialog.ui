@@ -52,7 +52,7 @@
         </size>
        </property>
        <property name="pixmap">
-        <pixmap resource="../bitcoin.qrc">:/icons/bitcoin</pixmap>
+        <pixmap resource="../safecash.qrc">:/icons/safecash</pixmap>
        </property>
        <property name="scaledContents">
         <bool>true</bool>
@@ -98,6 +98,9 @@
         <layout class="QVBoxLayout" name="verticalLayout_2">
          <item>
           <widget class="QLabel" name="aboutMessage">
+		    <property name="styleSheet">
+             <string notr="true">QLabel { color: #2c2b3b; }</string>
+            </property>			  
            <property name="cursor">
             <cursorShape>IBeamCursor</cursorShape>
            </property>
@@ -150,7 +153,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../bitcoin.qrc"/>
+  <include location="../safecash.qrc"/>
  </resources>
  <connections>
   <connection>

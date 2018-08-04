@@ -3,8 +3,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef BITCOIN_CHAINPARAMS_H
-#define BITCOIN_CHAINPARAMS_H
+#ifndef SAFECASH_CHAINPARAMS_H
+#define SAFECASH_CHAINPARAMS_H
 
 #include <chainparamsbase.h>
 #include <consensus/params.h>
@@ -33,7 +33,7 @@ struct ChainTxData {
 
 /**
  * CChainParams defines various tweakable parameters of a given instance of the
- * Bitcoin system. There are three: the main network on which people trade goods
+ * SafeCash system. There are three: the main network on which people trade goods
  * and services, the public test network which gets reset from time to time and
  * a regression test mode which is intended for private networks only. It has
  * minimal difficulty to ensure that blocks can be found instantly.
@@ -56,11 +56,15 @@ public:
     int GetDefaultPort() const { return nDefaultPort; }
 
     const CBlock& GenesisBlock() const { return genesis; }
+    /** Make miner wait to have peers to avoid wasting work */
+    bool MiningRequiresPeers() const { return fMiningRequiresPeers; }
     /** Default value for -checkmempool and -checkblockindex argument */
     bool DefaultConsistencyChecks() const { return fDefaultConsistencyChecks; }
     /** Policy: Filter transactions that do not match well-defined patterns */
     bool RequireStandard() const { return fRequireStandard; }
     uint64_t PruneAfterHeight() const { return nPruneAfterHeight; }
+    unsigned int EquihashN() const { return nEquihashN; }
+    unsigned int EquihashK() const { return nEquihashK; }
     /** Make miner stop after a block is found. In RPC, don't return until nGenProcLimit blocks are generated */
     bool MineBlocksOnDemand() const { return fMineBlocksOnDemand; }
     /** Return the BIP70 network string (main, test or regtest) */
@@ -73,6 +77,21 @@ public:
     const CCheckpointData& Checkpoints() const { return checkpointData; }
     const ChainTxData& TxData() const { return chainTxData; }
     void UpdateVersionBitsParameters(Consensus::DeploymentPos d, int64_t nStartTime, int64_t nTimeout);
+    /** Return the founder's address and script for a given block height */
+    std::string GetFounderAddressAtHeight(int height) const;
+    CScript GetFounderScriptAtHeight(int height) const;
+    std::string GetFounderAddressAtIndex(int i) const;
+    std::vector<CScript> GetAllFounderScripts() const;
+    /** Return the infrastucture address and script for a given block height */
+    std::string GetInfrastructureAddressAtHeight(int height) const;
+    CScript GetInfrastructureScriptAtHeight(int height) const;
+    std::string GetInfrastructureAddressAtIndex(int i) const;
+    /** Return the giveaway address and script for a given block height */
+    std::string GetGiveawayAddressAtHeight(int height) const;
+    CScript GetGiveawayScriptAtHeight(int height) const;
+    std::string GetGiveawayAddressAtIndex(int i) const;
+    /* Convenience Functions*/
+    CScript AddressToScript(std::string inAddress) const;
 protected:
     CChainParams() {}
 
@@ -80,17 +99,23 @@ protected:
     CMessageHeader::MessageStartChars pchMessageStart;
     int nDefaultPort;
     uint64_t nPruneAfterHeight;
+    unsigned int nEquihashN = 0;
+    unsigned int nEquihashK = 0;
     std::vector<std::string> vSeeds;
     std::vector<unsigned char> base58Prefixes[MAX_BASE58_TYPES];
     std::string bech32_hrp;
     std::string strNetworkID;
     CBlock genesis;
     std::vector<SeedSpec6> vFixedSeeds;
+    bool fMiningRequiresPeers = true;
     bool fDefaultConsistencyChecks;
     bool fRequireStandard;
     bool fMineBlocksOnDemand;
     CCheckpointData checkpointData;
     ChainTxData chainTxData;
+    std::vector<std::string> vFounderAddress;
+    std::vector<std::string> vInfrastructureAddress;
+    std::vector<std::string> vGiveawayAddress;
 };
 
 /**
@@ -117,4 +142,4 @@ void SelectParams(const std::string& chain);
  */
 void UpdateVersionBitsParameters(Consensus::DeploymentPos d, int64_t nStartTime, int64_t nTimeout);
 
-#endif // BITCOIN_CHAINPARAMS_H
+#endif // SAFECASH_CHAINPARAMS_H

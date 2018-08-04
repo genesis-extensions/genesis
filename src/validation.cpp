@@ -46,9 +46,10 @@
 #include <boost/algorithm/string/replace.hpp>
 #include <boost/algorithm/string/join.hpp>
 #include <boost/thread.hpp>
+#include <boost/foreach.hpp>
 
 #if defined(NDEBUG)
-# error "Bitcoin cannot be compiled without assertions."
+# error "SafeCash Official cannot be compiled without assertions."
 #endif
 
 #define MICRO 0.000001
@@ -238,7 +239,7 @@ CTxMemPool mempool(&feeEstimator);
 /** Constant stuff for coinbase transactions we create: */
 CScript COINBASE_FLAGS;
 
-const std::string strMessageMagic = "Bitcoin Signed Message:\n";
+const std::string strMessageMagic = "SafeCash Signed Message:\n";
 
 // Internal stuff
 namespace {
@@ -950,7 +951,7 @@ static bool AcceptToMemoryPoolWorker(const CChainParams& chainparams, CTxMemPool
         // Remove conflicting transactions from the mempool
         for (const CTxMemPool::txiter it : allConflicting)
         {
-            LogPrint(BCLog::MEMPOOL, "replacing tx %s with %s for %s BTC additional fees, %d delta bytes\n",
+            LogPrint(BCLog::MEMPOOL, "replacing tx %s with %s for %s SCASH additional fees, %d delta bytes\n",
                     it->GetTx().GetHash().ToString(),
                     hash.ToString(),
                     FormatMoney(nModifiedFees - nConflictingFees),
@@ -1144,14 +1145,80 @@ bool ReadBlockFromDisk(CBlock& block, const CBlockIndex* pindex, const Consensus
 
 CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams)
 {
-    int halvings = nHeight / consensusParams.nSubsidyHalvingInterval;
-    // Force block reward to zero when right shift is undefined.
-    if (halvings >= 64)
-        return 0;
+    int subsidy = 0;
 
-    CAmount nSubsidy = 50 * COIN;
-    // Subsidy is cut in half every 210,000 blocks which will occur approximately every 4 years.
-    nSubsidy >>= halvings;
+    // Ignore the genesis block, which has no value
+    if (nHeight == 0)
+    {
+        subsidy = 0;
+    }
+    else if (nHeight > 0 && nHeight <= COINBASE_MATURITY)
+    {
+        // There are no mature blocks yet...
+        subsidy = BLOCK_REWARD_MAX;
+    }
+    else
+    {
+        // Is this a superblock?
+        if (nHeight >= consensusParams.GetUltraBlockInterval() && (nHeight % consensusParams.GetUltraBlockInterval()) == 0)
+        {
+            // ultra block (once a lunar year +/- 354 days)
+            subsidy = (consensusParams.GetUltraBlockInterval() * BLOCK_REWARD_MAX) / BONUS_DIVISOR;
+        }
+        else if (nHeight >= consensusParams.GetMegaBlockInterval() && (nHeight % consensusParams.GetMegaBlockInterval()) == 0)
+        {
+            // a mega block (once a lunar month +/- 28 days) 
+            subsidy = (consensusParams.GetMegaBlockInterval() * BLOCK_REWARD_MAX) / BONUS_DIVISOR;
+        }
+        else if (nHeight >= consensusParams.GetSuperBlockInterval() && (nHeight % consensusParams.GetSuperBlockInterval()) == 0)
+        {
+            // a weekly super block (+/- 7 days)
+            subsidy = (consensusParams.GetSuperBlockInterval() * BLOCK_REWARD_MAX) / BONUS_DIVISOR;
+        }
+        else if (nHeight >= consensusParams.GetBonusBlockInterval() && (nHeight % consensusParams.GetBonusBlockInterval()) == 0)
+        {
+            // a daily bonus block
+            subsidy = (consensusParams.GetBonusBlockInterval() * BLOCK_REWARD_MAX) / BONUS_DIVISOR;
+        }
+        else
+        {
+            // A normal block...
+            // Get the most recent confirmed block's hash
+            CBlockIndex* pblockindex = chainActive[nHeight - COINBASE_MATURITY];
+            uint256  confirmedHash = pblockindex->GetBlockHash();
+            //LogPrintf("Confirmed Hash for block %i: %s \n", nHeight - COINBASE_MATURITY, confirmedHash.GetHex());
+            
+            // Get a sum of the significant bytes
+            // 7 23 3 2 27 4
+            unsigned int total = 0;
+            // Dialpad digits of safecash... from the literal hex of the hash
+            total += confirmedHash.GetUint64Char(7); 
+            total += confirmedHash.GetUint64Char(23);
+            total += confirmedHash.GetUint64Char(3); 
+            total += confirmedHash.GetUint64Char(2); 
+            total += confirmedHash.GetUint64Char(27); 
+            total += confirmedHash.GetUint64Char(4);
+
+            subsidy = total;
+
+            // sanity check... make sure it is not too little or too much
+            if (subsidy <= BLOCK_REWARD_MIN)
+            {
+                //LogPrintf("Subsidy %i too low, resetting to %i \n", subsidy, subsidy * BLOCK_REWARD_MIN);
+                subsidy = subsidy * BLOCK_REWARD_MIN;
+            }
+            else if (subsidy > BLOCK_REWARD_MAX)
+            {
+                //LogPrintf("Subsidy %i too high, resetting to %i \n", subsidy, subsidy / 10);
+                subsidy = subsidy / 10;
+            }
+        }
+    }
+    // Make sure the subsidy divides by 4 to make the rest of the math work better
+    subsidy -= subsidy % 4;
+
+    //LogPrintf("Subsidy %i acceptable for block %i \n", subsidy, nHeight);
+    CAmount nSubsidy = subsidy * COIN;
     return nSubsidy;
 }
 
@@ -1170,9 +1237,9 @@ bool IsInitialBlockDownload()
         return true;
     if (chainActive.Tip() == nullptr)
         return true;
-    if (chainActive.Tip()->nChainWork < nMinimumChainWork)
+    if (chainActive.Tip()->nHeight > 0  && chainActive.Tip()->nChainWork < nMinimumChainWork)
         return true;
-    if (chainActive.Tip()->GetBlockTime() < (GetTime() - nMaxTipAge))
+    if (chainActive.Tip()->nHeight > 0  && chainActive.Tip()->GetBlockTime() < (GetTime() - nMaxTipAge))
         return true;
     LogPrintf("Leaving InitialBlockDownload (latching to false)\n");
     latchToFalse.store(true, std::memory_order_relaxed);
@@ -1683,7 +1750,7 @@ static bool WriteTxIndexDataForBlock(const CBlock& block, CValidationState& stat
 static CCheckQueue<CScriptCheck> scriptcheckqueue(128);
 
 void ThreadScriptCheck() {
-    RenameThread("bitcoin-scriptch");
+    RenameThread("safecash-scriptch");
     scriptcheckqueue.Thread();
 }
 
@@ -2599,6 +2666,8 @@ bool CChainState::ActivateBestChain(CValidationState &state, const CChainParams&
             SyncWithValidationInterfaceQueue();
         }
 
+        const CBlockIndex *pindexFork;
+        bool fInitialDownload;
         {
             LOCK(cs_main);
             CBlockIndex* starting_tip = chainActive.Tip();
@@ -3243,6 +3312,86 @@ static bool ContextualCheckBlock(const CBlock& block, CValidationState& state, c
     if (GetBlockWeight(block) > MAX_BLOCK_WEIGHT) {
         return state.DoS(100, false, REJECT_INVALID, "bad-blk-weight", false, strprintf("%s : weight limit failed", __func__));
     }
+
+    // Coinbase transaction must include an output sending a specified % of
+    // the block reward to various scripts, until the last founders
+    // reward block or time is reached, with exception of the genesis block.
+    if ((nHeight > 0) && (nHeight <= consensusParams.GetLastFoundersRewardBlockHeight() || block.nTime <= consensusParams.GetLastFoundersRewardBlockTime()) ) 
+    {
+        bool found = false;
+
+        auto vBlockDeductionTotal =  GetBlockSubsidy(nHeight, consensusParams) / 4;
+        auto deductionChange = vBlockDeductionTotal % 5;
+        vBlockDeductionTotal -= deductionChange;
+
+        // Founders Reward
+        auto vFounders = (vBlockDeductionTotal / 5) * 2;
+        std::vector<CScript> allFounderScripts = Params().GetAllFounderScripts();
+        // Check the division... see if we'll have any change left after the division
+        auto foundersChange = vFounders % allFounderScripts.size();
+        if (foundersChange != 0)
+        {
+            vFounders -= foundersChange;
+        }
+        // Calculate the individual founder's reward
+        auto ifr = vFounders / allFounderScripts.size();
+        // create the transactions
+        auto foundScripts = 0;
+        for (auto &founderScript : allFounderScripts)
+        {
+            BOOST_FOREACH(const CTxOut& output, block.vtx[0]->vout) {
+                if (output.scriptPubKey == founderScript) {
+                    if (output.nValue == ifr) 
+                    {
+                        foundScripts++;
+                        break;
+                    }
+                    else
+                    {
+                        LogPrintf("Wrong big block founders value: %i should be %i \n", output.nValue, ifr);
+                    }
+                }
+            }
+        }
+        if (foundScripts == allFounderScripts.size())
+        {
+            found = true;
+        }
+
+        if (!found) {
+            return state.DoS(100, error("%s: founders payment missing", __func__), REJECT_INVALID, "cb-no-founders-payment");
+        }
+
+        // Infrastructure
+        BOOST_FOREACH(const CTxOut& output, block.vtx[0]->vout) {
+            if (output.scriptPubKey == Params().GetInfrastructureScriptAtHeight(nHeight)) {
+                if (output.nValue == (vBlockDeductionTotal / 5) * 1) {
+                    found = true;
+                    break;
+                }
+            }
+        }
+
+        if (!found) {
+            return state.DoS(100, error("%s: infrastructure payment missing", __func__), REJECT_INVALID, "cb-no-infrastructure-payment");
+        }
+
+        // Giveaways
+        BOOST_FOREACH(const CTxOut& output, block.vtx[0]->vout) {
+            if (output.scriptPubKey == Params().GetGiveawayScriptAtHeight(nHeight)) {
+                if (output.nValue == (vBlockDeductionTotal / 5) * 2) {
+                    found = true;
+                    break;
+                }
+            }
+        }
+
+        if (!found) {
+            return state.DoS(100, error("%s: giveaways payment missing", __func__), REJECT_INVALID, "cb-no-giveaways-payment");
+        }
+
+    }
+
 
     return true;
 }

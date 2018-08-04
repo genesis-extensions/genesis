@@ -3,8 +3,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef BITCOIN_UINT256_H
-#define BITCOIN_UINT256_H
+#ifndef SAFECASH_UINT256_H
+#define SAFECASH_UINT256_H
 
 #include <assert.h>
 #include <cstring>
@@ -78,6 +78,12 @@ public:
         return sizeof(data);
     }
 
+    uint64_t GetUint64Char(int pos) const
+    {
+        std::string hex = GetHex().substr(pos * 2, 2);
+        return (uint64_t)std::stoul(hex, nullptr, 16);
+    }
+
     uint64_t GetUint64(int pos) const
     {
         const uint8_t* ptr = data + pos * 8;
@@ -111,6 +117,7 @@ public:
 class uint160 : public base_blob<160> {
 public:
     uint160() {}
+    uint160(const base_blob<160>& b) : base_blob<160>(b) {}
     explicit uint160(const std::vector<unsigned char>& vch) : base_blob<160>(vch) {}
 };
 
@@ -122,6 +129,7 @@ public:
 class uint256 : public base_blob<256> {
 public:
     uint256() {}
+    uint256(const base_blob<256>& b) : base_blob<256>(b) {}
     explicit uint256(const std::vector<unsigned char>& vch) : base_blob<256>(vch) {}
 
     /** A cheap hash function that just returns 64 bits from the result, it can be
@@ -156,4 +164,4 @@ inline uint256 uint256S(const std::string& str)
     return rv;
 }
 
-#endif // BITCOIN_UINT256_H
+#endif // SAFECASH_UINT256_H

@@ -3,8 +3,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef BITCOIN_CHAIN_H
-#define BITCOIN_CHAIN_H
+#ifndef SAFECASH_CHAIN_H
+#define SAFECASH_CHAIN_H
 
 #include <arith_uint256.h>
 #include <primitives/block.h>
@@ -209,9 +209,11 @@ public:
     //! block header
     int32_t nVersion;
     uint256 hashMerkleRoot;
+    uint256 hashReserved;
     uint32_t nTime;
     uint32_t nBits;
-    uint32_t nNonce;
+    uint256 nNonce;
+    std::vector<unsigned char> nSolution;
 
     //! (memory only) Sequential id assigned to distinguish order in which blocks are received.
     int32_t nSequenceId;
@@ -237,9 +239,11 @@ public:
 
         nVersion       = 0;
         hashMerkleRoot = uint256();
+        hashReserved   = uint256();
         nTime          = 0;
         nBits          = 0;
-        nNonce         = 0;
+        nNonce         = uint256();
+        nSolution.clear();
     }
 
     CBlockIndex()
@@ -253,9 +257,12 @@ public:
 
         nVersion       = block.nVersion;
         hashMerkleRoot = block.hashMerkleRoot;
+        nHeight        = block.nHeight;
+        hashReserved   = block.hashReserved;
         nTime          = block.nTime;
         nBits          = block.nBits;
         nNonce         = block.nNonce;
+        nSolution      = block.nSolution;
     }
 
     CDiskBlockPos GetBlockPos() const {
@@ -283,9 +290,12 @@ public:
         if (pprev)
             block.hashPrevBlock = pprev->GetBlockHash();
         block.hashMerkleRoot = hashMerkleRoot;
+        block.nHeight        = nHeight;
+        block.hashReserved   = hashReserved;
         block.nTime          = nTime;
         block.nBits          = nBits;
         block.nNonce         = nNonce;
+        block.nSolution      = nSolution;
         return block;
     }
 
@@ -402,9 +412,11 @@ public:
         READWRITE(this->nVersion);
         READWRITE(hashPrev);
         READWRITE(hashMerkleRoot);
+        READWRITE(hashReserved);
         READWRITE(nTime);
         READWRITE(nBits);
         READWRITE(nNonce);
+        READWRITE(nSolution);
     }
 
     uint256 GetBlockHash() const
@@ -413,9 +425,12 @@ public:
         block.nVersion        = nVersion;
         block.hashPrevBlock   = hashPrev;
         block.hashMerkleRoot  = hashMerkleRoot;
+        block.nHeight         = nHeight;
+        block.hashReserved    = hashReserved;
         block.nTime           = nTime;
         block.nBits           = nBits;
         block.nNonce          = nNonce;
+        block.nSolution       = nSolution;
         return block.GetHash();
     }
 
@@ -491,4 +506,4 @@ public:
     CBlockIndex* FindEarliestAtLeast(int64_t nTime) const;
 };
 
-#endif // BITCOIN_CHAIN_H
+#endif // SAFECASH_CHAIN_H

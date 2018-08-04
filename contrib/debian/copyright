@@ -1,6 +1,6 @@
 Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: Bitcoin
-Upstream-Contact: Satoshi Nakamoto <satoshin@gmx.com>
+Upstream-Contact: Satoshi Nakamoto <satin@gmx.com>
  irc://#bitcoin@freenode.net
 Source: https://github.com/bitcoin/bitcoin
 
@@ -22,6 +22,10 @@ License: GNU-All-permissive-License
 Files: src/secp256k1/build-aux/m4/ax_prog_cc_for_build.m4
 Copyright: 2008 Paolo Bonzini <bonzini@gnu.org>
 License: GNU-All-permissive-License
+
+Files: depends/sources/libsodium-*.tar.gz
+Copyright: 2013-2016 Frank Denis
+License: ISC
 
 Files: src/qt/res/icons/add.png
        src/qt/res/icons/address-book.png

@@ -28,7 +28,7 @@
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_Main">
        <item>
-        <widget class="QCheckBox" name="bitcoinAtStartup">
+        <widget class="QCheckBox" name="safecashAtStartup">
          <property name="toolTip">
           <string>Automatically start %1 after logging in to the system.</string>
          </property>
@@ -41,6 +41,9 @@
         <layout class="QHBoxLayout" name="horizontalLayout_2_Main">
          <item>
           <widget class="QLabel" name="databaseCacheLabel">
+		    <property name="styleSheet">
+             <string notr="true">QLabel { color: #2c2b3b; }</string>
+            </property>	
            <property name="text">
             <string>Size of &amp;database cache</string>
            </property>
@@ -57,6 +60,9 @@
          </item>
          <item>
           <widget class="QLabel" name="databaseCacheUnitLabel">
+		    <property name="styleSheet">
+             <string notr="true">QLabel { color: #2c2b3b; }</string>
+            </property>			  
            <property name="text">
             <string>MB</string>
            </property>
@@ -84,6 +90,9 @@
         <layout class="QHBoxLayout" name="horizontalLayout_3_Main">
          <item>
           <widget class="QLabel" name="threadsScriptVerifLabel">
+		    <property name="styleSheet">
+             <string notr="true">QLabel { color: #2c2b3b; }</string>
+            </property>			  
            <property name="text">
             <string>Number of script &amp;verification threads</string>
            </property>
@@ -189,7 +198,7 @@
        <item>
         <widget class="QCheckBox" name="mapPortUpnp">
          <property name="toolTip">
-          <string>Automatically open the Bitcoin client port on the router. This only works when your router supports UPnP and it is enabled.</string>
+          <string>Automatically open the SafeCash Official client port on the router. This only works when your router supports UPnP and it is enabled.</string>
          </property>
          <property name="text">
           <string>Map port using &amp;UPnP</string>
@@ -209,7 +218,7 @@
        <item>
         <widget class="QCheckBox" name="connectSocks">
          <property name="toolTip">
-          <string>Connect to the Bitcoin network through a SOCKS5 proxy.</string>
+          <string>Connect to the SafeCash network through a SOCKS5 proxy.</string>
          </property>
          <property name="text">
           <string>&amp;Connect through SOCKS5 proxy (default proxy):</string>
@@ -220,6 +229,9 @@
         <layout class="QHBoxLayout" name="horizontalLayout_1_Network">
          <item>
           <widget class="QLabel" name="proxyIpLabel">
+		    <property name="styleSheet">
+             <string notr="true">QLabel { color: #2c2b3b; }</string>
+            </property>			  
            <property name="text">
             <string>Proxy &amp;IP:</string>
            </property>
@@ -252,6 +264,9 @@
          </item>
          <item>
           <widget class="QLabel" name="proxyPortLabel">
+		    <property name="styleSheet">
+             <string notr="true">QLabel { color: #2c2b3b; }</string>
+            </property>			  
            <property name="text">
             <string>&amp;Port:</string>
            </property>
@@ -301,6 +316,9 @@
         <layout class="QHBoxLayout" name="horizontalLayout_2_Network">
          <item>
           <widget class="QLabel" name="proxyActiveNets">
+		    <property name="styleSheet">
+             <string notr="true">QLabel { color: #2c2b3b; }</string>
+            </property>			  
            <property name="text">
             <string>Used for reaching peers via:</string>
            </property>
@@ -324,6 +342,9 @@
          </item>
          <item>
           <widget class="QLabel" name="proxyReachIPv4Label">
+		    <property name="styleSheet">
+             <string notr="true">QLabel { color: #2c2b3b; }</string>
+            </property>			  
            <property name="text">
             <string>IPv4</string>
            </property>
@@ -347,6 +368,9 @@
          </item>
          <item>
           <widget class="QLabel" name="proxyReachIPv6Label">
+		    <property name="styleSheet">
+             <string notr="true">QLabel { color: #2c2b3b; }</string>
+            </property>			  
            <property name="text">
             <string>IPv6</string>
            </property>
@@ -370,6 +394,9 @@
          </item>
          <item>
           <widget class="QLabel" name="proxyReachTorLabel">
+		    <property name="styleSheet">
+             <string notr="true">QLabel { color: #2c2b3b; }</string>
+            </property>			  
            <property name="text">
             <string>Tor</string>
            </property>
@@ -396,7 +423,7 @@
        <item>
         <widget class="QCheckBox" name="connectSocksTor">
          <property name="toolTip">
-          <string>Connect to the Bitcoin network through a separate SOCKS5 proxy for Tor hidden services.</string>
+          <string>Connect to the SafeCash network through a separate SOCKS5 proxy for Tor hidden services.</string>
          </property>
          <property name="text">
           <string>Use separate SOCKS&amp;5 proxy to reach peers via Tor hidden services:</string>
@@ -407,6 +434,9 @@
         <layout class="QHBoxLayout" name="horizontalLayout_3_Network">
          <item>
           <widget class="QLabel" name="proxyIpTorLabel">
+		    <property name="styleSheet">
+             <string notr="true">QLabel { color: #2c2b3b; }</string>
+            </property>			  
            <property name="text">
             <string>Proxy &amp;IP:</string>
            </property>
@@ -439,6 +469,9 @@
          </item>
          <item>
           <widget class="QLabel" name="proxyPortTorLabel">
+		    <property name="styleSheet">
+             <string notr="true">QLabel { color: #2c2b3b; }</string>
+            </property>			  
            <property name="text">
             <string>&amp;Port:</string>
            </property>
@@ -558,6 +591,9 @@
         <layout class="QHBoxLayout" name="horizontalLayout_1_Display">
          <item>
           <widget class="QLabel" name="langLabel">
+		  <property name="styleSheet">
+             <string notr="true">QLabel { color: #2c2b3b; }</string>
+            </property>			  
            <property name="text">
             <string>User Interface &amp;language:</string>
            </property>
@@ -582,6 +618,9 @@
         <layout class="QHBoxLayout" name="horizontalLayout_2_Display">
          <item>
           <widget class="QLabel" name="unitLabel">
+		  <property name="styleSheet">
+             <string notr="true">QLabel { color: #2c2b3b; }</string>
+            </property>	
            <property name="text">
             <string>&amp;Unit to show amounts in:</string>
            </property>
@@ -606,6 +645,9 @@
         <layout class="QHBoxLayout" name="horizontalLayout_3_Display">
          <item>
           <widget class="QLabel" name="thirdPartyTxUrlsLabel">
+		    <property name="styleSheet">
+             <string notr="true">QLabel { color: #2c2b3b; }</string>
+            </property>			  
            <property name="toolTip">
             <string>Third party URLs (e.g. a block explorer) that appear in the transactions tab as context menu items. %s in the URL is replaced by transaction hash. Multiple URLs are separated by vertical bar |.</string>
            </property>
@@ -650,6 +692,9 @@
        <layout class="QHBoxLayout" name="horizontalLayout_Bottom">
         <item>
          <widget class="QLabel" name="overriddenByCommandLineInfoLabel">
+		    <property name="styleSheet">
+             <string notr="true">QLabel { color: #2c2b3b; }</string>
+            </property>			 
           <property name="text">
            <string>Active command-line options that override above options:</string>
           </property>
@@ -675,6 +720,9 @@
       </item>
       <item>
        <widget class="QLabel" name="overriddenByCommandLineLabel">
+		    <property name="styleSheet">
+             <string notr="true">QLabel { color: #2c2b3b; }</string>
+            </property>		   
         <property name="text">
          <string/>
         </property>
@@ -694,7 +742,7 @@
      <item>
       <layout class="QVBoxLayout" name="verticalLayout_Buttons">
        <item>
-        <widget class="QPushButton" name="openBitcoinConfButton">
+        <widget class="QPushButton" name="openSafeCashConfButton">
          <property name="toolTip">
           <string>Open the %1 configuration file from the working directory.</string>
          </property>
@@ -736,6 +784,9 @@
      </item>
      <item>
       <widget class="QLabel" name="statusLabel">
+		    <property name="styleSheet">
+             <string notr="true">QLabel { color: #2c2b3b; }</string>
+            </property>		  
        <property name="minimumSize">
         <size>
          <width>200</width>

@@ -7,11 +7,11 @@
     ZMQ example using python3's asyncio
 
     Bitcoin should be started with the command line arguments:
-        bitcoind -testnet -daemon \
-                -zmqpubrawtx=tcp://127.0.0.1:28332 \
-                -zmqpubrawblock=tcp://127.0.0.1:28332 \
-                -zmqpubhashtx=tcp://127.0.0.1:28332 \
-                -zmqpubhashblock=tcp://127.0.0.1:28332
+        safecashd -testnet -daemon \
+                -zmqpubrawtx=tcp://127.0.0.1:27234 \
+                -zmqpubrawblock=tcp://127.0.0.1:27234 \
+                -zmqpubhashtx=tcp://127.0.0.1:27234 \
+                -zmqpubhashblock=tcp://127.0.0.1:27234
 
     We use the asyncio library here.  `self.handle()` installs itself as a
     future at the end of the function.  Since it never returns with the event
@@ -34,7 +34,7 @@ if not (sys.version_info.major >= 3 and sys.version_info.minor >= 5):
     print("This example only works with Python 3.5 and greater")
     sys.exit(1)
 
-port = 28332
+port = 27234
 
 class ZMQHandler():
     def __init__(self):

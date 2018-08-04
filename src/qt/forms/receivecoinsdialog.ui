@@ -47,7 +47,7 @@
         <item row="6" column="0">
          <widget class="QLabel" name="label_3">
           <property name="toolTip">
-           <string>An optional message to attach to the payment request, which will be displayed when the request is opened. Note: The message will not be sent with the payment over the Bitcoin network.</string>
+           <string>An optional message to attach to the payment request, which will be displayed when the request is opened. Note: The message will not be sent with the payment over the SafeCash network.</string>
           </property>
           <property name="text">
            <string>&amp;Message:</string>
@@ -93,7 +93,7 @@
         <item row="6" column="2">
          <widget class="QLineEdit" name="reqMessage">
           <property name="toolTip">
-           <string>An optional message to attach to the payment request, which will be displayed when the request is opened. Note: The message will not be sent with the payment over the Bitcoin network.</string>
+           <string>An optional message to attach to the payment request, which will be displayed when the request is opened. Note: The message will not be sent with the payment over the SafeCash network.</string>
           </property>
          </widget>
         </item>
@@ -111,7 +111,7 @@
              <string>&amp;Request payment</string>
             </property>
             <property name="icon">
-             <iconset resource="../bitcoin.qrc">
+             <iconset resource="../safecash.qrc">
               <normaloff>:/icons/receiving_addresses</normaloff>:/icons/receiving_addresses</iconset>
             </property>
            </widget>
@@ -131,7 +131,7 @@
              <string>Clear</string>
             </property>
             <property name="icon">
-             <iconset resource="../bitcoin.qrc">
+             <iconset resource="../safecash.qrc">
               <normaloff>:/icons/remove</normaloff>:/icons/remove</iconset>
             </property>
             <property name="autoDefault">
@@ -164,7 +164,7 @@
         <item row="5" column="2">
          <layout class="QHBoxLayout" name="horizontalLayout_6">
           <item>
-           <widget class="BitcoinAmountField" name="reqAmount">
+           <widget class="SafeCashAmountField" name="reqAmount">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -206,10 +206,10 @@
              <enum>Qt::StrongFocus</enum>
             </property>
             <property name="toolTip">
-             <string>Native segwit addresses (aka Bech32 or BIP-173) reduce your transaction fees later on and offer better protection against typos, but old wallets don't support them. When unchecked, an address compatible with older wallets will be created instead.</string>
+             <string>Bech32 addresses (BIP-173) are cheaper to spend from and offer better protection against typos. When unchecked a P2SH wrapped SegWit address will be created, compatible with older wallets.</string>
             </property>
             <property name="text">
-             <string>Generate native segwit (Bech32) address</string>
+             <string>Generate Bech32 address</string>
             </property>
            </widget>
           </item>
@@ -301,7 +301,7 @@
            <string>Show</string>
           </property>
           <property name="icon">
-           <iconset resource="../bitcoin.qrc">
+           <iconset resource="../safecash.qrc">
             <normaloff>:/icons/edit</normaloff>:/icons/edit</iconset>
           </property>
           <property name="autoDefault">
@@ -321,7 +321,7 @@
            <string>Remove</string>
           </property>
           <property name="icon">
-           <iconset resource="../bitcoin.qrc">
+           <iconset resource="../safecash.qrc">
             <normaloff>:/icons/remove</normaloff>:/icons/remove</iconset>
           </property>
           <property name="autoDefault">
@@ -351,9 +351,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>BitcoinAmountField</class>
+   <class>SafeCashAmountField</class>
    <extends>QLineEdit</extends>
-   <header>qt/bitcoinamountfield.h</header>
+   <header>qt/safecashamountfield.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
@@ -369,7 +369,7 @@
   <tabstop>removeRequestButton</tabstop>
  </tabstops>
  <resources>
-  <include location="../bitcoin.qrc"/>
+  <include location="../safecash.qrc"/>
  </resources>
  <connections/>
 </ui>

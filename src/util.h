@@ -7,11 +7,11 @@
  * Server/client environment: argument handling, config file parsing,
  * logging, thread wrappers, startup time
  */
-#ifndef BITCOIN_UTIL_H
-#define BITCOIN_UTIL_H
+#ifndef SAFECASH_UTIL_H
+#define SAFECASH_UTIL_H
 
 #if defined(HAVE_CONFIG_H)
-#include <config/bitcoin-config.h>
+#include <config/safecash-config.h>
 #endif
 
 #include <compat.h>
@@ -56,8 +56,8 @@ extern bool fLogIPs;
 extern std::atomic<bool> fReopenDebugLog;
 extern CTranslationInterface translationInterface;
 
-extern const char * const BITCOIN_CONF_FILENAME;
-extern const char * const BITCOIN_PID_FILENAME;
+extern const char * const SAFECASH_CONF_FILENAME;
+extern const char * const SAFECASH_PID_FILENAME;
 
 extern std::atomic<uint32_t> logCategories;
 
@@ -104,6 +104,7 @@ namespace BCLog {
         COINDB      = (1 << 18),
         QT          = (1 << 19),
         LEVELDB     = (1 << 20),
+        POW         = (1 << 30),
         ALL         = ~(uint32_t)0,
     };
 }
@@ -316,7 +317,7 @@ void RenameThread(const char* name);
  */
 template <typename Callable> void TraceThread(const char* name,  Callable func)
 {
-    std::string s = strprintf("bitcoin-%s", name);
+    std::string s = strprintf("safecash-%s", name);
     RenameThread(s.c_str());
     try
     {
@@ -348,4 +349,4 @@ std::unique_ptr<T> MakeUnique(Args&&... args)
     return std::unique_ptr<T>(new T(std::forward<Args>(args)...));
 }
 
-#endif // BITCOIN_UTIL_H
+#endif // SAFECASH_UTIL_H
