@@ -323,8 +323,8 @@ bool BlockAssembler::ProcessBlockFound(CBlock* pblock, CWallet& wallet, CReserve
 
     // Track how many getdata requests this block gets
     {
-        LOCK(wallet.cs_wallet);
-        wallet.mapRequestCount[pblock->GetHash()] = 0;
+        //LOCK(wallet.cs_wallet);
+        //wallet.mapRequestCount[pblock->GetHash()] = 0;
     }
 
     // Process this block the same as if we had received it from another node

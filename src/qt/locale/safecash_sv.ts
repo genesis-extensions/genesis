@@ -401,6 +401,7 @@ Var vänlig och försök igen.</translation>
     <message>
         <source>&amp;File</source>
         <translation>&amp;Arkiv</translation>
+    </message>
     <message>
         <source>&amp;Settings</source>
         <translation>&amp;Inställningar</translation>
@@ -420,6 +421,7 @@ Var vänlig och försök igen.</translation>
     <message>
         <source>Show the list of used receiving addresses and labels</source>
         <translation>Visa listan med använda mottagningsadresser och etiketter</translation>
+    </message>
     <message>
         <source>Open a safecash: URI or payment request</source>
         <translation>Öppna en safecash: URI eller betalningsbegäran</translation>
@@ -2462,6 +2464,7 @@ Var vänlig och försök igen.</translation>
     <message>
         <source>Verify &amp;Message</source>
         <translation>Verifiera &amp;Meddelande</translation>
+    </message>
     <message>
         <source>Reset all verify message fields</source>
         <translation>Rensa alla fält</translation>

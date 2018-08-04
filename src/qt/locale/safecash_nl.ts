@@ -1916,6 +1916,7 @@
     <message>
         <source>Show the selected request (does the same as double clicking an entry)</source>
         <translation>Toon het geselecteerde verzoek (doet hetzelfde als dubbelklikken)</translation>
+    </message>
     <message>
         <source>Show</source>
         <translation>Toon</translation>
