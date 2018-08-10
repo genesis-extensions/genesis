@@ -556,7 +556,7 @@ std::string CChainParams::GetFounderAddressAtHeight(int nHeight) const
 // The address is expected to be a multisig (P2SH) address
 CScript CChainParams::GetFounderScriptAtHeight(int nHeight) const 
 {
-    assert(nHeight > 0 && nHeight <= consensus.GetLastFoundersRewardBlockHeight());
+    //assert(nHeight > 0 && nHeight <= consensus.GetLastFoundersRewardBlockHeight());
     return AddressToScript(GetFounderAddressAtHeight(nHeight).c_str());
 }
 
@@ -594,7 +594,7 @@ std::string CChainParams::GetInfrastructureAddressAtHeight(int nHeight) const
 // The address is expected to be a multisig (P2SH) address
 CScript CChainParams::GetInfrastructureScriptAtHeight(int nHeight) const 
 {
-    assert(nHeight > 0 && nHeight <= consensus.GetLastFoundersRewardBlockHeight());
+    //assert(nHeight > 0 && nHeight <= consensus.GetLastFoundersRewardBlockHeight());
     return AddressToScript(GetInfrastructureAddressAtHeight(nHeight).c_str());
 }
 
@@ -622,7 +622,7 @@ std::string CChainParams::GetGiveawayAddressAtHeight(int nHeight) const
 // The address is expected to be a multisig (P2SH) address
 CScript CChainParams::GetGiveawayScriptAtHeight(int nHeight) const 
 {
-    assert(nHeight > 0 && nHeight <= consensus.GetLastFoundersRewardBlockHeight());
+    //assert(nHeight > 0 && nHeight <= consensus.GetLastFoundersRewardBlockHeight());
     return AddressToScript(GetGiveawayAddressAtHeight(nHeight).c_str());
 }
 
