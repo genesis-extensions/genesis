@@ -3316,7 +3316,7 @@ static bool ContextualCheckBlock(const CBlock& block, CValidationState& state, c
     // Coinbase transaction must include an output sending a specified % of
     // the block reward to various scripts, until the last founders
     // reward block or time is reached, with exception of the genesis block.
-    if ((nHeight > 0) && (nHeight <= consensusParams.GetLastFoundersRewardBlockHeight() || block.nTime <= consensusParams.GetLastFoundersRewardBlockTime()) ) 
+    if ((nHeight > 0) && (nHeight <= consensusParams.GetLastFoundersRewardBlockHeight() && block.nTime <= consensusParams.GetLastFoundersRewardBlockTime()) ) 
     {
         bool found = false;
 

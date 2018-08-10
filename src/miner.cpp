@@ -198,7 +198,7 @@ std::unique_ptr<CBlockTemplate> BlockAssembler::CreateNewBlock(const CScript& sc
     coinbaseTx.vout[0].nValue = totalSubsidy;
 
     // Block deductions - must also account for slippage in block height
-    if ((nHeight > 0) && (nHeight <= chainparams.GetConsensus().GetLastFoundersRewardBlockHeight() || pblock->nTime <= chainparams.GetConsensus().GetLastFoundersRewardBlockTime()) ) 
+    if ((nHeight > 0) && (nHeight <= chainparams.GetConsensus().GetLastFoundersRewardBlockHeight() && pblock->nTime <= chainparams.GetConsensus().GetLastFoundersRewardBlockTime()) ) 
     {
         // Deductions total 25% of the block subsidy
         auto vBlockDeductionTotal = coinbaseTx.vout[0].nValue / 4;
