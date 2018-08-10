@@ -473,6 +473,8 @@ UniValue getblocktemplate(const JSONRPCRequest& request)
             "  \"curtime\" : ttt,                  (numeric) current timestamp in seconds since epoch (Jan 1 1970 GMT)\n"
             "  \"bits\" : \"xxxxxxxx\",              (string) compressed target of next block\n"
             "  \"height\" : n                      (numeric) The height of the next block\n"
+            "  \"equihashn\" : n                   (numeric) Equihash N\n"
+            "  \"equihashk\" : n                   (numeric) Equihash K\n"
             "}\n"
 
             "\nExamples:\n"
@@ -784,6 +786,8 @@ UniValue getblocktemplate(const JSONRPCRequest& request)
     result.push_back(Pair("curtime", pblock->GetBlockTime()));
     result.push_back(Pair("bits", strprintf("%08x", pblock->nBits)));
     result.push_back(Pair("height", (int64_t)(pindexPrev->nHeight+1)));
+    result.push_back(Pair("equihashn", (int64_t)(Params().EquihashN())));
+    result.push_back(Pair("equihashk", (int64_t)(Params().EquihashK())));
 
     if (!pblocktemplate->vchCoinbaseCommitment.empty() && fSupportsSegwit) {
         result.push_back(Pair("default_witness_commitment", HexStr(pblocktemplate->vchCoinbaseCommitment.begin(), pblocktemplate->vchCoinbaseCommitment.end())));
@@ -892,7 +896,13 @@ UniValue getblocksubsidy(const JSONRPCRequest& request)
       "\nResult:\n"
       "{\n"
       "\"miner\": n,    (numeric) The mining reward amount in scashis.\n"
-      "\"founders\": f, (numeric) Always 0, for Zcash mining compatibility.\n"
+      "\"founders-chris\": f, (numeric) The founders reward in scashis (Chris) ()\n"
+      "\"founders-jimmy\": f, (numeric) The founders reward in scashis (Jimmy) ()\n"
+      "\"founders-scott\": f, (numeric) The founders reward in scashis (Scott) ()\n"
+      "\"founders-shelby\": f, (numeric) The founders reward in scashis (Shelby) ()\n"
+      "\"founders-loki\": f, (numeric) The founders reward in scashis (Loki) ()\n"
+      "\"infrastructure\": f, (numeric) Infrastructure deduction in scashis \n"
+      "\"giveaways\": f, (numeric) Giveaways deduction in scashis \n"
       "}\n"
       "\nExamples:\n"
       + HelpExampleCli("getblocksubsidy", "1000")
@@ -909,8 +919,47 @@ UniValue getblocksubsidy(const JSONRPCRequest& request)
   UniValue result(UniValue::VOBJ);
 
   CAmount nReward = GetBlockSubsidy(nHeight, Params().GetConsensus());
-  result.push_back(Pair("miner", (nReward / 4) * 3));
-  result.push_back(Pair("founders", 0));
+  if ((nHeight > 0) && (nHeight <= Params().GetConsensus().GetLastFoundersRewardBlockHeight()) ) 
+  {
+    CAmount deductions = nReward / 4;
+    CAmount miner = nReward - deductions;
+    auto deductionChange = deductions % 5;
+    // The change (remainder) gets re-added to the miner
+    miner += deductionChange;
+    // And removed from the deduction
+    deductions -= deductionChange;
+    // Founders : 40% of deduction (10% of total block)
+    auto vFounders = (deductions / 5) * 2;
+    // Check the division... see if we'll have any change left after the division
+    auto foundersChange = vFounders % 5;
+    if (foundersChange != 0)
+    {
+        miner += foundersChange;
+        vFounders -= foundersChange;
+    }
+    // Calculate the individual founder's reward
+    auto ifr = vFounders / 5;
+
+    result.push_back(Pair("miner", miner));
+    result.push_back(Pair("founders-chris", ifr));
+    result.push_back(Pair("founders-jimmy", ifr));
+    result.push_back(Pair("founders-scott", ifr));
+    result.push_back(Pair("founders-shelby", ifr));
+    result.push_back(Pair("founders-loki", ifr));
+    result.push_back(Pair("infrastructure", (deductions / 5)));
+    result.push_back(Pair("giveaways", (deductions / 5) * 2));
+  }
+  else
+  {
+    result.push_back(Pair("miner", nReward));
+    result.push_back(Pair("founders-chris", 0));
+    result.push_back(Pair("founders-jimmy", 0));
+    result.push_back(Pair("founders-scott", 0));
+    result.push_back(Pair("founders-shelby", 0));
+    result.push_back(Pair("founders-loki", 0));
+    result.push_back(Pair("infrastructure", 0));
+    result.push_back(Pair("giveaways", 0));
+  }
 
   return result;
 }
