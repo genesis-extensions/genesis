@@ -39,8 +39,13 @@ unsigned int LwmaGetNextWorkRequired(const CBlockIndex* pindexLast, const CBlock
     // Special difficulty rule for testnet:
     // If the new block's timestamp is more than 2 * 10 minutes
     // then allow mining of a min-difficulty block.
-    if (params.fPowAllowMinDifficultyBlocks &&
-        pblock->GetBlockTime() > pindexLast->GetBlockTime() + params.nPowTargetSpacing * 2) {
+    if (params.fPowAllowMinDifficultyBlocks && pblock->GetBlockTime() > pindexLast->GetBlockTime() + params.nPowTargetSpacing * 2) 
+    {
+        return UintToArith256(params.powLimit).GetCompact();
+    }
+    // Special difficulty rule for if we don't have enough blocks:
+    if (pindexLast->nHeight <= params.nZawyLwmaAveragingWindow )
+    {
         return UintToArith256(params.powLimit).GetCompact();
     }
     return LwmaCalculateNextWorkRequired(pindexLast, params);
