@@ -17,7 +17,7 @@ SafeCa$h Official
 | RPC Port              | 7423                                          |
 | P2P Port              | 7233                                          |
 | Block Time            | 60 Seconds                                    |
-| Difficulty Algorithm  | Dark Gravity Wave                             |
+| Difficulty Algorithm  | Zawy12's LWMA                                 |
 | Block Size            | 2MB                                           |
 | Confirmation          | 100 Blocks (100 Minutes)                      |
 | Block Reward          | Randomized                                    |
