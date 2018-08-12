@@ -9,7 +9,7 @@
  * network protocol versioning
  */
 
-static const int PROTOCOL_VERSION = 70018;
+static const int PROTOCOL_VERSION = 70019;
 
 //! initial proto version, to be increased after version/verack negotiation
 static const int INIT_PROTO_VERSION = 209;
@@ -45,5 +45,6 @@ static const int INVALID_CB_NO_BAN_VERSION = 70015;
 //! testnet beta release
 static const int TESTNET_REBUILD_BETA = 70016;
 static const int TESTNET_REBUILD_BETA2 = 70017;
+static const int TESTNET_REBUILD_PRE_LWMA = 70018;
 
 #endif // SAFECASH_VERSION_H
