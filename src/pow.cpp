@@ -41,11 +41,13 @@ unsigned int LwmaGetNextWorkRequired(const CBlockIndex* pindexLast, const CBlock
     // then allow mining of a min-difficulty block.
     if (params.fPowAllowMinDifficultyBlocks && pblock->GetBlockTime() > pindexLast->GetBlockTime() + params.nPowTargetSpacing * 2) 
     {
+        LogPrintf("Using minimum diff (%d), because we are in testnet and the last block was a long time ago \n", UintToArith256(params.powLimit).GetCompact());
         return UintToArith256(params.powLimit).GetCompact();
     }
     // Special difficulty rule for if we don't have enough blocks:
     if (pindexLast->nHeight <= params.nZawyLwmaAveragingWindow )
     {
+        LogPrintf("Using minimum diff (%d), because we don't have more than %d blocks yet %d to go... \n", UintToArith256(params.powLimit).GetCompact(), params.nZawyLwmaAveragingWindow, pindexLast->nHeight - params.nZawyLwmaAveragingWindow);
         return UintToArith256(params.powLimit).GetCompact();
     }
     return LwmaCalculateNextWorkRequired(pindexLast, params);
@@ -76,9 +78,14 @@ unsigned int LwmaCalculateNextWorkRequired(const CBlockIndex* pindexLast, const 
         sum_target += target / (k * N); // BTG added the missing N back here.
     }
     // Keep t reasonable to >= 1/10 of expected t.
-    if (t < k/10 ) {   t = k/10;  }
+    if (t < k/10 ) 
+    {
+        LogPrintf("t adjusted from %d to %d, as it was too low \n", t, k/10);
+        t = k/10;  
+    }
     arith_uint256 next_target = t * sum_target;
 
+    LogPrintf("LWMA diff: %d \n", next_target.GetCompact());
     return next_target.GetCompact();
 }
 
@@ -119,11 +126,34 @@ bool CheckProofOfWork(uint256 hash, unsigned int nBits, const Consensus::Params&
 
     // Check range
     if (fNegative || bnTarget == 0 || fOverflow || bnTarget > UintToArith256(params.powLimit))
+    {
+        LogPrintf("CheckProofOfWork failed the first check: \n");
+        if (fNegative)
+        {
+            LogPrintf("fNegative is true \n");
+        }
+        else if (bnTarget == 0)
+        {
+            LogPrintf("bnTarget is zero \n");
+        }
+        else if (fOverflow)
+        {
+            LogPrintf("fOverflow is true \n");
+        }
+        else if (bnTarget > UintToArith256(params.powLimit))
+        {
+            LogPrintf("bnTarget (%d) is greater than the minimum difficulty (%d) \n", bnTarget.GetCompact(), UintToArith256(params.powLimit).GetCompact());
+        }
         return false;
+    }
 
     // Check proof of work matches claimed amount
     if (UintToArith256(hash) > bnTarget)
+    {
+        LogPrintf("CheckProofOfWork failed the second check: the hash (%d) is greater than the target (%d) \n", UintToArith256(hash).GetCompact(), bnTarget.GetCompact());
         return false;
+    }
 
+    //LogPrintf("CheckProofOfWork success! \n");
     return true;
 }

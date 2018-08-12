@@ -111,7 +111,7 @@ public:
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nTimeout = Consensus::BIP9Deployment::NO_TIMEOUT;
 
         // LWMA
-        consensus.nZawyLwmaAveragingWindow = 45;
+        consensus.nZawyLwmaAveragingWindow = 90;
 
         // Deployment of BIP68, BIP112, and BIP113.
         consensus.vDeployments[Consensus::DEPLOYMENT_CSV].bit = 0;
@@ -242,10 +242,10 @@ public:
         consensus.BIP34Hash = uint256S("05465adce5ff77fe67e3fd5fb35e01b022580582795782dc29db4f9a6cda324c");
         consensus.BIP65Height = 0; 
         consensus.BIP66Height = 0; 
-        consensus.powLimit = uint256S("07ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
+        consensus.powLimit = uint256S("7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.nPowTargetTimespan = 14 * 24 * 60 * 60; 
         consensus.nPowTargetSpacing = 60;
-        consensus.fPowAllowMinDifficultyBlocks = false;
+        consensus.fPowAllowMinDifficultyBlocks = true;
         consensus.fPowNoRetargeting = false;
         consensus.nRuleChangeActivationThreshold = 1916; 
         consensus.nMinerConfirmationWindow = 2016; 
@@ -254,7 +254,7 @@ public:
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nTimeout = Consensus::BIP9Deployment::NO_TIMEOUT;
 
         // LWMA
-        consensus.nZawyLwmaAveragingWindow = 45;
+        consensus.nZawyLwmaAveragingWindow = 90;
 
         // Deployment of BIP68, BIP112, and BIP113.
         consensus.vDeployments[Consensus::DEPLOYMENT_CSV].bit = 0;
@@ -285,7 +285,7 @@ public:
         nEquihashN = N;
         nEquihashK = K;
         consensus.nPowAveragingWindow = 17;
-        assert(maxUint/UintToArith256(consensus.powLimit) >= consensus.nPowAveragingWindow);
+        //assert(maxUint/UintToArith256(consensus.powLimit) >= consensus.nPowAveragingWindow);
         consensus.nPowMaxAdjustDown = 32; // 32% adjustment down
         consensus.nPowMaxAdjustUp = 16; // 16% adjustment up
         // SafeCash PoW
@@ -400,7 +400,7 @@ public:
         consensus.vDeployments[Consensus::DEPLOYMENT_SEGWIT].nTimeout = Consensus::BIP9Deployment::NO_TIMEOUT;
 
         // LWMA
-        consensus.nZawyLwmaAveragingWindow = 45;
+        consensus.nZawyLwmaAveragingWindow = 90;
 
         // The best chain should have at least this much work.
         consensus.nMinimumChainWork = uint256S("0x00");
