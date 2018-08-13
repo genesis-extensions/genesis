@@ -912,15 +912,14 @@ UniValue getblocksubsidy(const JSONRPCRequest& request)
   RPCTypeCheck(request.params, {UniValue::VNUM});
 
   LOCK(cs_main);
-  int nHeight = (request.params.size() == 1) ? request.params[0].get_int() : chainActive.Height();
+  int nHeight = (request.params.size() == 1) ? request.params[0].get_int() : chainActive.Height() + 1;
   if (nHeight < 0)
     throw JSONRPCError(RPC_INVALID_PARAMETER, "Block height out of range.");
 
   UniValue result(UniValue::VOBJ);
 
   CAmount nReward = GetBlockSubsidy(nHeight, Params().GetConsensus());
-  if ((nHeight > 0) && (nHeight <= Params().GetConsensus().GetLastFoundersRewardBlockHeight()) ) 
-  {
+
     CAmount deductions = nReward / 4;
     CAmount miner = nReward - deductions;
     auto deductionChange = deductions % 5;
@@ -940,7 +939,11 @@ UniValue getblocksubsidy(const JSONRPCRequest& request)
     // Calculate the individual founder's reward
     auto ifr = vFounders / 5;
 
+    result.push_back(Pair("height", nHeight));
+    result.push_back(Pair("total", nReward));
+    result.push_back(Pair("deductions", deductions));
     result.push_back(Pair("miner", miner));
+    result.push_back(Pair("foundertotal", vFounders));
     result.push_back(Pair("founders-chris", ifr));
     result.push_back(Pair("founders-jimmy", ifr));
     result.push_back(Pair("founders-scott", ifr));
@@ -948,18 +951,6 @@ UniValue getblocksubsidy(const JSONRPCRequest& request)
     result.push_back(Pair("founders-loki", ifr));
     result.push_back(Pair("infrastructure", (deductions / 5)));
     result.push_back(Pair("giveaways", (deductions / 5) * 2));
-  }
-  else
-  {
-    result.push_back(Pair("miner", nReward));
-    result.push_back(Pair("founders-chris", 0));
-    result.push_back(Pair("founders-jimmy", 0));
-    result.push_back(Pair("founders-scott", 0));
-    result.push_back(Pair("founders-shelby", 0));
-    result.push_back(Pair("founders-loki", 0));
-    result.push_back(Pair("infrastructure", 0));
-    result.push_back(Pair("giveaways", 0));
-  }
 
   return result;
 }

@@ -3316,80 +3316,76 @@ static bool ContextualCheckBlock(const CBlock& block, CValidationState& state, c
     // Coinbase transaction must include an output sending a specified % of
     // the block reward to various scripts, until the last founders
     // reward block or time is reached, with exception of the genesis block.
-    if ((nHeight > 0) && (nHeight <= consensusParams.GetLastFoundersRewardBlockHeight() && block.nTime <= consensusParams.GetLastFoundersRewardBlockTime()) ) 
+    bool found = false;
+
+    auto vBlockDeductionTotal =  GetBlockSubsidy(nHeight, consensusParams) / 4;
+    auto deductionChange = vBlockDeductionTotal % 5;
+    vBlockDeductionTotal -= deductionChange;
+
+    // Founders Reward
+    auto vFounders = (vBlockDeductionTotal / 5) * 2;
+    std::vector<CScript> allFounderScripts = Params().GetAllFounderScripts();
+    // Check the division... see if we'll have any change left after the division
+    auto foundersChange = vFounders % allFounderScripts.size();
+    if (foundersChange != 0)
     {
-        bool found = false;
-
-        auto vBlockDeductionTotal =  GetBlockSubsidy(nHeight, consensusParams) / 4;
-        auto deductionChange = vBlockDeductionTotal % 5;
-        vBlockDeductionTotal -= deductionChange;
-
-        // Founders Reward
-        auto vFounders = (vBlockDeductionTotal / 5) * 2;
-        std::vector<CScript> allFounderScripts = Params().GetAllFounderScripts();
-        // Check the division... see if we'll have any change left after the division
-        auto foundersChange = vFounders % allFounderScripts.size();
-        if (foundersChange != 0)
-        {
-            vFounders -= foundersChange;
-        }
-        // Calculate the individual founder's reward
-        auto ifr = vFounders / allFounderScripts.size();
-        // create the transactions
-        auto foundScripts = 0;
-        for (auto &founderScript : allFounderScripts)
-        {
-            BOOST_FOREACH(const CTxOut& output, block.vtx[0]->vout) {
-                if (output.scriptPubKey == founderScript) {
-                    if (output.nValue == ifr) 
-                    {
-                        foundScripts++;
-                        break;
-                    }
-                    else
-                    {
-                        LogPrintf("Wrong big block founders value: %i should be %i \n", output.nValue, ifr);
-                    }
-                }
-            }
-        }
-        if (foundScripts == allFounderScripts.size())
-        {
-            found = true;
-        }
-
-        if (!found) {
-            return state.DoS(100, error("%s: founders payment missing", __func__), REJECT_INVALID, "cb-no-founders-payment");
-        }
-
-        // Infrastructure
+        vFounders -= foundersChange;
+    }
+    // Calculate the individual founder's reward
+    auto ifr = vFounders / allFounderScripts.size();
+    // create the transactions
+    auto foundScripts = 0;
+    for (auto &founderScript : allFounderScripts)
+    {
         BOOST_FOREACH(const CTxOut& output, block.vtx[0]->vout) {
-            if (output.scriptPubKey == Params().GetInfrastructureScriptAtHeight(nHeight)) {
-                if (output.nValue == (vBlockDeductionTotal / 5) * 1) {
-                    found = true;
+            if (output.scriptPubKey == founderScript) {
+                if (output.nValue == ifr) 
+                {
+                    foundScripts++;
                     break;
                 }
-            }
-        }
-
-        if (!found) {
-            return state.DoS(100, error("%s: infrastructure payment missing", __func__), REJECT_INVALID, "cb-no-infrastructure-payment");
-        }
-
-        // Giveaways
-        BOOST_FOREACH(const CTxOut& output, block.vtx[0]->vout) {
-            if (output.scriptPubKey == Params().GetGiveawayScriptAtHeight(nHeight)) {
-                if (output.nValue == (vBlockDeductionTotal / 5) * 2) {
-                    found = true;
-                    break;
+                else
+                {
+                    LogPrintf("Wrong block founders value: %i should be %i \n", output.nValue, ifr);
                 }
             }
         }
+    }
+    if (foundScripts == allFounderScripts.size())
+    {
+        found = true;
+    }
 
-        if (!found) {
-            return state.DoS(100, error("%s: giveaways payment missing", __func__), REJECT_INVALID, "cb-no-giveaways-payment");
+    if (!found) {
+        return state.DoS(100, error("%s: founders payment missing", __func__), REJECT_INVALID, "cb-no-founders-payment");
+    }
+
+    // Infrastructure
+    BOOST_FOREACH(const CTxOut& output, block.vtx[0]->vout) {
+        if (output.scriptPubKey == Params().GetInfrastructureScriptAtHeight(nHeight)) {
+            if (output.nValue == (vBlockDeductionTotal / 5) * 1) {
+                found = true;
+                break;
+            }
         }
+    }
 
+    if (!found) {
+        return state.DoS(100, error("%s: infrastructure payment missing", __func__), REJECT_INVALID, "cb-no-infrastructure-payment");
+    }
+
+    // Giveaways
+    BOOST_FOREACH(const CTxOut& output, block.vtx[0]->vout) {
+        if (output.scriptPubKey == Params().GetGiveawayScriptAtHeight(nHeight)) {
+            if (output.nValue == (vBlockDeductionTotal / 5) * 2) {
+                found = true;
+                break;
+            }
+        }
+    }
+
+    if (!found) {
+        return state.DoS(100, error("%s: giveaways payment missing", __func__), REJECT_INVALID, "cb-no-giveaways-payment");
     }
 
 
