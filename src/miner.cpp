@@ -236,7 +236,7 @@ std::unique_ptr<CBlockTemplate> BlockAssembler::CreateNewBlock(const CScript& sc
     coinbaseTx.vout.push_back(CTxOut(vGiveaways, chainparams.GetGiveawayScriptAtHeight(nHeight)));
     // Sanity check
     assert(vInfrastructure + vGiveaways + vFounders + coinbaseTx.vout[0].nValue == totalSubsidy);
-    LogPrintf("Sanity Check Values:\nHeight = %f\nTotal Subsidy = %f\nTotal Deduction = %f\nMiner = %f\nFounder Total = %f\nFounder Split = %f\nInfrastructure = %f\nGiveaways = %f\n", nHeight, totalSubsidy, vBlockDeductionTotal, coinbaseTx.vout[0].nValue, vFounders, ifr, vInfrastructure, vGiveaways / COIN);
+    //LogPrintf("Sanity Check Values:\nHeight = %f\nTotal Subsidy = %f\nTotal Deduction = %f\nMiner = %f\nFounder Total = %f\nFounder Split = %f\nInfrastructure = %f\nGiveaways = %f\n", nHeight, totalSubsidy, vBlockDeductionTotal, coinbaseTx.vout[0].nValue, vFounders, ifr, vInfrastructure, vGiveaways / COIN);
 
     // Add fees
     coinbaseTx.vout[0].nValue += nFees;
