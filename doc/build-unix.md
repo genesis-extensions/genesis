@@ -1,8 +1,9 @@
-UNIX BUILD NOTES
+Unix Build Notes
 ====================
 Some notes on how to build SafeCash in Unix.
 
 (for OpenBSD specific instructions, see [build-openbsd.md](build-openbsd.md))
+(for Ubuntu-Debian specific instructions, see [build-ubuntu-deb.md}(build-ubuntu-deb.md))
 
 Note
 ---------------------
@@ -62,90 +63,9 @@ tuned to conserve memory with additional CXXFLAGS:
 
     ./configure CXXFLAGS="--param ggc-min-expand=1 --param ggc-min-heapsize=32768"
 
-Dependency Build Instructions: Ubuntu & Debian
-----------------------------------------------
-Build requirements:
-
-    sudo apt-get install build-essential libtool autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils python3 libsodium-dev
-
-Options when installing required Boost library files:
-
-1. On at least Ubuntu 14.04+ and Debian 7+ there are generic names for the
-individual boost development packages, so the following can be used to only
-install necessary parts of boost:
-
-        sudo apt-get install libboost-system-dev libboost-filesystem-dev libboost-chrono-dev libboost-program-options-dev libboost-test-dev libboost-thread-dev
-
-2. If that doesn't work, you can install all boost development packages with:
-
-        sudo apt-get install libboost-all-dev
-
-BerkeleyDB is required for the wallet.
-
-**For Ubuntu only:** db4.8 packages are available [here](https://launchpad.net/~bitcoin/+archive/bitcoin).
-You can add the repository and install using the following commands:
-
-    sudo apt-get install software-properties-common
-    sudo add-apt-repository ppa:bitcoin/bitcoin
-    sudo apt-get update
-    sudo apt-get install libdb4.8-dev libdb4.8++-dev
-
-Ubuntu and Debian have their own libdb-dev and libdb++-dev packages, but these will install
-BerkeleyDB 5.1 or later, which break binary wallet compatibility with the distributed executables which
-are based on BerkeleyDB 4.8. If you do not care about wallet compatibility,
-pass `--with-incompatible-bdb` to configure.
-
-See the section "Disable-wallet mode" to build SafeCash without wallet.
-
-Optional (see --with-miniupnpc and --enable-upnp-default):
-
-    sudo apt-get install libminiupnpc-dev
-
-ZMQ dependencies (provides ZMQ API 4.x):
-
-    sudo apt-get install libzmq3-dev
-
-3. On Ubuntu 16.04.3 you need to install the newest libsodium (at least 1.0.13)
-
-    configure: error: Wrong libsodium: version >= 1.0.13 required
-
-```
-$ cd safecash
-$ cd depends
-$ make
-$ cd ..
-$ ./autogen.sh
-$ ./configure --prefix=`pwd`/depends/x86_64-pc-linux-gnu
-$ make
-$ make install
-```
-
-The command `make install` installs the executables in the `./depends/x86_64-pc-linux-gnu/bin/` directory.
-Dependencies for the GUI: Ubuntu & Debian
------------------------------------------
-
-If you want to build safecash-qt, make sure that the required packages for Qt development
-are installed. Either Qt 5 or Qt 4 are necessary to build the GUI.
-If both Qt 4 and Qt 5 are installed, Qt 5 will be used. Pass `--with-gui=qt4` to configure to choose Qt4.
-To build without GUI pass `--without-gui`.
-
-To build with Qt 5 (recommended) you need the following:
-
-    sudo apt-get install libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev protobuf-compiler
-
-Alternatively, to build with Qt 4 you need the following:
-
-    sudo apt-get install libqt4-dev libprotobuf-dev protobuf-compiler
-
-libqrencode (optional) can be installed with:
-
-    sudo apt-get install libqrencode-dev
-
-Once these are installed, they will be found by configure and a safecash-qt executable will be
-built by default.
-
 Dependency Build Instructions: Fedora
 -------------------------------------
+
 Build requirements:
 
     sudo dnf install gcc-c++ libtool make autoconf automake openssl-devel libevent-devel boost-devel libdb4-devel libdb4-cxx-devel python3
