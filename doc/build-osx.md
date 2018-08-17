@@ -16,7 +16,7 @@ Then install [Homebrew](https://brew.sh).
 Dependencies
 ----------------------
 
-    brew install automake berkeley-db4 libtool boost miniupnpc openssl pkg-config protobuf python3 qt libevent
+    brew install automake berkeley-db4 libtool boost miniupnpc openssl pkg-config protobuf python3 qt libevent libsodium
 
 See [dependencies.md](dependencies.md) for a complete overview.
 
@@ -36,7 +36,7 @@ like so
 ./contrib/install_db4.sh .
 ```
 
-from the root of the repository.
+from the root of the repository. **Source code must be cloned first**
 
 **Note**: You only need Berkeley DB if the wallet is enabled (see the section *Disable-Wallet mode* below).
 
@@ -58,11 +58,7 @@ Build SafeCash Official
         ./configure
         make
 
-3.  It is recommended to build and run the unit tests:
-
-        make check
-
-4.  You can also create a .dmg that contains the .app bundle (optional):
+3.  You can also create a .dmg that contains the .app bundle (optional):
 
         make deploy
 
@@ -77,7 +73,7 @@ Before running, it's recommended that you create an RPC configuration file.
 
     chmod 600 "/Users/${USER}/Library/Application Support/SafeCash/safecash.conf"
 
-The first time you run safecashd, it will start downloading the blockchain. This process could take several hours.
+The first time you run safecashd, it will start downloading the blockchain. This process could take several hours depending on how long the blockchain has been active.
 
 You can monitor the download process by looking at the debug.log file:
 

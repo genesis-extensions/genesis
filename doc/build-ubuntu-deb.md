@@ -1,9 +1,8 @@
-Unix Build Notes
+Ubuntu & Debian Build Notes
 ====================
-Some notes on how to build SafeCash in Unix.
+Some notes on how to build SafeCash in Ubuntu & Debian.
 
-(for OpenBSD specific instructions, see [build-openbsd.md](build-openbsd.md))
-(for Ubuntu-Debian specific instructions, see [build-ubuntu-deb.md}(build-ubuntu-deb.md))
+For Unix systems other than Ubuntu & Debian, please see see [build-unix.md](build-unix.md))
 
 Note
 ---------------------
@@ -14,19 +13,6 @@ for example, when specifying the path of the dependency:
 
 Here BDB_PREFIX must be an absolute path - it is defined using $(pwd) which ensures
 the usage of the absolute path.
-
-To Build
----------------------
-
-```
-bash
-./autogen.sh
-./configure
-make
-make install # optional
-```
-
-This will build safecash-qt as well if the dependencies are met.
 
 Dependencies
 ---------------------
@@ -60,27 +46,93 @@ C++ compilers are memory-hungry. It is recommended to have at least 1.5 GB of
 memory available when compiling SafeCash. On systems with less, gcc can be
 tuned to conserve memory with additional CXXFLAGS:
 
-
     ./configure CXXFLAGS="--param ggc-min-expand=1 --param ggc-min-heapsize=32768"
 
-Dependency Build Instructions: Fedora
--------------------------------------
+Dependency Build Instructions:
+----------------------------------------------
 
 Build requirements:
 
-    sudo dnf install gcc-c++ libtool make autoconf automake openssl-devel libevent-devel boost-devel libdb4-devel libdb4-cxx-devel python3
+    sudo apt-get install build-essential libtool autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils python3 libsodium-dev git
+    sudo apt-get install libboost-all-dev
 
-Optional:
+BerkeleyDB is required for the wallet.
 
-    sudo dnf install miniupnpc-devel
+    sudo apt-get install software-properties-common
+    sudo add-apt-repository ppa:bitcoin/bitcoin
+    sudo apt-get update
+    sudo apt-get install libdb4.8-dev libdb4.8++-dev
 
-To build with Qt 5 (recommended) you need the following:
+Ubuntu and Debian have their own libdb-dev and libdb++-dev packages, but these will install
+BerkeleyDB 5.1 or later, which break binary wallet compatibility with the distributed executables which
+are based on BerkeleyDB 4.8. If you do not care about wallet compatibility,
+pass `--with-incompatible-bdb` to configure.
 
-    sudo dnf install qt5-qttools-devel qt5-qtbase-devel protobuf-devel
+See the section "Disable-wallet mode" to build SafeCash without wallet.
 
-libqrencode (optional) can be installed with:
+Optional: See --with-miniupnpc and --enable-upnp-default
 
-    sudo dnf install qrencode-devel
+    sudo apt-get install libminiupnpc-dev
+
+Optional: ZMQ dependencies (provides ZMQ API 4.x)
+
+    sudo apt-get install libzmq3-dev
+
+On Ubuntu 16.04 you need to install the newest libsodium (at least 1.0.13) or you'll see the following:
+
+    configure: error: Wrong libsodium: version >= 1.0.13 required
+
+```
+$ wget https://download.libsodium.org/libsodium/releases/libsodium-1.0.16.tar.gz
+$ tar -xzf libsodium-1.0.16.tar.gz
+$ cd libsodium-1.0.16
+$ ./configure
+$ make
+$ make install
+```
+    
+Building SafeCash Official (w/out QT)
+--------------------
+
+Optional: When performing './configure', you can speed the process of making up by adding the disable-bench and test flags
+
+    $ ./configure --disable-bench --disable-test
+   
+Now build   
+```
+$ git https://github.com/safecashofficial/safecash.git
+$ cd safecash/depends
+$ make
+$ cd ..
+$ ./autogen.sh
+$ ./configure
+$ make
+```
+
+Building SafeCash Official (w/ QT)
+--------------------
+
+Install remaining dependencies
+
+    sudo apt-get install libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev protobuf-compiler
+    
+Optional: libqrencode
+
+    sudo apt-get install libqrencode-dev
+    
+Now build
+```
+$ git https://github.com/safecashofficial/safecash.git
+$ cd safecash/depends
+$ make
+$ cd ..
+$ ./autogen.sh
+$ ./configure --prefix=`pwd`/depends/x86_64-pc-linux-gnu
+$ make
+$ make install
+```
+
+The command `make install` installs the executables in the `./depends/x86_64-pc-linux-gnu/bin/` directory.
 
 Notes
 -----
@@ -190,26 +242,6 @@ A list of additional configure flags can be displayed with:
 
     ./configure --help
 
-
-Setup and Build Example: Arch Linux
------------------------------------
-This example lists the steps necessary to setup and build a command line only, non-wallet distribution of the latest changes on Arch Linux:
-
-    pacman -S git base-devel boost libevent python
-    git clone https://github.com/safecashofficial/safecash
-    cd safecash/
-    ./autogen.sh
-    ./configure --disable-wallet --without-gui --without-miniupnpc
-    make check
-
-Note:
-Enabling wallet support requires either compiling against a Berkeley DB newer than 4.8 (package `db`) using `--with-incompatible-bdb`,
-or building and depending on a local version of Berkeley DB 4.8. The readily available Arch Linux packages are currently built using
-`--with-incompatible-bdb` according to the [PKGBUILD](https://projects.archlinux.org/svntogit/community.git/tree/bitcoin/trunk/PKGBUILD).
-As mentioned above, when maintaining portability of the wallet between the standard SafeCash distributions and independently built
-node software is desired, Berkeley DB 4.8 must be used.
-
-
 ARM Cross-compilation
 -------------------
 These steps can be performed on, for example, an Ubuntu VM. The depends system
@@ -231,33 +263,3 @@ To build executables for ARM:
 
 
 For further documentation on the depends system see [README.md](../depends/README.md) in the depends directory.
-
-Building on FreeBSD
---------------------
-
-(Updated as of FreeBSD 11.0)
-
-Clang is installed by default as `cc` compiler, this makes it easier to get
-started than on [OpenBSD](build-openbsd.md). Installing dependencies:
-
-    pkg install autoconf automake libtool pkgconf
-    pkg install boost-libs openssl libevent
-    pkg install gmake
-
-You need to use GNU make (`gmake`) instead of `make`.
-(`libressl` instead of `openssl` will also work)
-
-For the wallet (optional):
-
-    ./contrib/install_db4.sh `pwd`
-    setenv BDB_PREFIX $PWD/db4
-
-Then build using:
-
-    ./autogen.sh
-    ./configure BDB_CFLAGS="-I${BDB_PREFIX}/include" BDB_LIBS="-L${BDB_PREFIX}/lib -ldb_cxx"
-    gmake
-
-*Note on debugging*: The version of `gdb` installed by default is [ancient and considered harmful](https://wiki.freebsd.org/GdbRetirement).
-It is not suitable for debugging a multi-threaded C++ program, not even for getting backtraces. Please install the package `gdb` and
-use the versioned gdb command e.g. `gdb7111`.
