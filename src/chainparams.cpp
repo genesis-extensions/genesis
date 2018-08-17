@@ -116,7 +116,7 @@ public:
         // Deployment of BIP68, BIP112, and BIP113.
         consensus.vDeployments[Consensus::DEPLOYMENT_CSV].bit = 0;
         consensus.vDeployments[Consensus::DEPLOYMENT_CSV].nStartTime = Consensus::BIP9Deployment::ALWAYS_ACTIVE;
-        consensus.vDeployments[Consensus::DEPLOYMENT_CSV].nTimeout;
+        consensus.vDeployments[Consensus::DEPLOYMENT_CSV].nTimeout = Consensus::BIP9Deployment::NO_TIMEOUT;
 
         // Deployment of SegWit (BIP141, BIP143, and BIP147)
         consensus.vDeployments[Consensus::DEPLOYMENT_SEGWIT].bit = 1;
@@ -124,7 +124,7 @@ public:
         consensus.vDeployments[Consensus::DEPLOYMENT_SEGWIT].nTimeout = Consensus::BIP9Deployment::NO_TIMEOUT;
 
         // The best chain should have at least this much work.
-        consensus.nMinimumChainWork = uint256S("0x0000000000000000000000000000000000000000000000000000000100010001");
+        consensus.nMinimumChainWork = uint256S("0x000000000000000000000000000000000000000000000000000000000000001f");
 
         // By default assume that the signatures in ancestors of this block are valid.
         consensus.defaultAssumeValid = uint256S("0x00"); 
@@ -209,22 +209,26 @@ public:
             0
         };
 
-        // Founders Addresses: A vector of 2-of-3 multisig addresses
+        // Founders Addresses: A vector of addresses
         vFounderAddress = 
         {
-            "", // Name
+            "SPfqCriDDxsaH854z3YHigCNUPfSdN3sr1", // Chris 
+            "SaSmUn7LkjmV2WUH1dKFK1xZR1FMRT4qrn", // Jimmy 
+            "SbfnZN1rPdFq4WsfUUjxphGFcfEits7JXH", // Scott 
+            "SSW62dCjdCxNbKiZdmJh5GLepauY1J1rXU", // Shelby 
+            "SW9GN4tZVfPftAQvGmZQLbK6NqePSs8fX1", // Loki 
         };
-        
-        // Infrastructure Addresses: A vector of 2-of-3 multisig addresses
+
+        // Infrastructure Addresses: A vector of addresses
         vInfrastructureAddress = 
         {
-            "", // Name
+            "SYSaqv2yChvf462gqmVX8VLrh3m6mXiPLd", // Infrastructure
         };
         
-        // Giveaway Addresses: A vector of 2-of-3 multisig addresses
+        // Giveaway Addresses: A vector of addresses
         vGiveawayAddress = 
         {
-            "", // Name
+            "SQnWFjgxMJyyMQK97gjdF8gYBUUH3kSWEA", // Giveaways
         };
     }
 };
@@ -347,23 +351,23 @@ public:
         // Founders Addresses: 
         vFounderAddress = 
         {
-            "c7K6smvBBNN4CFxAWnQFptmyWk1DtEtGNT", // Chris
-            "cAuzzQVDS9dx2jE7djxf43empta65XTwHv", // Jimmy
-            "c8SQXUgr7sFfSaRLFuo852iwGqjENRwvyY", // Scott
-            "c1Y5aJ78mqgQpCFEo8cwjL4275EkEt4zWp", // Shelby
-            "cMPZiLacQTfRqwSrG137NaGmVyZkSJQJf8", // Loki
+            "cHTa12xmjeDt4PykhVQLe9F1NGfayGfiC7", // Chris 
+            "c43Dy1h4Smp5EKjeF5sZew9SECVVUfkNnV", // Jimmy 
+            "c8wETLX6n3xbeNz4SAyf64E9vHPs3gNR2f", // Scott 
+            "c4wozCPLGwvuSXngEHaE8P9xMNzoaRU8Ss", // Shelby 
+            "cAbEZ8P6b5a1HbC5LDksMifnGvgrgRrND6", // Loki 
         };
         
         // Infrastructure Addresses:
         vInfrastructureAddress = 
         {
-            "cMVFs7e43DAMR6Bds6NPPcvMr5wJB2BEwm", // Infrastructure
+            "cFDCRyLcXFWCPMMyxUJajGCPdJLoyAzck6", // Infrastructure
         };
         
         // Giveaway Addresses:
         vGiveawayAddress = 
         {
-            "cDuFBwJ82XocLG3ZHoJqd5XsswSqEZhJou", // Giveaways
+            "c4NjsSBF4NGXbzxAJUiK1P1KfmxpxXiaaP", // Giveaways
         };
 
     }
@@ -477,19 +481,23 @@ public:
         // Founders Addresses: A vector of 2-of-3 multisig addresses
         vFounderAddress = 
         {
-            "", // Name
+            "c2uRLNyBD5cM56n4WDxHBY3aF88gmF6kJH", // Chris 
+            "cF31f7sBiufhX1xQ9Xg6W47jgPy2NqZ2nN", // Jimmy 
+            "cLeGwFJuVxs8qSLCEmFVMwCDHYXzNptmG7", // Scott 
+            "cMZgmvPhNGYfzJx7mNWsuxd5WrjxRyJh83", // Shelby 
+            "cKzFwcsWSKW4KoeiJGTqEv677frELvbacD", // Loki 
         };
         
         // Infrastructure Addresses: A vector of 2-of-3 multisig addresses
         vInfrastructureAddress = 
         {
-            "", // Name
+            "cC9WzRDphttg9nBCXj1wHMP2zSQURwzQ4n", // Infrastructure
         };
         
         // Giveaway Addresses: A vector of 2-of-3 multisig addresses
         vGiveawayAddress = 
         {
-            "", // Name
+            "c5M76MoQpWA5SqqKLiRWy8jpuT4Ubrcuqr", // Giveaways
         };
         
     }
