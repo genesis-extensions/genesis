@@ -1205,6 +1205,10 @@ CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams)
             if (subsidy <= BLOCK_REWARD_MIN)
             {
                 //LogPrintf("Subsidy %i too low, resetting to %i \n", subsidy, subsidy * BLOCK_REWARD_MIN);
+                if (subsidy == 0)
+                { 
+                    subsidy++;
+                }
                 subsidy = subsidy * BLOCK_REWARD_MIN;
             }
             else if (subsidy > BLOCK_REWARD_MAX)
