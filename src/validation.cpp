@@ -1184,7 +1184,9 @@ CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams)
         {
             // A normal block...
             // Get the most recent confirmed block's hash
-            CBlockIndex* pblockindex = chainActive[nHeight - COINBASE_MATURITY];
+            auto lookupBlockHeight = nHeight - COINBASE_MATURITY;
+            CBlockIndex* pblockindex = chainActive[lookupBlockHeight];
+            assert(pblockindex != nullptr);
             uint256  confirmedHash = pblockindex->GetBlockHash();
             //LogPrintf("Confirmed Hash for block %i: %s \n", nHeight - COINBASE_MATURITY, confirmedHash.GetHex());
             
