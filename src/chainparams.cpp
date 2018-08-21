@@ -190,6 +190,8 @@ public:
         vFixedSeeds = std::vector<SeedSpec6>(pnSeed6_main, pnSeed6_main + ARRAYLEN(pnSeed6_main));
         vSeeds.emplace_back("mainnet1.safecash.io", true);
         vSeeds.emplace_back("mainnet2.safecash.io", true);
+        vSeeds.emplace_back("mainnet3.safecash.io", true);
+        vSeeds.emplace_back("mainnet4.safecash.io", true);
 
         fDefaultConsistencyChecks = false;
         fRequireStandard = true;
