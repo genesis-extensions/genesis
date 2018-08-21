@@ -185,7 +185,7 @@ public:
         base58Prefixes[EXT_PUBLIC_KEY] = { 0x53, 0x41, 0x46, 0x45 };// 
         base58Prefixes[EXT_SECRET_KEY] = { 0x53, 0x61, 0x66, 0x65 };// 
 
-        bech32_hrp = "SCASH";
+        bech32_hrp = "scash";
 
         vFixedSeeds = std::vector<SeedSpec6>(pnSeed6_main, pnSeed6_main + ARRAYLEN(pnSeed6_main));
         vSeeds.emplace_back("mainnet1.safecash.io", true);
@@ -329,7 +329,7 @@ public:
         base58Prefixes[EXT_PUBLIC_KEY] = { 0x53, 0x4e, 0x55, 0x4c };// 
         base58Prefixes[EXT_SECRET_KEY] = { 0x53, 0x6f, 0x75, 0x6c };// 
 
-        bech32_hrp = "SCASHT";
+        bech32_hrp = "scasht";
 
         vFixedSeeds = std::vector<SeedSpec6>(pnSeed6_test, pnSeed6_test + ARRAYLEN(pnSeed6_test));
 
@@ -478,7 +478,7 @@ public:
         base58Prefixes[EXT_PUBLIC_KEY] = { 0x53, 0x4e, 0x55, 0x4c };// 
         base58Prefixes[EXT_SECRET_KEY] = { 0x53, 0x6f, 0x75, 0x6c };// 
         
-        bech32_hrp = "SCASHRT";
+        bech32_hrp = "scashrt";
 
         // Founders Addresses: A vector of 2-of-3 multisig addresses
         vFounderAddress = 
