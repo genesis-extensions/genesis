@@ -3522,6 +3522,8 @@ bool CChainState::AcceptBlock(const std::shared_ptr<const CBlock>& pblock, CVali
     // regardless of whether pruning is enabled; it should generally be safe to
     // not process unrequested blocks.
     bool fTooFarAhead = (pindex->nHeight > int(chainActive.Height() + MIN_BLOCKS_TO_KEEP));
+    // We don't have enough blocks to generate the random reward... yet
+    bool fTooFarAheadOfProcessing = (pindex->nHeight > int(chainActive.Height() + COINBASE_MATURITY)); 
 
     // TODO: Decouple this function from the block download logic by removing fRequested
     // This requires some new chain data structure to efficiently look up if a
@@ -3542,6 +3544,11 @@ bool CChainState::AcceptBlock(const std::shared_ptr<const CBlock>& pblock, CVali
         // request; don't process these.
         if (pindex->nChainWork < nMinimumChainWork) return true;
     }
+    else if (fRequested)
+    {
+        if (fTooFarAheadOfProcessing) return true;
+    }
+
     if (fNewBlock) *fNewBlock = true;
 
     if (!CheckBlock(block, state, chainparams.GetConsensus()) ||
