@@ -4,7 +4,7 @@
 
 #include <qt/qvalidatedlineedit.h>
 
-#include <qt/safecashaddressvalidator.h>
+#include <qt/genesisaddressvalidator.h>
 #include <qt/guiconstants.h>
 
 QValidatedLineEdit::QValidatedLineEdit(QWidget *parent) :

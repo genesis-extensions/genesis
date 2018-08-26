@@ -1,6 +1,6 @@
 all:
-	$(MAKE) -C ../../ test_safecash_qt
+	$(MAKE) -C ../../ test_genesis_qt
 clean:
-	$(MAKE) -C ../../ test_safecash_qt_clean
+	$(MAKE) -C ../../ test_genesis_qt_clean
 check:
-	$(MAKE) -C ../../ test_safecash_qt_check
+	$(MAKE) -C ../../ test_genesis_qt_check

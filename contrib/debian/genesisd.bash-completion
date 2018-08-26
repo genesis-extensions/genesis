@@ -1,0 +1,2 @@
+contrib/genesisd.bash-completion	genesisd
+contrib/genesis-cli.bash-completion	genesis-cli

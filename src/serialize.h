@@ -3,8 +3,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_SERIALIZE_H
-#define SAFECASH_SERIALIZE_H
+#ifndef GENESIS_SERIALIZE_H
+#define GENESIS_SERIALIZE_H
 
 #include <compat/endian.h>
 
@@ -963,4 +963,4 @@ size_t GetSerializeSize(const S& s, const T& t)
     return (CSizeComputer(s.GetType(), s.GetVersion()) << t).size();
 }
 
-#endif // SAFECASH_SERIALIZE_H
+#endif // GENESIS_SERIALIZE_H

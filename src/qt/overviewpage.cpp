@@ -5,7 +5,7 @@
 #include <qt/overviewpage.h>
 #include <qt/forms/ui_overviewpage.h>
 
-#include <qt/safecashunits.h>
+#include <qt/genesisunits.h>
 #include <qt/clientmodel.h>
 #include <qt/guiconstants.h>
 #include <qt/guiutil.h>
@@ -26,7 +26,7 @@ class TxViewDelegate : public QAbstractItemDelegate
     Q_OBJECT
 public:
     explicit TxViewDelegate(const PlatformStyle *_platformStyle, QObject *parent=nullptr):
-        QAbstractItemDelegate(parent), unit(SafeCashUnits::SCASH),
+        QAbstractItemDelegate(parent), unit(GenesisUnits::GENX),
         platformStyle(_platformStyle)
     {
 
@@ -84,7 +84,7 @@ public:
             foreground = option.palette.color(QPalette::Text);
         }
         painter->setPen(foreground);
-        QString amountText = SafeCashUnits::formatWithUnit(unit, amount, true, SafeCashUnits::separatorAlways);
+        QString amountText = GenesisUnits::formatWithUnit(unit, amount, true, GenesisUnits::separatorAlways);
         if(!confirmed)
         {
             amountText = QString("[") + amountText + QString("]");
@@ -163,14 +163,14 @@ void OverviewPage::setBalance(const CAmount& balance, const CAmount& unconfirmed
     currentWatchOnlyBalance = watchOnlyBalance;
     currentWatchUnconfBalance = watchUnconfBalance;
     currentWatchImmatureBalance = watchImmatureBalance;
-    ui->labelBalance->setText(SafeCashUnits::formatWithUnit(unit, balance, false, SafeCashUnits::separatorAlways));
-    ui->labelUnconfirmed->setText(SafeCashUnits::formatWithUnit(unit, unconfirmedBalance, false, SafeCashUnits::separatorAlways));
-    ui->labelImmature->setText(SafeCashUnits::formatWithUnit(unit, immatureBalance, false, SafeCashUnits::separatorAlways));
-    ui->labelTotal->setText(SafeCashUnits::formatWithUnit(unit, balance + unconfirmedBalance + immatureBalance, false, SafeCashUnits::separatorAlways));
-    ui->labelWatchAvailable->setText(SafeCashUnits::formatWithUnit(unit, watchOnlyBalance, false, SafeCashUnits::separatorAlways));
-    ui->labelWatchPending->setText(SafeCashUnits::formatWithUnit(unit, watchUnconfBalance, false, SafeCashUnits::separatorAlways));
-    ui->labelWatchImmature->setText(SafeCashUnits::formatWithUnit(unit, watchImmatureBalance, false, SafeCashUnits::separatorAlways));
-    ui->labelWatchTotal->setText(SafeCashUnits::formatWithUnit(unit, watchOnlyBalance + watchUnconfBalance + watchImmatureBalance, false, SafeCashUnits::separatorAlways));
+    ui->labelBalance->setText(GenesisUnits::formatWithUnit(unit, balance, false, GenesisUnits::separatorAlways));
+    ui->labelUnconfirmed->setText(GenesisUnits::formatWithUnit(unit, unconfirmedBalance, false, GenesisUnits::separatorAlways));
+    ui->labelImmature->setText(GenesisUnits::formatWithUnit(unit, immatureBalance, false, GenesisUnits::separatorAlways));
+    ui->labelTotal->setText(GenesisUnits::formatWithUnit(unit, balance + unconfirmedBalance + immatureBalance, false, GenesisUnits::separatorAlways));
+    ui->labelWatchAvailable->setText(GenesisUnits::formatWithUnit(unit, watchOnlyBalance, false, GenesisUnits::separatorAlways));
+    ui->labelWatchPending->setText(GenesisUnits::formatWithUnit(unit, watchUnconfBalance, false, GenesisUnits::separatorAlways));
+    ui->labelWatchImmature->setText(GenesisUnits::formatWithUnit(unit, watchImmatureBalance, false, GenesisUnits::separatorAlways));
+    ui->labelWatchTotal->setText(GenesisUnits::formatWithUnit(unit, watchOnlyBalance + watchUnconfBalance + watchImmatureBalance, false, GenesisUnits::separatorAlways));
 
     // only show immature (newly mined) balance if it's non-zero, so as not to complicate things
     // for the non-mining users
@@ -236,7 +236,7 @@ void OverviewPage::setWalletModel(WalletModel *model)
         connect(model, SIGNAL(notifyWatchonlyChanged(bool)), this, SLOT(updateWatchOnlyLabels(bool)));
     }
 
-    // update the display unit, to not use the default ("SCASH")
+    // update the display unit, to not use the default ("GENX")
     updateDisplayUnit();
 }
 

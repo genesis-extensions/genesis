@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_QT_CLIENTMODEL_H
-#define SAFECASH_QT_CLIENTMODEL_H
+#ifndef GENESIS_QT_CLIENTMODEL_H
+#define GENESIS_QT_CLIENTMODEL_H
 
 #include <QObject>
 #include <QDateTime>
@@ -34,7 +34,7 @@ enum NumConnections {
     CONNECTIONS_ALL  = (CONNECTIONS_IN | CONNECTIONS_OUT),
 };
 
-/** Model for SafeCash network client. */
+/** Model for Genesis network client. */
 class ClientModel : public QObject
 {
     Q_OBJECT
@@ -116,4 +116,4 @@ public Q_SLOTS:
     void updateBanlist();
 };
 
-#endif // SAFECASH_QT_CLIENTMODEL_H
+#endif // GENESIS_QT_CLIENTMODEL_H

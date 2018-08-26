@@ -9,7 +9,7 @@
     Raisin black: 23222f */
 
 WalletFrame {
-	background-image: url(':/images/safecash-logo') top left;
+	background-image: url(':/images/genesis-logo') top left;
 	background-repeat: no-repeat;
 	background-color:qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: .01 #23222f, stop: .25 #2c2b3b, stop: .75 #2c2b3b, stop: 1 #23222f);
 	color: #fff !important;

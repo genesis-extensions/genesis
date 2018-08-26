@@ -3,8 +3,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_WARNINGS_H
-#define SAFECASH_WARNINGS_H
+#ifndef GENESIS_WARNINGS_H
+#define GENESIS_WARNINGS_H
 
 #include <stdlib.h>
 #include <string>
@@ -24,4 +24,4 @@ std::string GetWarnings(const std::string& strFor);
 
 static const bool DEFAULT_TESTSAFEMODE = false;
 
-#endif //  SAFECASH_WARNINGS_H
+#endif //  GENESIS_WARNINGS_H

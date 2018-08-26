@@ -2,11 +2,11 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_ZMQ_ZMQCONFIG_H
-#define SAFECASH_ZMQ_ZMQCONFIG_H
+#ifndef GENESIS_ZMQ_ZMQCONFIG_H
+#define GENESIS_ZMQ_ZMQCONFIG_H
 
 #if defined(HAVE_CONFIG_H)
-#include <config/safecash-config.h>
+#include <config/genesis-config.h>
 #endif
 
 #include <stdarg.h>
@@ -21,4 +21,4 @@
 
 void zmqError(const char *str);
 
-#endif // SAFECASH_ZMQ_ZMQCONFIG_H
+#endif // GENESIS_ZMQ_ZMQCONFIG_H

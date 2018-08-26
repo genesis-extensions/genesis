@@ -12,7 +12,7 @@
 #include <script/script_error.h>
 #include <script/sign.h>
 #include <script/ismine.h>
-#include <test/test_safecash.h>
+#include <test/test_genesis.h>
 
 #include <vector>
 

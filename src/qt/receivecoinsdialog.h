@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_QT_RECEIVECOINSDIALOG_H
-#define SAFECASH_QT_RECEIVECOINSDIALOG_H
+#ifndef GENESIS_QT_RECEIVECOINSDIALOG_H
+#define GENESIS_QT_RECEIVECOINSDIALOG_H
 
 #include <qt/guiutil.h>
 
@@ -26,7 +26,7 @@ QT_BEGIN_NAMESPACE
 class QModelIndex;
 QT_END_NAMESPACE
 
-/** Dialog for requesting payment of SafeCash */
+/** Dialog for requesting payment of Genesis */
 class ReceiveCoinsDialog : public QDialog
 {
     Q_OBJECT
@@ -77,4 +77,4 @@ private Q_SLOTS:
     void copyAmount();
 };
 
-#endif // SAFECASH_QT_RECEIVECOINSDIALOG_H
+#endif // GENESIS_QT_RECEIVECOINSDIALOG_H

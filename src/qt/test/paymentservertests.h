@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_QT_TEST_PAYMENTSERVERTESTS_H
-#define SAFECASH_QT_TEST_PAYMENTSERVERTESTS_H
+#ifndef GENESIS_QT_TEST_PAYMENTSERVERTESTS_H
+#define GENESIS_QT_TEST_PAYMENTSERVERTESTS_H
 
 #include <qt/paymentserver.h>
 
@@ -32,4 +32,4 @@ public:
     SendCoinsRecipient recipient;
 };
 
-#endif // SAFECASH_QT_TEST_PAYMENTSERVERTESTS_H
+#endif // GENESIS_QT_TEST_PAYMENTSERVERTESTS_H

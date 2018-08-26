@@ -1,21 +1,21 @@
 Shared Libraries
 ================
 
-## safecashconsensus
+## genesisconsensus
 
-The purpose of this library is to make the verification functionality that is critical to SafeCash Officials's consensus available to other applications, e.g. to language bindings.
+The purpose of this library is to make the verification functionality that is critical to Genesis Officials's consensus available to other applications, e.g. to language bindings.
 
 ### API
 
-The interface is defined in the C header `safecashconsensus.h` located in  `src/script/safecashconsensus.h`.
+The interface is defined in the C header `genesisconsensus.h` located in  `src/script/genesisconsensus.h`.
 
 #### Version
 
-`safecashconsensus_version` returns an `unsigned int` with the API version *(currently at an experimental `0`)*.
+`genesisconsensus_version` returns an `unsigned int` with the API version *(currently at an experimental `0`)*.
 
 #### Script Validation
 
-`safecashconsensus_verify_script` returns an `int` with the status of the verification. It will be `1` if the input script correctly spends the previous output `scriptPubKey`.
+`genesisconsensus_verify_script` returns an `int` with the status of the verification. It will be `1` if the input script correctly spends the previous output `scriptPubKey`.
 
 ##### Parameters
 - `const unsigned char *scriptPubKey` - The previous output script that encumbers spending.
@@ -24,20 +24,20 @@ The interface is defined in the C header `safecashconsensus.h` located in  `src/
 - `unsigned int txToLen` - The number of bytes for the `txTo`.
 - `unsigned int nIn` - The index of the input in `txTo` that spends the `scriptPubKey`.
 - `unsigned int flags` - The script validation flags *(see below)*.
-- `safecashconsensus_error* err` - Will have the error/success code for the operation *(see below)*.
+- `genesisconsensus_error* err` - Will have the error/success code for the operation *(see below)*.
 
 ##### Script Flags
-- `safecashconsensus_SCRIPT_FLAGS_VERIFY_NONE`
-- `safecashconsensus_SCRIPT_FLAGS_VERIFY_P2SH` - Evaluate P2SH ([BIP16](https://github.com/bitcoin/bips/blob/master/bip-0016.mediawiki)) subscripts
-- `safecashconsensus_SCRIPT_FLAGS_VERIFY_DERSIG` - Enforce strict DER ([BIP66](https://github.com/bitcoin/bips/blob/master/bip-0066.mediawiki)) compliance
-- `safecashconsensus_SCRIPT_FLAGS_VERIFY_NULLDUMMY` - Enforce NULLDUMMY ([BIP147](https://github.com/bitcoin/bips/blob/master/bip-0147.mediawiki))
-- `safecashconsensus_SCRIPT_FLAGS_VERIFY_CHECKLOCKTIMEVERIFY` - Enable CHECKLOCKTIMEVERIFY ([BIP65](https://github.com/bitcoin/bips/blob/master/bip-0065.mediawiki))
-- `safecashconsensus_SCRIPT_FLAGS_VERIFY_CHECKSEQUENCEVERIFY` - Enable CHECKSEQUENCEVERIFY ([BIP112](https://github.com/bitcoin/bips/blob/master/bip-0112.mediawiki))
-- `safecashconsensus_SCRIPT_FLAGS_VERIFY_WITNESS` - Enable WITNESS ([BIP141](https://github.com/bitcoin/bips/blob/master/bip-0141.mediawiki))
+- `genesisconsensus_SCRIPT_FLAGS_VERIFY_NONE`
+- `genesisconsensus_SCRIPT_FLAGS_VERIFY_P2SH` - Evaluate P2SH ([BIP16](https://github.com/bitcoin/bips/blob/master/bip-0016.mediawiki)) subscripts
+- `genesisconsensus_SCRIPT_FLAGS_VERIFY_DERSIG` - Enforce strict DER ([BIP66](https://github.com/bitcoin/bips/blob/master/bip-0066.mediawiki)) compliance
+- `genesisconsensus_SCRIPT_FLAGS_VERIFY_NULLDUMMY` - Enforce NULLDUMMY ([BIP147](https://github.com/bitcoin/bips/blob/master/bip-0147.mediawiki))
+- `genesisconsensus_SCRIPT_FLAGS_VERIFY_CHECKLOCKTIMEVERIFY` - Enable CHECKLOCKTIMEVERIFY ([BIP65](https://github.com/bitcoin/bips/blob/master/bip-0065.mediawiki))
+- `genesisconsensus_SCRIPT_FLAGS_VERIFY_CHECKSEQUENCEVERIFY` - Enable CHECKSEQUENCEVERIFY ([BIP112](https://github.com/bitcoin/bips/blob/master/bip-0112.mediawiki))
+- `genesisconsensus_SCRIPT_FLAGS_VERIFY_WITNESS` - Enable WITNESS ([BIP141](https://github.com/bitcoin/bips/blob/master/bip-0141.mediawiki))
 
 ##### Errors
-- `safecashconsensus_ERR_OK` - No errors with input parameters *(see the return value of `safecashconsensus_verify_script` for the verification status)*
-- `safecashconsensus_ERR_TX_INDEX` - An invalid index for `txTo`
-- `safecashconsensus_ERR_TX_SIZE_MISMATCH` - `txToLen` did not match with the size of `txTo`
-- `safecashconsensus_ERR_DESERIALIZE` - An error deserializing `txTo`
-- `safecashconsensus_ERR_AMOUNT_REQUIRED` - Input amount is required if WITNESS is used
+- `genesisconsensus_ERR_OK` - No errors with input parameters *(see the return value of `genesisconsensus_verify_script` for the verification status)*
+- `genesisconsensus_ERR_TX_INDEX` - An invalid index for `txTo`
+- `genesisconsensus_ERR_TX_SIZE_MISMATCH` - `txToLen` did not match with the size of `txTo`
+- `genesisconsensus_ERR_DESERIALIZE` - An error deserializing `txTo`
+- `genesisconsensus_ERR_AMOUNT_REQUIRED` - Input amount is required if WITNESS is used

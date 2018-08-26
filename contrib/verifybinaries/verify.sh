@@ -18,7 +18,7 @@ function clean_up {
    done
 }
 
-WORKINGDIR="/tmp/safecash_verify_binaries"
+WORKINGDIR="/tmp/genesis_verify_binaries"
 TMPFILE="hashes.tmp"
 
 SIGNATUREFILENAME="SHA256SUMS.asc"

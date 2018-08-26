@@ -14,7 +14,7 @@
 #include <util.h>
 #include <validation.h>
 
-#include <test/test_safecash.h>
+#include <test/test_genesis.h>
 
 #include <stdint.h>
 

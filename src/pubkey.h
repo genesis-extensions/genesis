@@ -4,8 +4,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_PUBKEY_H
-#define SAFECASH_PUBKEY_H
+#ifndef GENESIS_PUBKEY_H
+#define GENESIS_PUBKEY_H
 
 #include <hash.h>
 #include <serialize.h>
@@ -254,4 +254,4 @@ public:
     ~ECCVerifyHandle();
 };
 
-#endif // SAFECASH_PUBKEY_H
+#endif // GENESIS_PUBKEY_H

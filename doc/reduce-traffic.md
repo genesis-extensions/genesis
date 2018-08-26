@@ -3,7 +3,7 @@ Reduce Traffic
 
 Some node operators need to deal with bandwidth caps imposed by their ISPs.
 
-By default, SafeCash Official allows up to 125 connections to different peers, 8 of which are outbound. You can therefore, have at most 117 inbound connections.
+By default, Genesis Official allows up to 125 connections to different peers, 8 of which are outbound. You can therefore, have at most 117 inbound connections.
 
 The default settings can result in relatively significant traffic consumption.
 
@@ -21,4 +21,4 @@ Disabling listening will result in fewer nodes connected (remember the maximum o
 
 ## 3. Reduce maximum connections (`-maxconnections=<num>`)
 
-Reducing the maximum connected nodes to a minimum could be desirable if traffic limits are tiny. Keep in mind that safecash's trustless model works best if you are connected to a handful of nodes.
+Reducing the maximum connected nodes to a minimum could be desirable if traffic limits are tiny. Keep in mind that genesis's trustless model works best if you are connected to a handful of nodes.

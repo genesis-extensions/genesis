@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_BLOCK_ENCODINGS_H
-#define SAFECASH_BLOCK_ENCODINGS_H
+#ifndef GENESIS_BLOCK_ENCODINGS_H
+#define GENESIS_BLOCK_ENCODINGS_H
 
 #include <primitives/block.h>
 

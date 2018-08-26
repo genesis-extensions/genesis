@@ -4,7 +4,7 @@
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 """Test BIP68 implementation."""
 
-from test_framework.test_framework import SafeCashTestFramework
+from test_framework.test_framework import GenesisTestFramework
 from test_framework.util import *
 from test_framework.blocktools import *
 
@@ -16,7 +16,7 @@ SEQUENCE_LOCKTIME_MASK = 0x0000ffff
 # RPC error for non-BIP68 final transactions
 NOT_FINAL_ERROR = "64: non-BIP68-final"
 
-class BIP68Test(SafeCashTestFramework):
+class BIP68Test(GenesisTestFramework):
     def set_test_params(self):
         self.num_nodes = 2
         self.extra_args = [[], ["-acceptnonstdtxn=0"]]
@@ -53,7 +53,7 @@ class BIP68Test(SafeCashTestFramework):
     def test_disable_flag(self):
         # Create some unconfirmed inputs
         new_addr = self.nodes[0].getnewaddress()
-        self.nodes[0].sendtoaddress(new_addr, 2) # send 2 SCASH
+        self.nodes[0].sendtoaddress(new_addr, 2) # send 2 GENX
 
         utxos = self.nodes[0].listunspent(0, 0)
         assert(len(utxos) > 0)
@@ -61,7 +61,7 @@ class BIP68Test(SafeCashTestFramework):
         utxo = utxos[0]
 
         tx1 = CTransaction()
-        value = int(scashi_round(utxo["amount"] - self.relayfee)*COIN)
+        value = int(genxi_round(utxo["amount"] - self.relayfee)*COIN)
 
         # Check that the disable flag disables relative locktime.
         # If sequence locks were used, this would require 1 block for the

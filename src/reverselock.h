@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_REVERSELOCK_H
-#define SAFECASH_REVERSELOCK_H
+#ifndef GENESIS_REVERSELOCK_H
+#define GENESIS_REVERSELOCK_H
 
 /**
  * An RAII-style reverse lock. Unlocks on construction and locks on destruction.
@@ -31,4 +31,4 @@ private:
     Lock templock;
 };
 
-#endif // SAFECASH_REVERSELOCK_H
+#endif // GENESIS_REVERSELOCK_H

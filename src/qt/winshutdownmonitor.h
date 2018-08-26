@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_QT_WINSHUTDOWNMONITOR_H
-#define SAFECASH_QT_WINSHUTDOWNMONITOR_H
+#ifndef GENESIS_QT_WINSHUTDOWNMONITOR_H
+#define GENESIS_QT_WINSHUTDOWNMONITOR_H
 
 #ifdef WIN32
 #include <QByteArray>
@@ -26,4 +26,4 @@ public:
 #endif
 #endif
 
-#endif // SAFECASH_QT_WINSHUTDOWNMONITOR_H
+#endif // GENESIS_QT_WINSHUTDOWNMONITOR_H

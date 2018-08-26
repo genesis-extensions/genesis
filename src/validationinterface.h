@@ -3,8 +3,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_VALIDATIONINTERFACE_H
-#define SAFECASH_VALIDATIONINTERFACE_H
+#ifndef GENESIS_VALIDATIONINTERFACE_H
+#define GENESIS_VALIDATIONINTERFACE_H
 
 #include <primitives/transaction.h> // CTransaction(Ref)
 
@@ -158,4 +158,4 @@ public:
 
 CMainSignals& GetMainSignals();
 
-#endif // SAFECASH_VALIDATIONINTERFACE_H
+#endif // GENESIS_VALIDATIONINTERFACE_H

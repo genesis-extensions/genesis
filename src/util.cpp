@@ -82,8 +82,8 @@
 // Application startup time (used for uptime calculation)
 const int64_t nStartupTime = GetTime();
 
-const char * const SAFECASH_CONF_FILENAME = "safecash.conf";
-const char * const SAFECASH_PID_FILENAME = "safecashd.pid";
+const char * const GENESIS_CONF_FILENAME = "genesis.conf";
+const char * const GENESIS_PID_FILENAME = "genesisd.pid";
 const char * const DEFAULT_DEBUGLOGFILE = "debug.log";
 
 ArgsManager gArgs;
@@ -559,7 +559,7 @@ static std::string FormatException(const std::exception* pex, const char* pszThr
     char pszModule[MAX_PATH] = "";
     GetModuleFileNameA(nullptr, pszModule, sizeof(pszModule));
 #else
-    const char* pszModule = "safecash";
+    const char* pszModule = "genesis";
 #endif
     if (pex)
         return strprintf(
@@ -578,13 +578,13 @@ void PrintExceptionContinue(const std::exception* pex, const char* pszThread)
 
 fs::path GetDefaultDataDir()
 {
-    // Windows < Vista: C:\Documents and Settings\Username\Application Data\SafeCash
-    // Windows >= Vista: C:\Users\Username\AppData\Roaming\SafeCash
-    // Mac: ~/Library/Application Support/SafeCash
-    // Unix: ~/.safecash
+    // Windows < Vista: C:\Documents and Settings\Username\Application Data\Genesis
+    // Windows >= Vista: C:\Users\Username\AppData\Roaming\Genesis
+    // Mac: ~/Library/Application Support/Genesis
+    // Unix: ~/.genesis
 #ifdef WIN32
     // Windows
-    return GetSpecialFolderPath(CSIDL_APPDATA) / "SafeCash";
+    return GetSpecialFolderPath(CSIDL_APPDATA) / "Genesis";
 #else
     fs::path pathRet;
     char* pszHome = getenv("HOME");
@@ -594,10 +594,10 @@ fs::path GetDefaultDataDir()
         pathRet = fs::path(pszHome);
 #ifdef MAC_OSX
     // Mac
-    return pathRet / "Library/Application Support/SafeCash";
+    return pathRet / "Library/Application Support/Genesis";
 #else
     // Unix
-    return pathRet / ".safecash";
+    return pathRet / ".genesis";
 #endif
 #endif
 }
@@ -659,7 +659,7 @@ void ArgsManager::ReadConfigFile(const std::string& confPath)
 {
     fs::ifstream streamConfig(GetConfigFile(confPath));
     if (!streamConfig.good())
-        return; // No safecash.conf file is OK
+        return; // No genesis.conf file is OK
 
     {
         LOCK(cs_args);
@@ -668,7 +668,7 @@ void ArgsManager::ReadConfigFile(const std::string& confPath)
 
         for (boost::program_options::detail::config_file_iterator it(streamConfig, setOptions), end; it != end; ++it)
         {
-            // Don't overwrite existing settings so command line settings override safecash.conf
+            // Don't overwrite existing settings so command line settings override genesis.conf
             std::string strKey = std::string("-") + it->string_key;
             std::string strValue = it->value[0];
             InterpretNegativeSetting(strKey, strValue);
@@ -687,7 +687,7 @@ void ArgsManager::ReadConfigFile(const std::string& confPath)
 #ifndef WIN32
 fs::path GetPidFile()
 {
-    fs::path pathPidFile(gArgs.GetArg("-pid", SAFECASH_PID_FILENAME));
+    fs::path pathPidFile(gArgs.GetArg("-pid", GENESIS_PID_FILENAME));
     if (!pathPidFile.is_complete()) pathPidFile = GetDataDir() / pathPidFile;
     return pathPidFile;
 }
@@ -948,9 +948,9 @@ std::string CopyrightHolders(const std::string& strPrefix)
 {
     std::string strCopyrightHolders = strPrefix + strprintf(_(COPYRIGHT_HOLDERS), _(COPYRIGHT_HOLDERS_SUBSTITUTION));
 
-    // Check for untranslated substitution to make sure SafeCash Official copyright is not removed by accident
-    if (strprintf(COPYRIGHT_HOLDERS, COPYRIGHT_HOLDERS_SUBSTITUTION).find("SafeCash") == std::string::npos) {
-        strCopyrightHolders += "\n" + strPrefix + "The SafeCash Official developers";
+    // Check for untranslated substitution to make sure Genesis Official copyright is not removed by accident
+    if (strprintf(COPYRIGHT_HOLDERS, COPYRIGHT_HOLDERS_SUBSTITUTION).find("Genesis") == std::string::npos) {
+        strCopyrightHolders += "\n" + strPrefix + "The Genesis Official developers";
     }
     return strCopyrightHolders;
 }

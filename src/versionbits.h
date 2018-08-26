@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_CONSENSUS_VERSIONBITS
-#define SAFECASH_CONSENSUS_VERSIONBITS
+#ifndef GENESIS_CONSENSUS_VERSIONBITS
+#define GENESIS_CONSENSUS_VERSIONBITS
 
 #include <chain.h>
 #include <map>

@@ -16,7 +16,7 @@ osx=true
 SIGNER=
 VERSION=
 commit=false
-url=https://github.com/safecashofficial/safecash
+url=https://github.com/genesisofficial/genesis
 proc=2
 mem=2000
 lxc=true
@@ -38,7 +38,7 @@ version		Version number, commit, or branch to build. If building a commit or bra
 
 Options:
 -c|--commit	Indicate that the version argument is for a commit or branch
--u|--url	Specify the URL of the repository. Default is https://github.com/safecashofficial/safecash
+-u|--url	Specify the URL of the repository. Default is https://github.com/genesisofficial/genesis
 -v|--verify 	Verify the Gitian build
 -b|--build	Do a Gitian build
 -s|--sign	Make signed binaries for Windows and Mac OSX
@@ -253,7 +253,7 @@ popd
 if [[ $build = true ]]
 then
 	# Make output folder
-	mkdir -p ./safecash-binaries/${VERSION}
+	mkdir -p ./genesis-binaries/${VERSION}
 	
 	# Build Dependencies
 	echo ""
@@ -263,7 +263,7 @@ then
 	mkdir -p inputs
 	wget -N -P inputs $osslPatchUrl
 	wget -N -P inputs $osslTarUrl
-	make -C ../safecash/depends download SOURCES_PATH=`pwd`/cache/common
+	make -C ../genesis/depends download SOURCES_PATH=`pwd`/cache/common
 
 	# Linux
 	if [[ $linux = true ]]
@@ -271,9 +271,9 @@ then
             echo ""
 	    echo "Compiling ${VERSION} Linux"
 	    echo ""
-	    ./bin/gbuild -j ${proc} -m ${mem} --commit safecash=${COMMIT} --url safecash=${url} ../safecash/contrib/gitian-descriptors/gitian-linux.yml
-	    ./bin/gsign -p $signProg --signer $SIGNER --release ${VERSION}-linux --destination ../gitian.sigs/ ../safecash/contrib/gitian-descriptors/gitian-linux.yml
-	    mv build/out/safecash-*.tar.gz build/out/src/safecash-*.tar.gz ../safecash-binaries/${VERSION}
+	    ./bin/gbuild -j ${proc} -m ${mem} --commit genesis=${COMMIT} --url genesis=${url} ../genesis/contrib/gitian-descriptors/gitian-linux.yml
+	    ./bin/gsign -p $signProg --signer $SIGNER --release ${VERSION}-linux --destination ../gitian.sigs/ ../genesis/contrib/gitian-descriptors/gitian-linux.yml
+	    mv build/out/genesis-*.tar.gz build/out/src/genesis-*.tar.gz ../genesis-binaries/${VERSION}
 	fi
 	# Windows
 	if [[ $windows = true ]]
@@ -281,10 +281,10 @@ then
 	    echo ""
 	    echo "Compiling ${VERSION} Windows"
 	    echo ""
-	    ./bin/gbuild -j ${proc} -m ${mem} --commit safecash=${COMMIT} --url safecash=${url} ../safecash/contrib/gitian-descriptors/gitian-win.yml
-	    ./bin/gsign -p $signProg --signer $SIGNER --release ${VERSION}-win-unsigned --destination ../gitian.sigs/ ../safecash/contrib/gitian-descriptors/gitian-win.yml
-	    mv build/out/safecash-*-win-unsigned.tar.gz inputs/bitcoin-win-unsigned.tar.gz
-	    mv build/out/safecash-*.zip build/out/safecash-*.exe ../safecash-binaries/${VERSION}
+	    ./bin/gbuild -j ${proc} -m ${mem} --commit genesis=${COMMIT} --url genesis=${url} ../genesis/contrib/gitian-descriptors/gitian-win.yml
+	    ./bin/gsign -p $signProg --signer $SIGNER --release ${VERSION}-win-unsigned --destination ../gitian.sigs/ ../genesis/contrib/gitian-descriptors/gitian-win.yml
+	    mv build/out/genesis-*-win-unsigned.tar.gz inputs/bitcoin-win-unsigned.tar.gz
+	    mv build/out/genesis-*.zip build/out/genesis-*.exe ../genesis-binaries/${VERSION}
 	fi
 	# Mac OSX
 	if [[ $osx = true ]]
@@ -292,10 +292,10 @@ then
 	    echo ""
 	    echo "Compiling ${VERSION} Mac OSX"
 	    echo ""
-	    ./bin/gbuild -j ${proc} -m ${mem} --commit safecash=${COMMIT} --url safecash=${url} ../safecash/contrib/gitian-descriptors/gitian-osx.yml
-	    ./bin/gsign -p $signProg --signer $SIGNER --release ${VERSION}-osx-unsigned --destination ../gitian.sigs/ ../safecash/contrib/gitian-descriptors/gitian-osx.yml
-	    mv build/out/safecash-*-osx-unsigned.tar.gz inputs/bitcoin-osx-unsigned.tar.gz
-	    mv build/out/safecash-*.tar.gz build/out/safecash-*.dmg ../safecash-binaries/${VERSION}
+	    ./bin/gbuild -j ${proc} -m ${mem} --commit genesis=${COMMIT} --url genesis=${url} ../genesis/contrib/gitian-descriptors/gitian-osx.yml
+	    ./bin/gsign -p $signProg --signer $SIGNER --release ${VERSION}-osx-unsigned --destination ../gitian.sigs/ ../genesis/contrib/gitian-descriptors/gitian-osx.yml
+	    mv build/out/genesis-*-osx-unsigned.tar.gz inputs/bitcoin-osx-unsigned.tar.gz
+	    mv build/out/genesis-*.tar.gz build/out/genesis-*.dmg ../genesis-binaries/${VERSION}
 	fi
 	popd
 
@@ -322,27 +322,27 @@ then
 	echo ""
 	echo "Verifying v${VERSION} Linux"
 	echo ""
-	./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-linux ../safecash/contrib/gitian-descriptors/gitian-linux.yml
+	./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-linux ../genesis/contrib/gitian-descriptors/gitian-linux.yml
 	# Windows
 	echo ""
 	echo "Verifying v${VERSION} Windows"
 	echo ""
-	./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-win-unsigned ../safecash/contrib/gitian-descriptors/gitian-win.yml
+	./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-win-unsigned ../genesis/contrib/gitian-descriptors/gitian-win.yml
 	# Mac OSX	
 	echo ""
 	echo "Verifying v${VERSION} Mac OSX"
 	echo ""	
-	./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-osx-unsigned ../safecash/contrib/gitian-descriptors/gitian-osx.yml
+	./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-osx-unsigned ../genesis/contrib/gitian-descriptors/gitian-osx.yml
 	# Signed Windows
 	echo ""
 	echo "Verifying v${VERSION} Signed Windows"
 	echo ""
-	./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-osx-signed ../safecash/contrib/gitian-descriptors/gitian-osx-signer.yml
+	./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-osx-signed ../genesis/contrib/gitian-descriptors/gitian-osx-signer.yml
 	# Signed Mac OSX
 	echo ""
 	echo "Verifying v${VERSION} Signed Mac OSX"
 	echo ""
-	./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-osx-signed ../safecash/contrib/gitian-descriptors/gitian-osx-signer.yml	
+	./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-osx-signed ../genesis/contrib/gitian-descriptors/gitian-osx-signer.yml	
 	popd
 fi
 
@@ -357,10 +357,10 @@ then
 	    echo ""
 	    echo "Signing ${VERSION} Windows"
 	    echo ""
-	    ./bin/gbuild -i --commit signature=${COMMIT} ../safecash/contrib/gitian-descriptors/gitian-win-signer.yml
-	    ./bin/gsign -p $signProg --signer $SIGNER --release ${VERSION}-win-signed --destination ../gitian.sigs/ ../safecash/contrib/gitian-descriptors/gitian-win-signer.yml
-	    mv build/out/safecash-*win64-setup.exe ../safecash-binaries/${VERSION}
-	    mv build/out/safecash-*win32-setup.exe ../safecash-binaries/${VERSION}
+	    ./bin/gbuild -i --commit signature=${COMMIT} ../genesis/contrib/gitian-descriptors/gitian-win-signer.yml
+	    ./bin/gsign -p $signProg --signer $SIGNER --release ${VERSION}-win-signed --destination ../gitian.sigs/ ../genesis/contrib/gitian-descriptors/gitian-win-signer.yml
+	    mv build/out/genesis-*win64-setup.exe ../genesis-binaries/${VERSION}
+	    mv build/out/genesis-*win32-setup.exe ../genesis-binaries/${VERSION}
 	fi
 	# Sign Mac OSX
 	if [[ $osx = true ]]
@@ -368,9 +368,9 @@ then
 	    echo ""
 	    echo "Signing ${VERSION} Mac OSX"
 	    echo ""
-	    ./bin/gbuild -i --commit signature=${COMMIT} ../safecash/contrib/gitian-descriptors/gitian-osx-signer.yml
-	    ./bin/gsign -p $signProg --signer $SIGNER --release ${VERSION}-osx-signed --destination ../gitian.sigs/ ../safecash/contrib/gitian-descriptors/gitian-osx-signer.yml
-	    mv build/out/safecash-osx-signed.dmg ../safecash-binaries/${VERSION}/safecash-${VERSION}-osx.dmg
+	    ./bin/gbuild -i --commit signature=${COMMIT} ../genesis/contrib/gitian-descriptors/gitian-osx-signer.yml
+	    ./bin/gsign -p $signProg --signer $SIGNER --release ${VERSION}-osx-signed --destination ../gitian.sigs/ ../genesis/contrib/gitian-descriptors/gitian-osx-signer.yml
+	    mv build/out/genesis-osx-signed.dmg ../genesis-binaries/${VERSION}/genesis-${VERSION}-osx.dmg
 	fi
 	popd
 

@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_QT_GUIUTIL_H
-#define SAFECASH_QT_GUIUTIL_H
+#ifndef GENESIS_QT_GUIUTIL_H
+#define GENESIS_QT_GUIUTIL_H
 
 #include <amount.h>
 #include <fs.h>
@@ -29,7 +29,7 @@ class QUrl;
 class QWidget;
 QT_END_NAMESPACE
 
-/** Utility functions used by the SafeCash Qt UI.
+/** Utility functions used by the Genesis Qt UI.
  */
 namespace GUIUtil
 {
@@ -47,10 +47,10 @@ namespace GUIUtil
     void setupAddressWidget(QValidatedLineEdit *widget, QWidget *parent);
     void setupAmountWidget(QLineEdit *widget, QWidget *parent);
 
-    // Parse "safecash:" URI into recipient object, return true on successful parsing
-    bool parseSafeCashURI(const QUrl &uri, SendCoinsRecipient *out);
-    bool parseSafeCashURI(QString uri, SendCoinsRecipient *out);
-    QString formatSafeCashURI(const SendCoinsRecipient &info);
+    // Parse "genesis:" URI into recipient object, return true on successful parsing
+    bool parseGenesisURI(const QUrl &uri, SendCoinsRecipient *out);
+    bool parseGenesisURI(QString uri, SendCoinsRecipient *out);
+    QString formatGenesisURI(const SendCoinsRecipient &info);
 
     // Returns true if given address+amount meets "dust" definition
     bool isDust(const QString& address, const CAmount& amount);
@@ -117,7 +117,7 @@ namespace GUIUtil
     void openDebugLogfile();
 
     // Open the config file
-    bool openSafeCashConf();
+    bool openGenesisConf();
 
     // Replace invalid default fonts with known good ones
     void SubstituteFonts(const QString& language);
@@ -253,4 +253,4 @@ namespace GUIUtil
 
 } // namespace GUIUtil
 
-#endif // SAFECASH_QT_GUIUTIL_H
+#endif // GENESIS_QT_GUIUTIL_H

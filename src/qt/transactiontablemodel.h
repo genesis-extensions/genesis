@@ -2,10 +2,10 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_QT_TRANSACTIONTABLEMODEL_H
-#define SAFECASH_QT_TRANSACTIONTABLEMODEL_H
+#ifndef GENESIS_QT_TRANSACTIONTABLEMODEL_H
+#define GENESIS_QT_TRANSACTIONTABLEMODEL_H
 
-#include <qt/safecashunits.h>
+#include <qt/genesisunits.h>
 
 #include <QAbstractTableModel>
 #include <QStringList>
@@ -98,7 +98,7 @@ private:
     QString formatTxDate(const TransactionRecord *wtx) const;
     QString formatTxType(const TransactionRecord *wtx) const;
     QString formatTxToAddress(const TransactionRecord *wtx, bool tooltip) const;
-    QString formatTxAmount(const TransactionRecord *wtx, bool showUnconfirmed=true, SafeCashUnits::SeparatorStyle separators=SafeCashUnits::separatorStandard) const;
+    QString formatTxAmount(const TransactionRecord *wtx, bool showUnconfirmed=true, GenesisUnits::SeparatorStyle separators=GenesisUnits::separatorStandard) const;
     QString formatTooltip(const TransactionRecord *rec) const;
     QVariant txStatusDecoration(const TransactionRecord *wtx) const;
     QVariant txWatchonlyDecoration(const TransactionRecord *wtx) const;
@@ -117,4 +117,4 @@ public Q_SLOTS:
     friend class TransactionTablePriv;
 };
 
-#endif // SAFECASH_QT_TRANSACTIONTABLEMODEL_H
+#endif // GENESIS_QT_TRANSACTIONTABLEMODEL_H

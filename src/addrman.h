@@ -3,8 +3,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_ADDRMAN_H
-#define SAFECASH_ADDRMAN_H
+#ifndef GENESIS_ADDRMAN_H
+#define GENESIS_ADDRMAN_H
 
 #include <netaddress.h>
 #include <protocol.h>
@@ -601,4 +601,4 @@ public:
 
 };
 
-#endif // SAFECASH_ADDRMAN_H
+#endif // GENESIS_ADDRMAN_H

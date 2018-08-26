@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_FS_H
-#define SAFECASH_FS_H
+#ifndef GENESIS_FS_H
+#define GENESIS_FS_H
 
 #include <stdio.h>
 #include <string>
@@ -21,4 +21,4 @@ namespace fsbridge {
     FILE *freopen(const fs::path& p, const char *mode, FILE *stream);
 };
 
-#endif // SAFECASH_FS_H
+#endif // GENESIS_FS_H

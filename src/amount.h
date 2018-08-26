@@ -3,21 +3,21 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_AMOUNT_H
-#define SAFECASH_AMOUNT_H
+#ifndef GENESIS_AMOUNT_H
+#define GENESIS_AMOUNT_H
 
 #include <stdint.h>
 
-/** Amount in scashis (Can be negative) */
+/** Amount in genxis (Can be negative) */
 typedef int64_t CAmount;
 
 static const CAmount COIN = 100000000;
 static const CAmount CENT = 1000000;
 
-/** No amount larger than this (in scashi) is valid.
+/** No amount larger than this (in genxi) is valid.
  *
- * Note that this constant is *not* the total money supply, which in SafeCash
- * currently happens to be less than 4'127'721'000 SCASH for various reasons, but
+ * Note that this constant is *not* the total money supply, which in Genesis
+ * currently happens to be less than 4'127'721'000 GENX for various reasons, but
  * rather a sanity check. As this sanity check is used by consensus-critical
  * validation code, the exact value of the MAX_MONEY constant is consensus
  * critical; in unusual circumstances like a(nother) overflow bug that allowed
@@ -26,4 +26,4 @@ static const CAmount CENT = 1000000;
 static const CAmount MAX_MONEY = 4127721000 * COIN;
 inline bool MoneyRange(const CAmount& nValue) { return (nValue >= 0 && nValue <= MAX_MONEY); }
 
-#endif //  SAFECASH_AMOUNT_H
+#endif //  GENESIS_AMOUNT_H

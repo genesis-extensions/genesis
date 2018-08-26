@@ -3,8 +3,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_PRIMITIVES_BLOCK_H
-#define SAFECASH_PRIMITIVES_BLOCK_H
+#ifndef GENESIS_PRIMITIVES_BLOCK_H
+#define GENESIS_PRIMITIVES_BLOCK_H
 
 #include <primitives/transaction.h>
 #include <serialize.h>
@@ -199,4 +199,4 @@ public:
 };
 
 
-#endif // SAFECASH_PRIMITIVES_BLOCK_H
+#endif // GENESIS_PRIMITIVES_BLOCK_H

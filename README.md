@@ -1,18 +1,18 @@
 ![SC Logo](https://image.ibb.co/h82JEy/SC.png "SafeCa$h")
 SafeCa$h Official
 &middot;
-[![Github License](https://img.shields.io/npm/l/express.svg)](https://github.com/SafeCashOfficial/SafeCash/blob/master/COPYING)
+[![Github License](https://img.shields.io/npm/l/express.svg)](https://github.com/genesisofficial/genesis/blob/master/COPYING)
 =====================================
 
-* SafeCash (SCASH) is a fair-launch, decentralized cryptocurrency built upon the latest 0.16 BTC codebase focused on speed, security and stability
-* SafeCash utilizes Equihash 192.7 Proof-of-Work with randomized block rewards. Proof-of-Stake and Masternodes will be implemented over time
-* SafeCash provides the building blocks to be the first true Point-of-Sale cryptocurrency that non-technical consumers can adopt anywhere.
+* Genesis (GENX) is a fair-launch, decentralized cryptocurrency built upon the latest 0.16 BTC codebase focused on speed, security and stability
+* Genesis utilizes Equihash 192.7 Proof-of-Work with randomized block rewards. Proof-of-Stake and Masternodes will be implemented over time
+* Genesis provides the building blocks to be the first true Point-of-Sale cryptocurrency that non-technical consumers can adopt anywhere.
 
 ## Specifications
 
 | Specification         | Descriptor                                    |
 |-----------------------|-----------------------------------------------|
-| Ticker                | SCASH                                         |
+| Ticker                | GENX                                         |
 | Algorithm             | Equihash 192.7                                |
 | RPC Port              | 7423                                          |
 | P2P Port              | 7233                                          |
@@ -27,10 +27,10 @@ SafeCa$h Official
 
 ## Resources
 
-* [Website](https://safecash.io/)
-* [Forums](https://safecash.io/forum/)
+* [Website](https://genesisnetwork.io/)
+* [Forums](https://genesisnetwork.io/forum/)
 * [Discord](https://discord.gg/8hSjExc)
-* [Twitter](https://twitter.com/SafeCash_IO)
+* [Twitter](https://twitter.com/Genesis_IO)
 
 
 ## Development Process

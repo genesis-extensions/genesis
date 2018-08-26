@@ -6,8 +6,8 @@
 /**
  * Utilities for converting data from/to strings.
  */
-#ifndef SAFECASH_UTILSTRENCODINGS_H
-#define SAFECASH_UTILSTRENCODINGS_H
+#ifndef GENESIS_UTILSTRENCODINGS_H
+#define GENESIS_UTILSTRENCODINGS_H
 
 #include <stdint.h>
 #include <string>
@@ -173,4 +173,4 @@ bool ConvertBits(O& out, I it, I end) {
     return true;
 }
 
-#endif // SAFECASH_UTILSTRENCODINGS_H
+#endif // GENESIS_UTILSTRENCODINGS_H

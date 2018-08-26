@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_HTTPRPC_H
-#define SAFECASH_HTTPRPC_H
+#ifndef GENESIS_HTTPRPC_H
+#define GENESIS_HTTPRPC_H
 
 #include <string>
 #include <map>

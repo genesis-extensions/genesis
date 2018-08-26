@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_THREADINTERRUPT_H
-#define SAFECASH_THREADINTERRUPT_H
+#ifndef GENESIS_THREADINTERRUPT_H
+#define GENESIS_THREADINTERRUPT_H
 
 #include <atomic>
 #include <chrono>
@@ -31,4 +31,4 @@ private:
     std::atomic<bool> flag;
 };
 
-#endif //SAFECASH_THREADINTERRUPT_H
+#endif //GENESIS_THREADINTERRUPT_H

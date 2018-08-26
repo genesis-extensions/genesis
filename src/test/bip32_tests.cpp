@@ -9,7 +9,7 @@
 #include <uint256.h>
 #include <util.h>
 #include <utilstrencodings.h>
-#include <test/test_safecash.h>
+#include <test/test_genesis.h>
 
 #include <string>
 #include <vector>
@@ -99,18 +99,18 @@ void RunTest(const TestVector &test) {
         pubkey.Encode(data);
 
         // Test private key
-        CSafeCashExtKey b58key; b58key.SetKey(key);
+        CGenesisExtKey b58key; b58key.SetKey(key);
         BOOST_CHECK(b58key.ToString() == derive.prv);
 
-        CSafeCashExtKey b58keyDecodeCheck(derive.prv);
+        CGenesisExtKey b58keyDecodeCheck(derive.prv);
         CExtKey checkKey = b58keyDecodeCheck.GetKey();
         assert(checkKey == key); //ensure a base58 decoded key also matches
 
         // Test public key
-        CSafeCashExtPubKey b58pubkey; b58pubkey.SetKey(pubkey);
+        CGenesisExtPubKey b58pubkey; b58pubkey.SetKey(pubkey);
         BOOST_CHECK(b58pubkey.ToString() == derive.pub);
 
-        CSafeCashExtPubKey b58PubkeyDecodeCheck(derive.pub);
+        CGenesisExtPubKey b58PubkeyDecodeCheck(derive.pub);
         CExtPubKey checkPubKey = b58PubkeyDecodeCheck.GetKey();
         assert(checkPubKey == pubkey); //ensure a base58 decoded pubkey also matches
 

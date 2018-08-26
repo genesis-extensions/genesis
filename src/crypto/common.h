@@ -2,11 +2,11 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_CRYPTO_COMMON_H
-#define SAFECASH_CRYPTO_COMMON_H
+#ifndef GENESIS_CRYPTO_COMMON_H
+#define GENESIS_CRYPTO_COMMON_H
 
 #if defined(HAVE_CONFIG_H)
-#include <config/safecash-config.h>
+#include <config/genesis-config.h>
 #endif
 
 #include <stdint.h>
@@ -141,4 +141,4 @@ int inline init_and_check_sodium()
     return 0;
 }
 
-#endif // SAFECASH_CRYPTO_COMMON_H
+#endif // GENESIS_CRYPTO_COMMON_H

@@ -1,5 +1,5 @@
-#ifndef SAFECASH_QT_TEST_WALLETTESTS_H
-#define SAFECASH_QT_TEST_WALLETTESTS_H
+#ifndef GENESIS_QT_TEST_WALLETTESTS_H
+#define GENESIS_QT_TEST_WALLETTESTS_H
 
 #include <QObject>
 #include <QTest>
@@ -12,4 +12,4 @@ private Q_SLOTS:
     void walletTests();
 };
 
-#endif // SAFECASH_QT_TEST_WALLETTESTS_H
+#endif // GENESIS_QT_TEST_WALLETTESTS_H

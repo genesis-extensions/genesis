@@ -7,7 +7,7 @@
 
 #include <tinyformat.h>
 
-const std::string CURRENCY_UNIT = "SCASH";
+const std::string CURRENCY_UNIT = "GENX";
 
 CFeeRate::CFeeRate(const CAmount& nFeePaid, size_t nBytes_)
 {
@@ -15,9 +15,9 @@ CFeeRate::CFeeRate(const CAmount& nFeePaid, size_t nBytes_)
     int64_t nSize = int64_t(nBytes_);
 
     if (nSize > 0)
-        nScashisPerK = nFeePaid * 1000 / nSize;
+        nGenxisPerK = nFeePaid * 1000 / nSize;
     else
-        nScashisPerK = 0;
+        nGenxisPerK = 0;
 }
 
 CAmount CFeeRate::GetFee(size_t nBytes_) const
@@ -25,12 +25,12 @@ CAmount CFeeRate::GetFee(size_t nBytes_) const
     assert(nBytes_ <= uint64_t(std::numeric_limits<int64_t>::max()));
     int64_t nSize = int64_t(nBytes_);
 
-    CAmount nFee = nScashisPerK * nSize / 1000;
+    CAmount nFee = nGenxisPerK * nSize / 1000;
 
     if (nFee == 0 && nSize != 0) {
-        if (nScashisPerK > 0)
+        if (nGenxisPerK > 0)
             nFee = CAmount(1);
-        if (nScashisPerK < 0)
+        if (nGenxisPerK < 0)
             nFee = CAmount(-1);
     }
 
@@ -39,5 +39,5 @@ CAmount CFeeRate::GetFee(size_t nBytes_) const
 
 std::string CFeeRate::ToString() const
 {
-    return strprintf("%d.%08d %s/kB", nScashisPerK / COIN, nScashisPerK % COIN, CURRENCY_UNIT);
+    return strprintf("%d.%08d %s/kB", nGenxisPerK / COIN, nGenxisPerK % COIN, CURRENCY_UNIT);
 }

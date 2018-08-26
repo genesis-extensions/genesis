@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_QT_SENDCOINSDIALOG_H
-#define SAFECASH_QT_SENDCOINSDIALOG_H
+#ifndef GENESIS_QT_SENDCOINSDIALOG_H
+#define GENESIS_QT_SENDCOINSDIALOG_H
 
 #include <qt/walletmodel.h>
 
@@ -25,7 +25,7 @@ QT_BEGIN_NAMESPACE
 class QUrl;
 QT_END_NAMESPACE
 
-/** Dialog for sending SafeCash */
+/** Dialog for sending Genesis */
 class SendCoinsDialog : public QDialog
 {
     Q_OBJECT
@@ -121,4 +121,4 @@ private:
     int secDelay;
 };
 
-#endif // SAFECASH_QT_SENDCOINSDIALOG_H
+#endif // GENESIS_QT_SENDCOINSDIALOG_H

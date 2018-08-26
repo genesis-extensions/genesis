@@ -4,8 +4,8 @@
 
 #include <qt/guiutil.h>
 
-#include <qt/safecashaddressvalidator.h>
-#include <qt/safecashunits.h>
+#include <qt/genesisaddressvalidator.h>
+#include <qt/genesisunits.h>
 #include <qt/qvalidatedlineedit.h>
 #include <qt/walletmodel.h>
 
@@ -172,11 +172,11 @@ void setupAddressWidget(QValidatedLineEdit *widget, QWidget *parent)
 #if QT_VERSION >= 0x040700
     // We don't want translators to use own addresses in translations
     // and this is the only place, where this address is supplied.
-    widget->setPlaceholderText(QObject::tr("Enter a SafeCash address (e.g. %1)").arg(
+    widget->setPlaceholderText(QObject::tr("Enter a Genesis address (e.g. %1)").arg(
         QString::fromStdString(DummyAddress(Params()))));
 #endif
-    widget->setValidator(new SafeCashAddressEntryValidator(parent));
-    widget->setCheckValidator(new SafeCashAddressCheckValidator(parent));
+    widget->setValidator(new GenesisAddressEntryValidator(parent));
+    widget->setCheckValidator(new GenesisAddressCheckValidator(parent));
 }
 
 void setupAmountWidget(QLineEdit *widget, QWidget *parent)
@@ -188,10 +188,10 @@ void setupAmountWidget(QLineEdit *widget, QWidget *parent)
     widget->setAlignment(Qt::AlignRight|Qt::AlignVCenter);
 }
 
-bool parseSafeCashURI(const QUrl &uri, SendCoinsRecipient *out)
+bool parseGenesisURI(const QUrl &uri, SendCoinsRecipient *out)
 {
-    // return if URI is not valid or is no safecash: URI
-    if(!uri.isValid() || uri.scheme() != QString("safecash"))
+    // return if URI is not valid or is no genesis: URI
+    if(!uri.isValid() || uri.scheme() != QString("genesis"))
         return false;
 
     SendCoinsRecipient rv;
@@ -231,7 +231,7 @@ bool parseSafeCashURI(const QUrl &uri, SendCoinsRecipient *out)
         {
             if(!i->second.isEmpty())
             {
-                if(!SafeCashUnits::parse(SafeCashUnits::SCASH, i->second, &rv.amount))
+                if(!GenesisUnits::parse(GenesisUnits::GENX, i->second, &rv.amount))
                 {
                     return false;
                 }
@@ -249,28 +249,28 @@ bool parseSafeCashURI(const QUrl &uri, SendCoinsRecipient *out)
     return true;
 }
 
-bool parseSafeCashURI(QString uri, SendCoinsRecipient *out)
+bool parseGenesisURI(QString uri, SendCoinsRecipient *out)
 {
-    // Convert safecash:// to safecash:
+    // Convert genesis:// to genesis:
     //
-    //    Cannot handle this later, because safecash:// will cause Qt to see the part after // as host,
+    //    Cannot handle this later, because genesis:// will cause Qt to see the part after // as host,
     //    which will lower-case it (and thus invalidate the address).
-    if(uri.startsWith("safecash://", Qt::CaseInsensitive))
+    if(uri.startsWith("genesis://", Qt::CaseInsensitive))
     {
-        uri.replace(0, 10, "safecash:");
+        uri.replace(0, 10, "genesis:");
     }
     QUrl uriInstance(uri);
-    return parseSafeCashURI(uriInstance, out);
+    return parseGenesisURI(uriInstance, out);
 }
 
-QString formatSafeCashURI(const SendCoinsRecipient &info)
+QString formatGenesisURI(const SendCoinsRecipient &info)
 {
-    QString ret = QString("safecash:%1").arg(info.address);
+    QString ret = QString("genesis:%1").arg(info.address);
     int paramCount = 0;
 
     if (info.amount)
     {
-        ret += QString("?amount=%1").arg(SafeCashUnits::format(SafeCashUnits::SCASH, info.amount, false, SafeCashUnits::separatorNever));
+        ret += QString("?amount=%1").arg(GenesisUnits::format(GenesisUnits::GENX, info.amount, false, GenesisUnits::separatorNever));
         paramCount++;
     }
 
@@ -460,9 +460,9 @@ void openDebugLogfile()
         QDesktopServices::openUrl(QUrl::fromLocalFile(boostPathToQString(pathDebug)));
 }
 
-bool openSafeCashConf()
+bool openGenesisConf()
 {
-    boost::filesystem::path pathConfig = GetConfigFile(SAFECASH_CONF_FILENAME);
+    boost::filesystem::path pathConfig = GetConfigFile(GENESIS_CONF_FILENAME);
 
     /* Create the file */
     boost::filesystem::ofstream configFile(pathConfig, std::ios_base::app);
@@ -472,7 +472,7 @@ bool openSafeCashConf()
     
     configFile.close();
     
-    /* Open safecash.conf with the associated application */
+    /* Open genesis.conf with the associated application */
     return QDesktopServices::openUrl(QUrl::fromLocalFile(boostPathToQString(pathConfig)));
 }
 
@@ -660,15 +660,15 @@ fs::path static StartupShortcutPath()
 {
     std::string chain = ChainNameFromCommandLine();
     if (chain == CBaseChainParams::MAIN)
-        return GetSpecialFolderPath(CSIDL_STARTUP) / "SafeCash.lnk";
+        return GetSpecialFolderPath(CSIDL_STARTUP) / "Genesis.lnk";
     if (chain == CBaseChainParams::TESTNET) // Remove this special case when CBaseChainParams::TESTNET = "testnet4"
-        return GetSpecialFolderPath(CSIDL_STARTUP) / "SafeCash (testnet).lnk";
-    return GetSpecialFolderPath(CSIDL_STARTUP) / strprintf("SafeCash (%s).lnk", chain);
+        return GetSpecialFolderPath(CSIDL_STARTUP) / "Genesis (testnet).lnk";
+    return GetSpecialFolderPath(CSIDL_STARTUP) / strprintf("Genesis (%s).lnk", chain);
 }
 
 bool GetStartOnSystemStartup()
 {
-    // check for SafeCash*.lnk
+    // check for Genesis*.lnk
     return fs::exists(StartupShortcutPath());
 }
 
@@ -758,8 +758,8 @@ fs::path static GetAutostartFilePath()
 {
     std::string chain = ChainNameFromCommandLine();
     if (chain == CBaseChainParams::MAIN)
-        return GetAutostartDir() / "safecash.desktop";
-    return GetAutostartDir() / strprintf("safecash-%s.lnk", chain);
+        return GetAutostartDir() / "genesis.desktop";
+    return GetAutostartDir() / strprintf("genesis-%s.lnk", chain);
 }
 
 bool GetStartOnSystemStartup()
@@ -799,13 +799,13 @@ bool SetStartOnSystemStartup(bool fAutoStart)
         if (!optionFile.good())
             return false;
         std::string chain = ChainNameFromCommandLine();
-        // Write a safecash.desktop file to the autostart directory:
+        // Write a genesis.desktop file to the autostart directory:
         optionFile << "[Desktop Entry]\n";
         optionFile << "Type=Application\n";
         if (chain == CBaseChainParams::MAIN)
-            optionFile << "Name=SafeCash\n";
+            optionFile << "Name=Genesis\n";
         else
-            optionFile << strprintf("Name=SafeCash (%s)\n", chain);
+            optionFile << strprintf("Name=Genesis (%s)\n", chain);
         optionFile << "Exec=" << pszExePath << strprintf(" -min -testnet=%d -regtest=%d\n", gArgs.GetBoolArg("-testnet", false), gArgs.GetBoolArg("-regtest", false));
         optionFile << "Terminal=false\n";
         optionFile << "Hidden=false\n";
@@ -831,7 +831,7 @@ LSSharedFileListItemRef findStartupItemInList(LSSharedFileListRef list, CFURLRef
         return nullptr;
     }
     
-    // loop through the list of startup items and try to find the safecash app
+    // loop through the list of startup items and try to find the genesis app
     for(int i = 0; i < CFArrayGetCount(listSnapshot); i++) {
         LSSharedFileListItemRef item = (LSSharedFileListItemRef)CFArrayGetValueAtIndex(listSnapshot, i);
         UInt32 resolutionFlags = kLSSharedFileListNoUserInteraction | kLSSharedFileListDoNotMountVolumes;
@@ -865,38 +865,38 @@ LSSharedFileListItemRef findStartupItemInList(LSSharedFileListRef list, CFURLRef
 
 bool GetStartOnSystemStartup()
 {
-    CFURLRef safecashAppUrl = CFBundleCopyBundleURL(CFBundleGetMainBundle());
-    if (safecashAppUrl == nullptr) {
+    CFURLRef genesisAppUrl = CFBundleCopyBundleURL(CFBundleGetMainBundle());
+    if (genesisAppUrl == nullptr) {
         return false;
     }
     
     LSSharedFileListRef loginItems = LSSharedFileListCreate(nullptr, kLSSharedFileListSessionLoginItems, nullptr);
-    LSSharedFileListItemRef foundItem = findStartupItemInList(loginItems, safecashAppUrl);
+    LSSharedFileListItemRef foundItem = findStartupItemInList(loginItems, genesisAppUrl);
 
-    CFRelease(safecashAppUrl);
+    CFRelease(genesisAppUrl);
     return !!foundItem; // return boolified object
 }
 
 bool SetStartOnSystemStartup(bool fAutoStart)
 {
-    CFURLRef safecashAppUrl = CFBundleCopyBundleURL(CFBundleGetMainBundle());
-    if (safecashAppUrl == nullptr) {
+    CFURLRef genesisAppUrl = CFBundleCopyBundleURL(CFBundleGetMainBundle());
+    if (genesisAppUrl == nullptr) {
         return false;
     }
     
     LSSharedFileListRef loginItems = LSSharedFileListCreate(nullptr, kLSSharedFileListSessionLoginItems, nullptr);
-    LSSharedFileListItemRef foundItem = findStartupItemInList(loginItems, safecashAppUrl);
+    LSSharedFileListItemRef foundItem = findStartupItemInList(loginItems, genesisAppUrl);
 
     if(fAutoStart && !foundItem) {
-        // add safecash app to startup item list
-        LSSharedFileListInsertItemURL(loginItems, kLSSharedFileListItemBeforeFirst, nullptr, nullptr, safecashAppUrl, nullptr, nullptr);
+        // add genesis app to startup item list
+        LSSharedFileListInsertItemURL(loginItems, kLSSharedFileListItemBeforeFirst, nullptr, nullptr, genesisAppUrl, nullptr, nullptr);
     }
     else if(!fAutoStart && foundItem) {
         // remove item
         LSSharedFileListItemRemove(loginItems, foundItem);
     }
     
-    CFRelease(safecashAppUrl);
+    CFRelease(genesisAppUrl);
     return true;
 }
 

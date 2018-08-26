@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_QT_NETWORKSTYLE_H
-#define SAFECASH_QT_NETWORKSTYLE_H
+#ifndef GENESIS_QT_NETWORKSTYLE_H
+#define GENESIS_QT_NETWORKSTYLE_H
 
 #include <QIcon>
 #include <QPixmap>
@@ -30,4 +30,4 @@ private:
     QString titleAddText;
 };
 
-#endif // SAFECASH_QT_NETWORKSTYLE_H
+#endif // GENESIS_QT_NETWORKSTYLE_H

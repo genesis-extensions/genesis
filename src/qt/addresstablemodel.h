@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_QT_ADDRESSTABLEMODEL_H
-#define SAFECASH_QT_ADDRESSTABLEMODEL_H
+#ifndef GENESIS_QT_ADDRESSTABLEMODEL_H
+#define GENESIS_QT_ADDRESSTABLEMODEL_H
 
 #include <QAbstractTableModel>
 #include <QStringList>
@@ -28,7 +28,7 @@ public:
 
     enum ColumnIndex {
         Label = 0,   /**< User specified label */
-        Address = 1  /**< SafeCash address */
+        Address = 1  /**< Genesis address */
     };
 
     enum RoleIndex {
@@ -94,4 +94,4 @@ public Q_SLOTS:
     friend class AddressTablePriv;
 };
 
-#endif // SAFECASH_QT_ADDRESSTABLEMODEL_H
+#endif // GENESIS_QT_ADDRESSTABLEMODEL_H

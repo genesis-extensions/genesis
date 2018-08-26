@@ -3,8 +3,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_WALLET_FEES_H
-#define SAFECASH_WALLET_FEES_H
+#ifndef GENESIS_WALLET_FEES_H
+#define GENESIS_WALLET_FEES_H
 
 #include <amount.h>
 
@@ -31,4 +31,4 @@ CAmount GetMinimumFee(unsigned int nTxBytes, const CCoinControl& coin_control, c
  */
 CFeeRate GetDiscardRate(const CBlockPolicyEstimator& estimator);
 
-#endif // SAFECASH_WALLET_FEES_H
+#endif // GENESIS_WALLET_FEES_H

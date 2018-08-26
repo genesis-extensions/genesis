@@ -49,7 +49,7 @@ const char * DEFAULT_WALLET_DAT = "wallet.dat";
 const uint32_t BIP32_HARDENED_KEY_LIMIT = 0x80000000;
 
 /**
- * Fees smaller than this (in scashi) are considered zero fee (for transaction creation)
+ * Fees smaller than this (in genxi) are considered zero fee (for transaction creation)
  * Override with -mintxfee
  */
 CFeeRate CWallet::minTxFee = CFeeRate(DEFAULT_TRANSACTION_MINFEE);
@@ -2733,7 +2733,7 @@ bool CWallet::CreateTransaction(const std::vector<CRecipient>& vecSend, CWalletT
 
             // Create change script that will be used if we need change
             // TODO: pass in scriptChange instead of reservekey so
-            // change transaction isn't always pay-to-safecash-address
+            // change transaction isn't always pay-to-genesis-address
             CScript scriptChange;
 
             // coin control: send change to custom address

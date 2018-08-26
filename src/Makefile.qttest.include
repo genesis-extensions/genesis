@@ -2,8 +2,8 @@
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-bin_PROGRAMS += qt/test/test_safecash-qt
-TESTS += qt/test/test_safecash-qt
+bin_PROGRAMS += qt/test/test_genesis-qt
+TESTS += qt/test/test_genesis-qt
 
 TEST_QT_MOC_CPP = \
   qt/test/moc_compattests.cpp \
@@ -24,54 +24,54 @@ TEST_QT_H = \
   qt/test/paymentservertests.h \
   qt/test/wallettests.h
 
-TEST_SAFECASH_CPP = \
-  test/test_safecash.cpp
+TEST_GENESIS_CPP = \
+  test/test_genesis.cpp
 
-TEST_SAFECASH_H = \
-  test/test_safecash.h
+TEST_GENESIS_H = \
+  test/test_genesis.h
 
-qt_test_test_safecash_qt_CPPFLAGS = $(AM_CPPFLAGS) $(SAFECASH_INCLUDES) $(SAFECASH_QT_INCLUDES) \
+qt_test_test_genesis_qt_CPPFLAGS = $(AM_CPPFLAGS) $(GENESIS_INCLUDES) $(GENESIS_QT_INCLUDES) \
   $(QT_INCLUDES) $(QT_TEST_INCLUDES) $(PROTOBUF_CFLAGS)
 
-qt_test_test_safecash_qt_SOURCES = \
+qt_test_test_genesis_qt_SOURCES = \
   qt/test/compattests.cpp \
   qt/test/rpcnestedtests.cpp \
   qt/test/test_main.cpp \
   qt/test/uritests.cpp \
   $(TEST_QT_H) \
-  $(TEST_SAFECASH_CPP) \
-  $(TEST_SAFECASH_H)
+  $(TEST_GENESIS_CPP) \
+  $(TEST_GENESIS_H)
 if ENABLE_WALLET
-qt_test_test_safecash_qt_SOURCES += \
+qt_test_test_genesis_qt_SOURCES += \
   qt/test/paymentservertests.cpp \
   qt/test/wallettests.cpp \
   wallet/test/wallet_test_fixture.cpp
 endif
 
-nodist_qt_test_test_safecash_qt_SOURCES = $(TEST_QT_MOC_CPP)
+nodist_qt_test_test_genesis_qt_SOURCES = $(TEST_QT_MOC_CPP)
 
-qt_test_test_safecash_qt_LDADD = $(LIBSAFECASHQT) $(LIBSAFECASH_SERVER)
+qt_test_test_genesis_qt_LDADD = $(LIBGENESISQT) $(LIBGENESIS_SERVER)
 if ENABLE_WALLET
-qt_test_test_safecash_qt_LDADD += $(LIBSAFECASH_WALLET)
+qt_test_test_genesis_qt_LDADD += $(LIBGENESIS_WALLET)
 endif
 if ENABLE_ZMQ
-qt_test_test_safecash_qt_LDADD += $(LIBSAFECASH_ZMQ) $(ZMQ_LIBS)
+qt_test_test_genesis_qt_LDADD += $(LIBGENESIS_ZMQ) $(ZMQ_LIBS)
 endif
-qt_test_test_safecash_qt_LDADD += $(LIBSAFECASH_CLI) $(LIBSAFECASH_COMMON) $(LIBSAFECASH_UTIL) $(LIBSAFECASH_CONSENSUS) $(LIBSAFECASH_CRYPTO) $(LIBUNIVALUE) $(LIBLEVELDB) \
+qt_test_test_genesis_qt_LDADD += $(LIBGENESIS_CLI) $(LIBGENESIS_COMMON) $(LIBGENESIS_UTIL) $(LIBGENESIS_CONSENSUS) $(LIBGENESIS_CRYPTO) $(LIBUNIVALUE) $(LIBLEVELDB) \
   $(LIBLEVELDB_SSE42) $(LIBMEMENV) $(BOOST_LIBS) $(QT_DBUS_LIBS) $(QT_TEST_LIBS) $(QT_LIBS) \
   $(QR_LIBS) $(PROTOBUF_LIBS) $(BDB_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(MINIUPNPC_LIBS) $(LIBSECP256K1) \
   $(EVENT_PTHREADS_LIBS) $(EVENT_LIBS)
-qt_test_test_safecash_qt_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(QT_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
-qt_test_test_safecash_qt_CXXFLAGS = $(AM_CXXFLAGS) $(QT_PIE_FLAGS)
+qt_test_test_genesis_qt_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(QT_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
+qt_test_test_genesis_qt_CXXFLAGS = $(AM_CXXFLAGS) $(QT_PIE_FLAGS)
 
-CLEAN_SAFECASH_QT_TEST = $(TEST_QT_MOC_CPP) qt/test/*.gcda qt/test/*.gcno
+CLEAN_GENESIS_QT_TEST = $(TEST_QT_MOC_CPP) qt/test/*.gcda qt/test/*.gcno
 
-CLEANFILES += $(CLEAN_SAFECASH_QT_TEST)
+CLEANFILES += $(CLEAN_GENESIS_QT_TEST)
 
-test_safecash_qt : qt/test/test_safecash-qt$(EXEEXT)
+test_genesis_qt : qt/test/test_genesis-qt$(EXEEXT)
 
-test_safecash_qt_check : qt/test/test_safecash-qt$(EXEEXT) FORCE
+test_genesis_qt_check : qt/test/test_genesis-qt$(EXEEXT) FORCE
 	$(MAKE) check-TESTS TESTS=$^
 
-test_safecash_qt_clean: FORCE
-	rm -f $(CLEAN_SAFECASH_QT_TEST) $(qt_test_test_safecash_qt_OBJECTS)
+test_genesis_qt_clean: FORCE
+	rm -f $(CLEAN_GENESIS_QT_TEST) $(qt_test_test_genesis_qt_OBJECTS)

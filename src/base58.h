@@ -11,8 +11,8 @@
  * - E-mail usually won't line-break if there's no punctuation to break at.
  * - Double-clicking selects the whole string as one word if it's all alphanumeric.
  */
-#ifndef SAFECASH_BASE58_H
-#define SAFECASH_BASE58_H
+#ifndef GENESIS_BASE58_H
+#define GENESIS_BASE58_H
 
 #include <chainparams.h>
 #include <key.h>
@@ -97,7 +97,7 @@ public:
 /**
  * A base58-encoded secret key
  */
-class CSafeCashSecret : public CBase58Data
+class CGenesisSecret : public CBase58Data
 {
 public:
     void SetKey(const CKey& vchSecret);
@@ -106,11 +106,11 @@ public:
     bool SetString(const char* pszSecret);
     bool SetString(const std::string& strSecret);
 
-    CSafeCashSecret(const CKey& vchSecret) { SetKey(vchSecret); }
-    CSafeCashSecret() {}
+    CGenesisSecret(const CKey& vchSecret) { SetKey(vchSecret); }
+    CGenesisSecret() {}
 };
 
-template<typename K, int Size, CChainParams::Base58Type Type> class CSafeCashExtKeyBase : public CBase58Data
+template<typename K, int Size, CChainParams::Base58Type Type> class CGenesisExtKeyBase : public CBase58Data
 {
 public:
     void SetKey(const K &key) {
@@ -128,23 +128,23 @@ public:
         return ret;
     }
 
-    CSafeCashExtKeyBase(const K &key) {
+    CGenesisExtKeyBase(const K &key) {
         SetKey(key);
     }
 
-    CSafeCashExtKeyBase(const std::string& strBase58c) {
+    CGenesisExtKeyBase(const std::string& strBase58c) {
         SetString(strBase58c.c_str(), Params().Base58Prefix(Type).size());
     }
 
-    CSafeCashExtKeyBase() {}
+    CGenesisExtKeyBase() {}
 };
 
-typedef CSafeCashExtKeyBase<CExtKey, BIP32_EXTKEY_SIZE, CChainParams::EXT_SECRET_KEY> CSafeCashExtKey;
-typedef CSafeCashExtKeyBase<CExtPubKey, BIP32_EXTKEY_SIZE, CChainParams::EXT_PUBLIC_KEY> CSafeCashExtPubKey;
+typedef CGenesisExtKeyBase<CExtKey, BIP32_EXTKEY_SIZE, CChainParams::EXT_SECRET_KEY> CGenesisExtKey;
+typedef CGenesisExtKeyBase<CExtPubKey, BIP32_EXTKEY_SIZE, CChainParams::EXT_PUBLIC_KEY> CGenesisExtPubKey;
 
 std::string EncodeDestination(const CTxDestination& dest);
 CTxDestination DecodeDestination(const std::string& str);
 bool IsValidDestinationString(const std::string& str);
 bool IsValidDestinationString(const std::string& str, const CChainParams& params);
 
-#endif // SAFECASH_BASE58_H
+#endif // GENESIS_BASE58_H

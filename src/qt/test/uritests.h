@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_QT_TEST_URITESTS_H
-#define SAFECASH_QT_TEST_URITESTS_H
+#ifndef GENESIS_QT_TEST_URITESTS_H
+#define GENESIS_QT_TEST_URITESTS_H
 
 #include <QObject>
 #include <QTest>
@@ -16,4 +16,4 @@ private Q_SLOTS:
     void uriTests();
 };
 
-#endif // SAFECASH_QT_TEST_URITESTS_H
+#endif // GENESIS_QT_TEST_URITESTS_H

@@ -3,8 +3,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_UTILTIME_H
-#define SAFECASH_UTILTIME_H
+#ifndef GENESIS_UTILTIME_H
+#define GENESIS_UTILTIME_H
 
 #include <stdint.h>
 #include <string>
@@ -29,4 +29,4 @@ void MilliSleep(int64_t n);
 
 std::string DateTimeStrFormat(const char* pszFormat, int64_t nTime);
 
-#endif // SAFECASH_UTILTIME_H
+#endif // GENESIS_UTILTIME_H

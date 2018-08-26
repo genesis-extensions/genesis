@@ -1,7 +1,7 @@
 Developer Notes
 ===============
 
-Various coding styles have been used during the history of the Bitcoin codebase, and the result is not very consistent. SafeCash, however, plans to verge to a single style.
+Various coding styles have been used during the history of the Bitcoin codebase, and the result is not very consistent. Genesis, however, plans to verge to a single style.
 
 - Basic rules specified in src/.clang-format. Use a recent clang-format-3.5 to format automatically.
   - Braces on new lines for namespaces, classes, functions, methods.
@@ -124,7 +124,7 @@ to see it.
 
 **testnet and regtest modes**
 
-Run with the -testnet option to run with "play safecash" on the test network, if you
+Run with the -testnet option to run with "play genesis" on the test network, if you
 are testing multi-machine code that needs to operate across the internet.
 
 If you are testing something that can run on one machine, run with the -regtest option.
@@ -133,7 +133,7 @@ that run in -regtest mode.
 
 **DEBUG_LOCKORDER**
 
-SafeCash Official is a multithreaded application, and deadlocks or other multithreading bugs
+Genesis Official is a multithreaded application, and deadlocks or other multithreading bugs
 can be very difficult to track down. Compiling with -DDEBUG_LOCKORDER (configure
 CXXFLAGS="-DDEBUG_LOCKORDER -g") inserts run-time checks to keep track of which locks
 are held, and adds warnings to the debug.log file if inconsistencies are detected.
@@ -182,7 +182,7 @@ Threads
 
 - ThreadRPCServer : Remote procedure call handler, listens on port 8332 for connections and services them.
 
-- SafeCashMiner : Generates coins (if wallet is enabled).
+- GenesisMiner : Generates coins (if wallet is enabled).
 
 - Shutdown : Does an orderly shutdown of everything.
 
@@ -192,7 +192,7 @@ Ignoring IDE/editor files
 In closed-source environments in which everyone uses the same IDE it is common
 to add temporary files it produces to the project-wide `.gitignore` file.
 
-However, in open source software such as SafeCash Official, where everyone uses
+However, in open source software such as Genesis Official, where everyone uses
 their own editors/IDE/tools, it is less common. Only you know what files your
 editor produces and this may change from version to version. The canonical way
 to do this is thus to create your local gitignore. Add this to `~/.gitconfig`:
@@ -222,9 +222,9 @@ Development guidelines
 ============================
 
 A few non-style-related recommendations for developers, as well as points to
-pay attention to for reviewers of SafeCash Official code.
+pay attention to for reviewers of Genesis Official code.
 
-General SafeCash
+General Genesis
 ----------------------
 
 - New features should be exposed on RPC first, then can be made available in the GUI
@@ -340,7 +340,7 @@ Strings and formatting
 
 - For `strprintf`, `LogPrint`, `LogPrintf` formatting characters don't need size specifiers
 
-  - *Rationale*: SafeCash Official uses tinyformat, which is type safe. Leave them out to avoid confusion
+  - *Rationale*: Genesis Official uses tinyformat, which is type safe. Leave them out to avoid confusion
 
 Threads and synchronization
 ----------------------------

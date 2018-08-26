@@ -4,7 +4,7 @@
 
 #include <qt/paymentserver.h>
 
-#include <qt/safecashunits.h>
+#include <qt/genesisunits.h>
 #include <qt/guiutil.h>
 #include <qt/optionsmodel.h>
 
@@ -47,15 +47,15 @@
 #include <QUrlQuery>
 #endif
 
-const int SAFECASH_IPC_CONNECT_TIMEOUT = 1000; // milliseconds
-const QString SAFECASH_IPC_PREFIX("safecash:");
+const int GENESIS_IPC_CONNECT_TIMEOUT = 1000; // milliseconds
+const QString GENESIS_IPC_PREFIX("genesis:");
 // BIP70 payment protocol messages
 const char* BIP70_MESSAGE_PAYMENTACK = "PaymentACK";
 const char* BIP70_MESSAGE_PAYMENTREQUEST = "PaymentRequest";
 // BIP71 payment protocol media types
-const char* BIP71_MIMETYPE_PAYMENT = "application/safecash-payment";
-const char* BIP71_MIMETYPE_PAYMENTACK = "application/safecash-paymentack";
-const char* BIP71_MIMETYPE_PAYMENTREQUEST = "application/safecash-paymentrequest";
+const char* BIP71_MIMETYPE_PAYMENT = "application/genesis-payment";
+const char* BIP71_MIMETYPE_PAYMENTACK = "application/genesis-paymentack";
+const char* BIP71_MIMETYPE_PAYMENTREQUEST = "application/genesis-paymentrequest";
 
 struct X509StoreDeleter {
       void operator()(X509_STORE* b) {
@@ -79,7 +79,7 @@ namespace // Anon namespace
 //
 static QString ipcServerName()
 {
-    QString name("SafeCashQt");
+    QString name("GenesisQt");
 
     // Append a simple hash of the datadir
     // Note that GetDataDir(true) returns a different path
@@ -208,16 +208,16 @@ void PaymentServer::ipcParseCommandLine(int argc, char* argv[])
         if (arg.startsWith("-"))
             continue;
 
-        // If the safecash: URI contains a payment request, we are not able to detect the
+        // If the genesis: URI contains a payment request, we are not able to detect the
         // network as that would require fetching and parsing the payment request.
         // That means clicking such an URI which contains a testnet payment request
         // will start a mainnet instance and throw a "wrong network" error.
-        if (arg.startsWith(SAFECASH_IPC_PREFIX, Qt::CaseInsensitive)) // safecash: URI
+        if (arg.startsWith(GENESIS_IPC_PREFIX, Qt::CaseInsensitive)) // genesis: URI
         {
             savedPaymentRequests.append(arg);
 
             SendCoinsRecipient r;
-            if (GUIUtil::parseSafeCashURI(arg, &r) && !r.address.isEmpty())
+            if (GUIUtil::parseGenesisURI(arg, &r) && !r.address.isEmpty())
             {
                 auto tempChainParams = CreateChainParams(CBaseChainParams::MAIN);
 
@@ -270,7 +270,7 @@ bool PaymentServer::ipcSendCommandLine()
     {
         QLocalSocket* socket = new QLocalSocket();
         socket->connectToServer(ipcServerName(), QIODevice::WriteOnly);
-        if (!socket->waitForConnected(SAFECASH_IPC_CONNECT_TIMEOUT))
+        if (!socket->waitForConnected(GENESIS_IPC_CONNECT_TIMEOUT))
         {
             delete socket;
             socket = nullptr;
@@ -285,7 +285,7 @@ bool PaymentServer::ipcSendCommandLine()
 
         socket->write(block);
         socket->flush();
-        socket->waitForBytesWritten(SAFECASH_IPC_CONNECT_TIMEOUT);
+        socket->waitForBytesWritten(GENESIS_IPC_CONNECT_TIMEOUT);
         socket->disconnectFromServer();
 
         delete socket;
@@ -308,7 +308,7 @@ PaymentServer::PaymentServer(QObject* parent, bool startLocalServer) :
     GOOGLE_PROTOBUF_VERIFY_VERSION;
 
     // Install global event filter to catch QFileOpenEvents
-    // on Mac: sent when you click safecash: links
+    // on Mac: sent when you click genesis: links
     // other OSes: helpful when dealing with payment request files
     if (parent)
         parent->installEventFilter(this);
@@ -325,7 +325,7 @@ PaymentServer::PaymentServer(QObject* parent, bool startLocalServer) :
         if (!uriServer->listen(name)) {
             // constructor is called early in init, so don't use "Q_EMIT message()" here
             QMessageBox::critical(0, tr("Payment request error"),
-                tr("Cannot start safecash: click-to-pay handler"));
+                tr("Cannot start genesis: click-to-pay handler"));
         }
         else {
             connect(uriServer, SIGNAL(newConnection()), this, SLOT(handleURIConnection()));
@@ -340,7 +340,7 @@ PaymentServer::~PaymentServer()
 }
 
 //
-// OSX-specific way of handling safecash: URIs and PaymentRequest mime types.
+// OSX-specific way of handling genesis: URIs and PaymentRequest mime types.
 // Also used by paymentservertests.cpp and when opening a payment request file
 // via "Open URI..." menu entry.
 //
@@ -365,7 +365,7 @@ void PaymentServer::initNetManager()
         return;
     delete netManager;
 
-    // netManager is used to fetch paymentrequests given in safecash: URIs
+    // netManager is used to fetch paymentrequests given in genesis: URIs
     netManager = new QNetworkAccessManager(this);
 
     QNetworkProxy proxy;
@@ -405,7 +405,7 @@ void PaymentServer::handleURIOrFile(const QString& s)
         return;
     }
 
-    if (s.startsWith(SAFECASH_IPC_PREFIX, Qt::CaseInsensitive)) // safecash: URI
+    if (s.startsWith(GENESIS_IPC_PREFIX, Qt::CaseInsensitive)) // genesis: URI
     {
 #if QT_VERSION < 0x050000
         QUrl uri(s);
@@ -437,7 +437,7 @@ void PaymentServer::handleURIOrFile(const QString& s)
         else // normal URI
         {
             SendCoinsRecipient recipient;
-            if (GUIUtil::parseSafeCashURI(s, &recipient))
+            if (GUIUtil::parseGenesisURI(s, &recipient))
             {
                 if (!IsValidDestinationString(recipient.address.toStdString())) {
                     Q_EMIT message(tr("URI handling"), tr("Invalid payment address %1").arg(recipient.address),
@@ -448,7 +448,7 @@ void PaymentServer::handleURIOrFile(const QString& s)
             }
             else
                 Q_EMIT message(tr("URI handling"),
-                    tr("URI cannot be parsed! This can be caused by an invalid SafeCash address or malformed URI parameters."),
+                    tr("URI cannot be parsed! This can be caused by an invalid Genesis address or malformed URI parameters."),
                     CClientUIInterface::ICON_WARNING);
 
             return;
@@ -560,7 +560,7 @@ bool PaymentServer::processPaymentRequest(const PaymentRequestPlus& request, Sen
             addresses.append(QString::fromStdString(EncodeDestination(dest)));
         }
         else if (!recipient.authenticatedMerchant.isEmpty()) {
-            // Unauthenticated payment requests to custom safecash addresses are not supported
+            // Unauthenticated payment requests to custom genesis addresses are not supported
             // (there is no good way to tell the user where they are paying in a way they'd
             // have a chance of understanding).
             Q_EMIT message(tr("Payment request rejected"),
@@ -569,7 +569,7 @@ bool PaymentServer::processPaymentRequest(const PaymentRequestPlus& request, Sen
             return false;
         }
 
-        // SafeCash amounts are stored as (optional) uint64 in the protobuf messages (see paymentrequest.proto),
+        // Genesis amounts are stored as (optional) uint64 in the protobuf messages (see paymentrequest.proto),
         // but CAmount is defined as int64_t. Because of that we need to verify that amounts are in a valid range
         // and no overflow has happened.
         if (!verifyAmount(sendingTo.second)) {
@@ -581,7 +581,7 @@ bool PaymentServer::processPaymentRequest(const PaymentRequestPlus& request, Sen
         CTxOut txOut(sendingTo.second, sendingTo.first);
         if (IsDust(txOut, ::dustRelayFee)) {
             Q_EMIT message(tr("Payment request error"), tr("Requested payment amount of %1 is too small (considered dust).")
-                .arg(SafeCashUnits::formatWithUnit(optionsModel->getDisplayUnit(), sendingTo.second)),
+                .arg(GenesisUnits::formatWithUnit(optionsModel->getDisplayUnit(), sendingTo.second)),
                 CClientUIInterface::MSG_ERROR);
 
             return false;

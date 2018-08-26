@@ -13,7 +13,7 @@
 // https://www.internetsociety.org/sites/default/files/blogs-media/equihash-asymmetric-proof-of-work-based-generalized-birthday-problem.pdf
 
 #if defined(HAVE_CONFIG_H)
-#include "config/safecash-config.h"
+#include "config/genesis-config.h"
 #endif
 
 #include "crypto/equihash/equihash.h"
@@ -38,7 +38,7 @@ int Equihash<N,K>::InitialiseState(eh_HashState& base_state)
     uint32_t le_N = htole32(N);
     uint32_t le_K = htole32(K);
     unsigned char personalization[crypto_generichash_blake2b_PERSONALBYTES] = {};
-    memcpy(personalization, "SafeCash", 8);
+    memcpy(personalization, "GENX_PoW", 8);
     memcpy(personalization+8,  &le_N, 4);
     memcpy(personalization+12, &le_K, 4);
     return crypto_generichash_blake2b_init_salt_personal(&base_state,

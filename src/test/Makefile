@@ -1,6 +1,6 @@
 all:
-	$(MAKE) -C .. safecash_test
+	$(MAKE) -C .. genesis_test
 clean:
-	$(MAKE) -C .. safecash_test_clean
+	$(MAKE) -C .. genesis_test_clean
 check:
-	$(MAKE) -C .. safecash_test_check
+	$(MAKE) -C .. genesis_test_check

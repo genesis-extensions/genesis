@@ -3,8 +3,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_RPCSERVER_H
-#define SAFECASH_RPCSERVER_H
+#ifndef GENESIS_RPCSERVER_H
+#define GENESIS_RPCSERVER_H
 
 #include <amount.h>
 #include <rpc/protocol.h>
@@ -137,7 +137,7 @@ public:
 };
 
 /**
- * SafeCash RPC command dispatcher.
+ * Genesis RPC command dispatcher.
  */
 class CRPCTable
 {
@@ -196,4 +196,4 @@ std::string JSONRPCExecBatch(const JSONRPCRequest& jreq, const UniValue& vReq);
 // Retrieves any serialization flags requested in command line argument
 int RPCSerializationFlags();
 
-#endif // SAFECASH_RPCSERVER_H
+#endif // GENESIS_RPCSERVER_H

@@ -1,11 +1,11 @@
 Sample configuration files for:
 ```
-SystemD: safecashd.service
-Upstart: safecashd.conf
-OpenRC:  safecashd.openrc
-         safecashd.openrcconf
-CentOS:  safecashd.init
-OS X:    io.safecash.safecashd.plist
+SystemD: genesisd.service
+Upstart: genesisd.conf
+OpenRC:  genesisd.openrc
+         genesisd.openrcconf
+CentOS:  genesisd.init
+OS X:    io.genesis.genesisd.plist
 ```
 have been made available to assist packagers in creating node packages here.
 

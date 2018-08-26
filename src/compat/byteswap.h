@@ -2,11 +2,11 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_COMPAT_BYTESWAP_H
-#define SAFECASH_COMPAT_BYTESWAP_H
+#ifndef GENESIS_COMPAT_BYTESWAP_H
+#define GENESIS_COMPAT_BYTESWAP_H
 
 #if defined(HAVE_CONFIG_H)
-#include <config/safecash-config.h>
+#include <config/genesis-config.h>
 #endif
 
 #include <stdint.h>
@@ -63,4 +63,4 @@ inline uint64_t bswap_64(uint64_t x)
 
 #endif // defined(__APPLE__)
 
-#endif // SAFECASH_COMPAT_BYTESWAP_H
+#endif // GENESIS_COMPAT_BYTESWAP_H

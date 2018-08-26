@@ -3,8 +3,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_INIT_H
-#define SAFECASH_INIT_H
+#ifndef GENESIS_INIT_H
+#define GENESIS_INIT_H
 
 #include <string>
 
@@ -26,7 +26,7 @@ void InitLogging();
 //!Parameter interaction: change current parameters depending on various rules
 void InitParameterInteraction();
 
-/** Initialize SafeCash Official: Basic context setup.
+/** Initialize Genesis Official: Basic context setup.
  *  @note This can be done before daemonization. Do not call Shutdown() if this function fails.
  *  @pre Parameters should be parsed and config file should be read.
  */
@@ -44,13 +44,13 @@ bool AppInitParameterInteraction();
  */
 bool AppInitSanityChecks();
 /**
- * Lock SafeCash core data directory.
+ * Lock Genesis core data directory.
  * @note This should only be done after daemonization. Do not call Shutdown() if this function fails.
  * @pre Parameters should be parsed and config file should be read, AppInitSanityChecks should have been called.
  */
 bool AppInitLockDataDirectory();
 /**
- * SafeCash Official main initialization.
+ * Genesis Official main initialization.
  * @note This should only be done after daemonization. Call Shutdown() if this function fails.
  * @pre Parameters should be parsed and config file should be read, AppInitLockDataDirectory should have been called.
  */
@@ -58,8 +58,8 @@ bool AppInitMain();
 
 /** The help message mode determines what help message to show */
 enum HelpMessageMode {
-    HMM_SAFECASHD,
-    HMM_SAFECASH_QT
+    HMM_GENESISD,
+    HMM_GENESIS_QT
 };
 
 /** Help for options shared between UI and daemon (for -help) */
@@ -67,4 +67,4 @@ std::string HelpMessage(HelpMessageMode mode);
 /** Returns licensing information (for -version) */
 std::string LicenseInfo();
 
-#endif // SAFECASH_INIT_H
+#endif // GENESIS_INIT_H

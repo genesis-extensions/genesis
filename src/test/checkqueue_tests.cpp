@@ -6,7 +6,7 @@
 #include <utiltime.h>
 #include <validation.h>
 
-#include <test/test_safecash.h>
+#include <test/test_genesis.h>
 #include <checkqueue.h>
 #include <boost/test/unit_test.hpp>
 #include <boost/thread.hpp>

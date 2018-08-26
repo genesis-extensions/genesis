@@ -2,10 +2,10 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_COMPAT_SANITY_H
-#define SAFECASH_COMPAT_SANITY_H
+#ifndef GENESIS_COMPAT_SANITY_H
+#define GENESIS_COMPAT_SANITY_H
 
 bool glibc_sanity_test();
 bool glibcxx_sanity_test();
 
-#endif // SAFECASH_COMPAT_SANITY_H
+#endif // GENESIS_COMPAT_SANITY_H

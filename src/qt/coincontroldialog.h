@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_QT_COINCONTROLDIALOG_H
-#define SAFECASH_QT_COINCONTROLDIALOG_H
+#ifndef GENESIS_QT_COINCONTROLDIALOG_H
+#define GENESIS_QT_COINCONTROLDIALOG_H
 
 #include <amount.h>
 
@@ -109,4 +109,4 @@ private Q_SLOTS:
     void updateLabelLocked();
 };
 
-#endif // SAFECASH_QT_COINCONTROLDIALOG_H
+#endif // GENESIS_QT_COINCONTROLDIALOG_H

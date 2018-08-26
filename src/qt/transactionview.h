@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_QT_TRANSACTIONVIEW_H
-#define SAFECASH_QT_TRANSACTIONVIEW_H
+#ifndef GENESIS_QT_TRANSACTIONVIEW_H
+#define GENESIS_QT_TRANSACTIONVIEW_H
 
 #include <qt/guiutil.h>
 
@@ -119,4 +119,4 @@ public Q_SLOTS:
 
 };
 
-#endif // SAFECASH_QT_TRANSACTIONVIEW_H
+#endif // GENESIS_QT_TRANSACTIONVIEW_H

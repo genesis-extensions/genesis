@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_WALLET_FEEBUMPER_H
-#define SAFECASH_WALLET_FEEBUMPER_H
+#ifndef GENESIS_WALLET_FEEBUMPER_H
+#define GENESIS_WALLET_FEEBUMPER_H
 
 #include <primitives/transaction.h>
 
@@ -55,4 +55,4 @@ Result CommitTransaction(CWallet* wallet,
 
 } // namespace feebumper
 
-#endif // SAFECASH_WALLET_FEEBUMPER_H
+#endif // GENESIS_WALLET_FEEBUMPER_H

@@ -7,7 +7,7 @@ import configparser
 import os
 import struct
 
-from test_framework.test_framework import SafeCashTestFramework, SkipTest
+from test_framework.test_framework import GenesisTestFramework, SkipTest
 from test_framework.mininode import CTransaction
 from test_framework.util import (assert_equal,
                                  bytes_to_hex_str,
@@ -34,7 +34,7 @@ class ZMQSubscriber:
         return body
 
 
-class ZMQTest (SafeCashTestFramework):
+class ZMQTest (GenesisTestFramework):
     def set_test_params(self):
         self.num_nodes = 2
 
@@ -45,14 +45,14 @@ class ZMQTest (SafeCashTestFramework):
         except ImportError:
             raise SkipTest("python3-zmq module not available.")
 
-        # Check that safecash has been built with ZMQ enabled.
+        # Check that genesis has been built with ZMQ enabled.
         config = configparser.ConfigParser()
         if not self.options.configfile:
             self.options.configfile = os.path.abspath(os.path.join(os.path.dirname(__file__), "../config.ini"))
         config.read_file(open(self.options.configfile))
 
         if not config["components"].getboolean("ENABLE_ZMQ"):
-            raise SkipTest("safecashd has not been built with zmq enabled.")
+            raise SkipTest("genesisd has not been built with zmq enabled.")
 
         # Initialize ZMQ context and socket.
         # All messages are received in the same socket which means

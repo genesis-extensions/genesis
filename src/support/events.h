@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_SUPPORT_EVENTS_H
-#define SAFECASH_SUPPORT_EVENTS_H
+#ifndef GENESIS_SUPPORT_EVENTS_H
+#define GENESIS_SUPPORT_EVENTS_H
 
 #include <ios>
 #include <memory>
@@ -53,4 +53,4 @@ inline raii_evhttp_connection obtain_evhttp_connection_base(struct event_base* b
     return result;
 }
 
-#endif // SAFECASH_SUPPORT_EVENTS_H
+#endif // GENESIS_SUPPORT_EVENTS_H

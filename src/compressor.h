@@ -3,8 +3,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_COMPRESSOR_H
-#define SAFECASH_COMPRESSOR_H
+#ifndef GENESIS_COMPRESSOR_H
+#define GENESIS_COMPRESSOR_H
 
 #include <primitives/transaction.h>
 #include <script/script.h>
@@ -118,4 +118,4 @@ public:
     }
 };
 
-#endif // SAFECASH_COMPRESSOR_H
+#endif // GENESIS_COMPRESSOR_H

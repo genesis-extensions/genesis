@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_SCHEDULER_H
-#define SAFECASH_SCHEDULER_H
+#ifndef GENESIS_SCHEDULER_H
+#define GENESIS_SCHEDULER_H
 
 //
 // NOTE:

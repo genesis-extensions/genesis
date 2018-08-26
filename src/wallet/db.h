@@ -3,8 +3,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_WALLET_DB_H
-#define SAFECASH_WALLET_DB_H
+#ifndef GENESIS_WALLET_DB_H
+#define GENESIS_WALLET_DB_H
 
 #include <clientversion.h>
 #include <fs.h>
@@ -369,4 +369,4 @@ public:
     bool static Rewrite(CWalletDBWrapper& dbw, const char* pszSkip = nullptr);
 };
 
-#endif // SAFECASH_WALLET_DB_H
+#endif // GENESIS_WALLET_DB_H

@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_CUCKOOCACHE_H
-#define SAFECASH_CUCKOOCACHE_H
+#ifndef GENESIS_CUCKOOCACHE_H
+#define GENESIS_CUCKOOCACHE_H
 
 #include <array>
 #include <algorithm>
@@ -478,4 +478,4 @@ public:
 };
 } // namespace CuckooCache
 
-#endif // SAFECASH_CUCKOOCACHE_H
+#endif // GENESIS_CUCKOOCACHE_H

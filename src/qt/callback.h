@@ -1,5 +1,5 @@
-#ifndef SAFECASH_QT_CALLBACK_H
-#define SAFECASH_QT_CALLBACK_H
+#ifndef GENESIS_QT_CALLBACK_H
+#define GENESIS_QT_CALLBACK_H
 
 #include <QObject>
 
@@ -27,4 +27,4 @@ FunctionCallback<F>* makeCallback(F f)
     return new FunctionCallback<F>(std::move(f));
 }
 
-#endif // SAFECASH_QT_CALLBACK_H
+#endif // GENESIS_QT_CALLBACK_H

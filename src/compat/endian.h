@@ -2,11 +2,11 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_COMPAT_ENDIAN_H
-#define SAFECASH_COMPAT_ENDIAN_H
+#ifndef GENESIS_COMPAT_ENDIAN_H
+#define GENESIS_COMPAT_ENDIAN_H
 
 #if defined(HAVE_CONFIG_H)
-#include <config/safecash-config.h>
+#include <config/genesis-config.h>
 #endif
 
 #include <compat/byteswap.h>
@@ -238,4 +238,4 @@ inline uint64_t le64toh(uint64_t little_endian_64bits)
 
 #endif // WORDS_BIGENDIAN
 
-#endif // SAFECASH_COMPAT_ENDIAN_H
+#endif // GENESIS_COMPAT_ENDIAN_H

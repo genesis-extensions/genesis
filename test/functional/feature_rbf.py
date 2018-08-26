@@ -4,7 +4,7 @@
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 """Test the RBF code."""
 
-from test_framework.test_framework import SafeCashTestFramework
+from test_framework.test_framework import GenesisTestFramework
 from test_framework.util import *
 from test_framework.script import *
 from test_framework.mininode import *
@@ -23,11 +23,11 @@ def make_utxo(node, amount, confirmed=True, scriptPubKey=CScript([1])):
                 unconfirmed otherwise.
     """
     fee = 1*COIN
-    while node.getbalance() < scashi_round((amount + fee)/COIN):
+    while node.getbalance() < genxi_round((amount + fee)/COIN):
         node.generate(100)
 
     new_addr = node.getnewaddress()
-    txid = node.sendtoaddress(new_addr, scashi_round((amount+fee)/COIN))
+    txid = node.sendtoaddress(new_addr, genxi_round((amount+fee)/COIN))
     tx1 = node.getrawtransaction(txid, 1)
     txid = int(txid, 16)
     i = None
@@ -59,7 +59,7 @@ def make_utxo(node, amount, confirmed=True, scriptPubKey=CScript([1])):
 
     return COutPoint(int(txid, 16), 0)
 
-class ReplaceByFeeTest(SafeCashTestFramework):
+class ReplaceByFeeTest(GenesisTestFramework):
 
     def set_test_params(self):
         self.num_nodes = 2
@@ -140,7 +140,7 @@ class ReplaceByFeeTest(SafeCashTestFramework):
         # This will raise an exception due to transaction replacement being disabled
         assert_raises_rpc_error(-26, "txn-mempool-conflict", self.nodes[1].sendrawtransaction, tx1b_hex, True)
 
-        # Extra 0.1 SCASH fee
+        # Extra 0.1 GENX fee
         tx1b = CTransaction()
         tx1b.vin = [CTxIn(tx0_outpoint, nSequence=0)]
         tx1b.vout = [CTxOut(int(0.9 * COIN), CScript([b'b' * 35]))]
@@ -182,7 +182,7 @@ class ReplaceByFeeTest(SafeCashTestFramework):
             prevout = COutPoint(int(txid, 16), 0)
 
         # Whether the double-spend is allowed is evaluated by including all
-        # child fees - 40 SCASH - so this attempt is rejected.
+        # child fees - 40 GENX - so this attempt is rejected.
         dbl_tx = CTransaction()
         dbl_tx.vin = [CTxIn(tx0_outpoint, nSequence=0)]
         dbl_tx.vout = [CTxOut(initial_nValue - 30 * COIN, CScript([1] * 35))]
@@ -252,7 +252,7 @@ class ReplaceByFeeTest(SafeCashTestFramework):
         # This will raise an exception due to insufficient fee
         assert_raises_rpc_error(-26, "insufficient fee", self.nodes[0].sendrawtransaction, dbl_tx_hex, True)
 
-        # 1 SCASH fee is enough
+        # 1 GENX fee is enough
         dbl_tx = CTransaction()
         dbl_tx.vin = [CTxIn(tx0_outpoint, nSequence=0)]
         dbl_tx.vout = [CTxOut(initial_nValue - fee * n - 1 * COIN, CScript([1] * 35))]

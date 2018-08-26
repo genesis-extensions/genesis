@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_MEMUSAGE_H
-#define SAFECASH_MEMUSAGE_H
+#ifndef GENESIS_MEMUSAGE_H
+#define GENESIS_MEMUSAGE_H
 
 #include <indirectmap.h>
 
@@ -167,4 +167,4 @@ static inline size_t DynamicUsage(const std::unordered_map<X, Y, Z>& m)
 
 }
 
-#endif // SAFECASH_MEMUSAGE_H
+#endif // GENESIS_MEMUSAGE_H

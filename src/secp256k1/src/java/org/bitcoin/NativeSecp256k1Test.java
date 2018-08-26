@@ -1,10 +1,10 @@
-package io.safecash;
+package io.genesis;
 
 import com.google.common.io.BaseEncoding;
 import java.util.Arrays;
 import java.math.BigInteger;
 import javax.xml.bind.DatatypeConverter;
-import static io.safecash.NativeSecp256k1Util.*;
+import static io.genesis.NativeSecp256k1Util.*;
 
 /**
  * This class holds test cases defined for testing this library.

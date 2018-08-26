@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_QT_RECENTREQUESTSTABLEMODEL_H
-#define SAFECASH_QT_RECENTREQUESTSTABLEMODEL_H
+#ifndef GENESIS_QT_RECENTREQUESTSTABLEMODEL_H
+#define GENESIS_QT_RECENTREQUESTSTABLEMODEL_H
 
 #include <qt/walletmodel.h>
 
@@ -52,7 +52,7 @@ private:
     Qt::SortOrder order;
 };
 
-/** Model for list of recently generated payment requests / safecash: URIs.
+/** Model for list of recently generated payment requests / genesis: URIs.
  * Part of wallet model.
  */
 class RecentRequestsTableModel: public QAbstractTableModel
@@ -104,4 +104,4 @@ private:
     QString getAmountTitle();
 };
 
-#endif // SAFECASH_QT_RECENTREQUESTSTABLEMODEL_H
+#endif // GENESIS_QT_RECENTREQUESTSTABLEMODEL_H

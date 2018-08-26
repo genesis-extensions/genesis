@@ -2,11 +2,11 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_NETBASE_H
-#define SAFECASH_NETBASE_H
+#ifndef GENESIS_NETBASE_H
+#define GENESIS_NETBASE_H
 
 #if defined(HAVE_CONFIG_H)
-#include <config/safecash-config.h>
+#include <config/genesis-config.h>
 #endif
 
 #include <compat.h>
@@ -68,4 +68,4 @@ bool SetSocketNoDelay(const SOCKET& hSocket);
 struct timeval MillisToTimeval(int64_t nTimeout);
 void InterruptSocks5(bool interrupt);
 
-#endif // SAFECASH_NETBASE_H
+#endif // GENESIS_NETBASE_H

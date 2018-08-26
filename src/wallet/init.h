@@ -3,8 +3,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_WALLET_INIT_H
-#define SAFECASH_WALLET_INIT_H
+#ifndef GENESIS_WALLET_INIT_H
+#define GENESIS_WALLET_INIT_H
 
 #include <string>
 
@@ -40,4 +40,4 @@ void StopWallets();
 //! Close all wallets.
 void CloseWallets();
 
-#endif // SAFECASH_WALLET_INIT_H
+#endif // GENESIS_WALLET_INIT_H

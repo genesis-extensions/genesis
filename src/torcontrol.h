@@ -5,8 +5,8 @@
 /**
  * Functionality for communicating with Tor.
  */
-#ifndef SAFECASH_TORCONTROL_H
-#define SAFECASH_TORCONTROL_H
+#ifndef GENESIS_TORCONTROL_H
+#define GENESIS_TORCONTROL_H
 
 #include <scheduler.h>
 
@@ -17,4 +17,4 @@ void StartTorControl(boost::thread_group& threadGroup, CScheduler& scheduler);
 void InterruptTorControl();
 void StopTorControl();
 
-#endif /* SAFECASH_TORCONTROL_H */
+#endif /* GENESIS_TORCONTROL_H */

@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_WALLET_COINCONTROL_H
-#define SAFECASH_WALLET_COINCONTROL_H
+#ifndef GENESIS_WALLET_COINCONTROL_H
+#define GENESIS_WALLET_COINCONTROL_H
 
 #include <policy/feerate.h>
 #include <policy/fees.h>
@@ -88,4 +88,4 @@ private:
     std::set<COutPoint> setSelected;
 };
 
-#endif // SAFECASH_WALLET_COINCONTROL_H
+#endif // GENESIS_WALLET_COINCONTROL_H

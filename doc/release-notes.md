@@ -1,10 +1,10 @@
-SafeCash initial release based on Bitcoin-Core version 0.16.0:
+Genesis initial release based on Bitcoin-Core version 0.16.0:
 
-Download Wallet [here](https://safecash.io/#download)
+Download Wallet [here](https://genesisnetwork.io/#download)
 
-Please report bugs using the issue tracker at GitHub or on our [forums](https://safecash.io/forum/).
+Please report bugs using the issue tracker at GitHub or on our [forums](https://genesisnetwork.io/forum/).
 
-To receive security and update notifications, please register at our [forums](https://safecash.io/forum/).
+To receive security and update notifications, please register at our [forums](https://genesisnetwork.io/forum/).
 
 How to Upgrade
 ==============

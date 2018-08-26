@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.safecash;
+package io.genesis;
 
 public class NativeSecp256k1Util{
 

@@ -3,8 +3,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_RANDOM_H
-#define SAFECASH_RANDOM_H
+#ifndef GENESIS_RANDOM_H
+#define GENESIS_RANDOM_H
 
 #include <crypto/chacha20.h>
 #include <crypto/common.h>
@@ -143,4 +143,4 @@ bool Random_SanityCheck();
 /** Initialize the RNG. */
 void RandomInit();
 
-#endif // SAFECASH_RANDOM_H
+#endif // GENESIS_RANDOM_H

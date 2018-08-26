@@ -13,7 +13,7 @@
 - (NSString *)__bundleIdentifier
 {
     if (self == [NSBundle mainBundle]) {
-        return @"io.safecash.SafeCash-Qt";
+        return @"io.genesis.genesis-qt";
     } else {
         return [self __bundleIdentifier];
     }

@@ -3,8 +3,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_SCRIPT_SCRIPT_ERROR_H
-#define SAFECASH_SCRIPT_SCRIPT_ERROR_H
+#ifndef GENESIS_SCRIPT_SCRIPT_ERROR_H
+#define GENESIS_SCRIPT_SCRIPT_ERROR_H
 
 typedef enum ScriptError_t
 {
@@ -75,4 +75,4 @@ typedef enum ScriptError_t
 
 const char* ScriptErrorString(const ScriptError error);
 
-#endif // SAFECASH_SCRIPT_SCRIPT_ERROR_H
+#endif // GENESIS_SCRIPT_SCRIPT_ERROR_H

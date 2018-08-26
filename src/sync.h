@@ -3,8 +3,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_SYNC_H
-#define SAFECASH_SYNC_H
+#ifndef GENESIS_SYNC_H
+#define GENESIS_SYNC_H
 
 #include <threadsafety.h>
 
@@ -287,4 +287,4 @@ public:
     }
 };
 
-#endif // SAFECASH_SYNC_H
+#endif // GENESIS_SYNC_H

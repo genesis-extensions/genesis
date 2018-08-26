@@ -2,11 +2,11 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_RPC_SAFEMODE_H
-#define SAFECASH_RPC_SAFEMODE_H
+#ifndef GENESIS_RPC_SAFEMODE_H
+#define GENESIS_RPC_SAFEMODE_H
 
 static const bool DEFAULT_DISABLE_SAFEMODE = true;
 
 void ObserveSafeMode();
 
-#endif // SAFECASH_RPC_SAFEMODE_H
+#endif // GENESIS_RPC_SAFEMODE_H

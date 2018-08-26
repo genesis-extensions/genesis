@@ -197,7 +197,7 @@ UniValue generatetoaddress(const JSONRPCRequest& request)
             "\nMine blocks immediately to a specified address (before the RPC call returns)\n"
             "\nArguments:\n"
             "1. nblocks      (numeric, required) How many blocks are generated immediately.\n"
-            "2. address      (string, required) The address to send the newly generated SafeCash to.\n"
+            "2. address      (string, required) The address to send the newly generated Genesis to.\n"
             "3. maxtries     (numeric, optional) How many iterations to try (default = 1000000).\n"
             "\nResult:\n"
             "[ blockhashes ]     (array) hashes of blocks generated\n"
@@ -289,7 +289,7 @@ UniValue setgenerate(const JSONRPCRequest& request)
     gArgs.SoftSetArg("-gen", (fGenerate ? "1" : "0"));
     gArgs.SoftSetArg("-genproclimit", itostr(nGenProcLimit));
 
-    GenerateSafeCash(fGenerate, pwallet, nGenProcLimit);
+    GenerateGenesis(fGenerate, pwallet, nGenProcLimit);
     return NullUniValue;
 }
 
@@ -310,7 +310,7 @@ UniValue getmininginfo(const JSONRPCRequest& request)
             "  \"pooledtx\": n              (numeric) The size of the mempool\n"
             "  \"chain\": \"xxxx\",           (string) current network name as defined in BIP70 (main, test, regtest)\n"
             "  \"warnings\": \"...\"          (string) any network and blockchain warnings\n"
-            "  \"errors\": \"...\"            (string) DEPRECATED. Same as warnings. Only shown when safecashd is started with -deprecatedrpc=getmininginfo\n"
+            "  \"errors\": \"...\"            (string) DEPRECATED. Same as warnings. Only shown when genesisd is started with -deprecatedrpc=getmininginfo\n"
             "}\n"
             "\nExamples:\n"
             + HelpExampleCli("getmininginfo", "")
@@ -338,7 +338,7 @@ UniValue getmininginfo(const JSONRPCRequest& request)
 }
 
 
-// NOTE: Unlike wallet RPC (which use SCASH values), mining RPCs follow GBT (BIP 22) in using scashi amounts
+// NOTE: Unlike wallet RPC (which use GENX values), mining RPCs follow GBT (BIP 22) in using genxi amounts
 UniValue prioritisetransaction(const JSONRPCRequest& request)
 {
     if (request.fHelp || request.params.size() != 3)
@@ -349,7 +349,7 @@ UniValue prioritisetransaction(const JSONRPCRequest& request)
             "1. \"txid\"       (string, required) The transaction id.\n"
             "2. dummy          (numeric, optional) API-Compatibility for previous API. Must be zero or null.\n"
             "                  DEPRECATED. For forward compatibility use named arguments and omit this parameter.\n"
-            "3. fee_delta      (numeric, required) The fee value (in scashis) to add (or subtract, if negative).\n"
+            "3. fee_delta      (numeric, required) The fee value (in genxis) to add (or subtract, if negative).\n"
             "                  The fee is not actually paid, only the algorithm for selecting transactions into a block\n"
             "                  considers the transaction as it would have paid a higher (or lower) fee.\n"
             "\nResult:\n"
@@ -448,7 +448,7 @@ UniValue getblocktemplate(const JSONRPCRequest& request)
             "             n                          (numeric) transactions before this one (by 1-based index in 'transactions' list) that must be present in the final block if this one is\n"
             "             ,...\n"
             "         ],\n"
-            "         \"fee\": n,                    (numeric) difference in value between transaction inputs and outputs (in scashis); for coinbase transactions, this is a negative Number of the total collected block fees (ie, not including the block subsidy); if key is not present, fee is unknown and clients MUST NOT assume there isn't one\n"
+            "         \"fee\": n,                    (numeric) difference in value between transaction inputs and outputs (in genxis); for coinbase transactions, this is a negative Number of the total collected block fees (ie, not including the block subsidy); if key is not present, fee is unknown and clients MUST NOT assume there isn't one\n"
             "         \"sigops\" : n,                (numeric) total SigOps cost, as counted for purposes of block limits; if key is not present, sigop cost is unknown and clients MUST NOT assume it is zero\n"
             "         \"weight\" : n,                (numeric) total transaction weight, as counted for purposes of block limits\n"
             "         \"required\" : true|false      (boolean) if provided and true, this transaction must be in the final block\n"
@@ -458,7 +458,7 @@ UniValue getblocktemplate(const JSONRPCRequest& request)
             "  \"coinbaseaux\" : {                 (json object) data that should be included in the coinbase's scriptSig content\n"
             "      \"flags\" : \"xx\"                  (string) key name is to be ignored, and value included in scriptSig\n"
             "  },\n"
-            "  \"coinbasevalue\" : n,              (numeric) maximum allowable input to coinbase transaction, including the generation award and transaction fees (in scashis)\n"
+            "  \"coinbasevalue\" : n,              (numeric) maximum allowable input to coinbase transaction, including the generation award and transaction fees (in genxis)\n"
             "  \"coinbasetxn\" : { ... },          (json object) information for coinbase transaction\n"
             "  \"target\" : \"xxxx\",                (string) The hash target\n"
             "  \"mintime\" : xxx,                  (numeric) The minimum timestamp appropriate for next block time in seconds since epoch (Jan 1 1970 GMT)\n"
@@ -554,10 +554,10 @@ UniValue getblocktemplate(const JSONRPCRequest& request)
         throw JSONRPCError(RPC_CLIENT_P2P_DISABLED, "Error: Peer-to-peer functionality missing or disabled");
 
     if (g_connman->GetNodeCount(CConnman::CONNECTIONS_ALL) == 0)
-        throw JSONRPCError(RPC_CLIENT_NOT_CONNECTED, "SafeCash Official is not connected!");
+        throw JSONRPCError(RPC_CLIENT_NOT_CONNECTED, "Genesis Official is not connected!");
 
     if (IsInitialBlockDownload())
-        throw JSONRPCError(RPC_CLIENT_IN_INITIAL_DOWNLOAD, "SafeCash Official is downloading blocks...");
+        throw JSONRPCError(RPC_CLIENT_IN_INITIAL_DOWNLOAD, "Genesis Official is downloading blocks...");
 
     static unsigned int nTransactionsUpdatedLast;
 
@@ -895,14 +895,14 @@ UniValue getblocksubsidy(const JSONRPCRequest& request)
       "1. height          (numeric, optional) The block height. If not provided, defaults to the current height of the chain.\n"
       "\nResult:\n"
       "{\n"
-      "\"miner\": n,    (numeric) The mining reward amount in scashis.\n"
-      "\"founders-chris\": f, (numeric) The founders reward in scashis (Chris) ()\n"
-      "\"founders-jimmy\": f, (numeric) The founders reward in scashis (Jimmy) ()\n"
-      "\"founders-scott\": f, (numeric) The founders reward in scashis (Scott) ()\n"
-      "\"founders-shelby\": f, (numeric) The founders reward in scashis (Shelby) ()\n"
-      "\"founders-loki\": f, (numeric) The founders reward in scashis (Loki) ()\n"
-      "\"infrastructure\": f, (numeric) Infrastructure deduction in scashis \n"
-      "\"giveaways\": f, (numeric) Giveaways deduction in scashis \n"
+      "\"miner\": n,    (numeric) The mining reward amount in genxis.\n"
+      "\"founders-chris\": f, (numeric) The founders reward in genxis (Chris) ()\n"
+      "\"founders-jimmy\": f, (numeric) The founders reward in genxis (Jimmy) ()\n"
+      "\"founders-scott\": f, (numeric) The founders reward in genxis (Scott) ()\n"
+      "\"founders-shelby\": f, (numeric) The founders reward in genxis (Shelby) ()\n"
+      "\"founders-loki\": f, (numeric) The founders reward in genxis (Loki) ()\n"
+      "\"infrastructure\": f, (numeric) Infrastructure deduction in genxis \n"
+      "\"giveaways\": f, (numeric) Giveaways deduction in genxis \n"
       "}\n"
       "\nExamples:\n"
       + HelpExampleCli("getblocksubsidy", "1000")
@@ -979,7 +979,7 @@ UniValue estimatefee(const JSONRPCRequest& request)
 
     if (!IsDeprecatedRPCEnabled("estimatefee")) {
         throw JSONRPCError(RPC_METHOD_DEPRECATED, "estimatefee is deprecated and will be fully removed in v0.17. "
-            "To use estimatefee in v0.16, restart safecashd with -deprecatedrpc=estimatefee.\n"
+            "To use estimatefee in v0.16, restart genesisd with -deprecatedrpc=estimatefee.\n"
             "Projects should transition to using estimatesmartfee before upgrading to v0.17");
     }
 

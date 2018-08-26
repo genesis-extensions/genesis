@@ -1,0 +1,8 @@
+/usr/bin/genesis-cli		--	gen_context(system_u:object_r:genesis_exec_t,s0)
+/usr/sbin/genesisd		--	gen_context(system_u:object_r:genesis_exec_t,s0)
+/usr/lib(64)?/bitcoin/genesisd		--	gen_context(system_u:object_r:genesis_exec_t,s0)
+
+/etc/bitcoin(/.*)?		gen_context(system_u:object_r:genesis_conf_t,s0)
+/var/lib/genesis(/.*)?		gen_context(system_u:object_r:genesis_var_lib_t,s0)
+
+(/var)?/run/genesisd(/.*)?   gen_context(system_u:object_r:genesis_var_run_t,s0)

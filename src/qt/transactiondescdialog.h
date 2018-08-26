@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_QT_TRANSACTIONDESCDIALOG_H
-#define SAFECASH_QT_TRANSACTIONDESCDIALOG_H
+#ifndef GENESIS_QT_TRANSACTIONDESCDIALOG_H
+#define GENESIS_QT_TRANSACTIONDESCDIALOG_H
 
 #include <QDialog>
 
@@ -28,4 +28,4 @@ private:
     Ui::TransactionDescDialog *ui;
 };
 
-#endif // SAFECASH_QT_TRANSACTIONDESCDIALOG_H
+#endif // GENESIS_QT_TRANSACTIONDESCDIALOG_H

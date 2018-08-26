@@ -1,0 +1,25 @@
+# It is not recommended to modify this file in-place, because it will
+# be overwritten during package upgrades. If you want to add further
+# options or overwrite existing ones then use
+# $ systemctl edit genesisd.service
+# See "man systemd.service" for details.
+
+# Note that almost all daemon options could be specified in
+# /etc/genesis/genesis.conf
+
+[Unit]
+Description=Genesis daemon
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/genesisd -daemon -conf=/etc/genesis/genesis.conf -pid=/run/genesisd/genesisd.pid
+# Creates /run/genesisd owned by genesis
+RuntimeDirectory=genesisd
+User=genesis
+Type=forking
+PIDFile=/run/genesisd/genesisd.pid
+Restart=on-failure
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

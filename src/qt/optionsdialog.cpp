@@ -3,13 +3,13 @@
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #if defined(HAVE_CONFIG_H)
-#include <config/safecash-config.h>
+#include <config/genesis-config.h>
 #endif
 
 #include <qt/optionsdialog.h>
 #include <qt/forms/ui_optionsdialog.h>
 
-#include <qt/safecashunits.h>
+#include <qt/genesisunits.h>
 #include <qt/guiutil.h>
 #include <qt/optionsmodel.h>
 
@@ -73,10 +73,10 @@ OptionsDialog::OptionsDialog(QWidget *parent, bool enableWallet) :
     /* Display elements init */
     QDir translations(":translations");
 
-    ui->safecashAtStartup->setToolTip(ui->safecashAtStartup->toolTip().arg(tr(PACKAGE_NAME)));
-    ui->safecashAtStartup->setText(ui->safecashAtStartup->text().arg(tr(PACKAGE_NAME)));
+    ui->genesisAtStartup->setToolTip(ui->genesisAtStartup->toolTip().arg(tr(PACKAGE_NAME)));
+    ui->genesisAtStartup->setText(ui->genesisAtStartup->text().arg(tr(PACKAGE_NAME)));
 
-    ui->openSafeCashConfButton->setToolTip(ui->openSafeCashConfButton->toolTip().arg(tr(PACKAGE_NAME)));
+    ui->openGenesisConfButton->setToolTip(ui->openGenesisConfButton->toolTip().arg(tr(PACKAGE_NAME)));
 
     ui->lang->setToolTip(ui->lang->toolTip().arg(tr(PACKAGE_NAME)));
     ui->lang->addItem(QString("(") + tr("default") + QString(")"), QVariant(""));
@@ -110,7 +110,7 @@ OptionsDialog::OptionsDialog(QWidget *parent, bool enableWallet) :
     ui->thirdPartyTxUrls->setPlaceholderText("https://example.com/tx/%s");
 #endif
 
-    ui->unit->setModel(new SafeCashUnits(this));
+    ui->unit->setModel(new GenesisUnits(this));
 
     /* Widget-to-option mapper */
     mapper = new QDataWidgetMapper(this);
@@ -172,7 +172,7 @@ void OptionsDialog::setModel(OptionsModel *_model)
 void OptionsDialog::setMapper()
 {
     /* Main */
-    mapper->addMapping(ui->safecashAtStartup, OptionsModel::StartAtStartup);
+    mapper->addMapping(ui->genesisAtStartup, OptionsModel::StartAtStartup);
     mapper->addMapping(ui->threadsScriptVerif, OptionsModel::ThreadsScriptVerif);
     mapper->addMapping(ui->databaseCache, OptionsModel::DatabaseCache);
 
@@ -228,7 +228,7 @@ void OptionsDialog::on_resetButton_clicked()
     }
 }
 
-void OptionsDialog::on_openSafeCashConfButton_clicked()
+void OptionsDialog::on_openGenesisConfButton_clicked()
 {
     /* explain the purpose of the config file */
     QMessageBox::information(this, tr("Configuration options"),
@@ -236,7 +236,7 @@ void OptionsDialog::on_openSafeCashConfButton_clicked()
            "Additionally, any command-line options will override this configuration file."));
 
     /* show an error if there was some problem opening the file */
-    if (!GUIUtil::openSafeCashConf())
+    if (!GUIUtil::openGenesisConf())
         QMessageBox::critical(this, tr("Error"), tr("The configuration file could not be opened."));
 }
 

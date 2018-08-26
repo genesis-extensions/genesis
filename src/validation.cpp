@@ -49,7 +49,7 @@
 #include <boost/foreach.hpp>
 
 #if defined(NDEBUG)
-# error "SafeCash Official cannot be compiled without assertions."
+# error "Genesis Official cannot be compiled without assertions."
 #endif
 
 #define MICRO 0.000001
@@ -239,7 +239,7 @@ CTxMemPool mempool(&feeEstimator);
 /** Constant stuff for coinbase transactions we create: */
 CScript COINBASE_FLAGS;
 
-const std::string strMessageMagic = "SafeCash Signed Message:\n";
+const std::string strMessageMagic = "Genesis Signed Message:\n";
 
 // Internal stuff
 namespace {
@@ -951,7 +951,7 @@ static bool AcceptToMemoryPoolWorker(const CChainParams& chainparams, CTxMemPool
         // Remove conflicting transactions from the mempool
         for (const CTxMemPool::txiter it : allConflicting)
         {
-            LogPrint(BCLog::MEMPOOL, "replacing tx %s with %s for %s SCASH additional fees, %d delta bytes\n",
+            LogPrint(BCLog::MEMPOOL, "replacing tx %s with %s for %s GENX additional fees, %d delta bytes\n",
                     it->GetTx().GetHash().ToString(),
                     hash.ToString(),
                     FormatMoney(nModifiedFees - nConflictingFees),
@@ -1193,7 +1193,7 @@ CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams)
             // Get a sum of the significant bytes
             // 7 23 3 2 27 4
             unsigned int total = 0;
-            // Dialpad digits of safecash... from the literal hex of the hash
+            // Dialpad digits of genesis... from the literal hex of the hash
             total += confirmedHash.GetUint64Char(7); 
             total += confirmedHash.GetUint64Char(23);
             total += confirmedHash.GetUint64Char(3); 
@@ -1756,7 +1756,7 @@ static bool WriteTxIndexDataForBlock(const CBlock& block, CValidationState& stat
 static CCheckQueue<CScriptCheck> scriptcheckqueue(128);
 
 void ThreadScriptCheck() {
-    RenameThread("safecash-scriptch");
+    RenameThread("genesis-scriptch");
     scriptcheckqueue.Thread();
 }
 

@@ -1,5 +1,5 @@
 ---
-name: "safecash-dmg-signer"
+name: "genesis-dmg-signer"
 suites:
 - "trusty"
 architectures:
@@ -7,10 +7,10 @@ architectures:
 packages:
 - "faketime"
 remotes:
-- "url": "https://github.com/SafeCashOfficial/safecash-detached-sigs.git"
+- "url": "https://github.com/genesisofficial/genesis-detached-sigs.git"
   "dir": "signature"
 files:
-- "safecash-osx-unsigned.tar.gz"
+- "genesis-osx-unsigned.tar.gz"
 script: |
   WRAP_DIR=$HOME/wrapped
   mkdir -p ${WRAP_DIR}
@@ -27,8 +27,8 @@ script: |
     chmod +x ${WRAP_DIR}/${prog}
   done
 
-  UNSIGNED=safecash-osx-unsigned.tar.gz
-  SIGNED=safecash-osx-signed.dmg
+  UNSIGNED=genesis-osx-unsigned.tar.gz
+  SIGNED=genesis-osx-signed.dmg
 
   tar -xf ${UNSIGNED}
   OSX_VOLNAME="$(cat osx_volname)"

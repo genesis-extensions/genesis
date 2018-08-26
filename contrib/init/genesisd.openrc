@@ -1,0 +1,92 @@
+#!/sbin/openrc-run
+
+# backward compatibility for existing gentoo layout 
+#
+if [ -d "/var/lib/genesis/.genesis" ]; then
+	GENESISD_DEFAULT_DATADIR="/var/lib/genesis/.genesis"
+else
+	GENESISD_DEFAULT_DATADIR="/var/lib/genesisd"
+fi
+
+GENESISD_CONFIGFILE=${GENESISD_CONFIGFILE:-/etc/genesis/genesis.conf}
+GENESISD_PIDDIR=${GENESISD_PIDDIR:-/var/run/genesisd}
+GENESISD_PIDFILE=${GENESISD_PIDFILE:-${GENESISD_PIDDIR}/genesisd.pid}
+GENESISD_DATADIR=${GENESISD_DATADIR:-${GENESISD_DEFAULT_DATADIR}}
+GENESISD_USER=${GENESISD_USER:-${GENESIS_USER:-genesis}}
+GENESISD_GROUP=${GENESISD_GROUP:-genesis}
+GENESISD_BIN=${GENESISD_BIN:-/usr/bin/genesisd}
+GENESISD_NICE=${GENESISD_NICE:-${NICELEVEL:-0}}
+GENESISD_OPTS="${GENESISD_OPTS:-${GENESIS_OPTS}}"
+
+name="Genesis Official Daemon"
+description="Genesis cryptocurrency P2P network daemon"
+
+command="/usr/bin/genesisd"
+command_args="-pid=\"${GENESISD_PIDFILE}\" \
+		-conf=\"${GENESISD_CONFIGFILE}\" \
+		-datadir=\"${GENESISD_DATADIR}\" \
+		-daemon \
+		${GENESISD_OPTS}"
+
+required_files="${GENESISD_CONFIGFILE}"
+start_stop_daemon_args="-u ${GENESISD_USER} \
+			-N ${GENESISD_NICE} -w 2000"
+pidfile="${GENESISD_PIDFILE}"
+
+# The retry schedule to use when stopping the daemon. Could be either
+# a timeout in seconds or multiple signal/timeout pairs (like
+# "SIGKILL/180 SIGTERM/300")
+retry="${GENESISD_SIGTERM_TIMEOUT}"
+
+depend() {
+	need localmount net
+}
+
+# verify
+# 1) that the datadir exists and is writable (or create it)
+# 2) that a directory for the pid exists and is writable
+# 3) ownership and permissions on the config file
+start_pre() {
+	checkpath \
+	-d \
+	--mode 0750 \
+	--owner "${GENESISD_USER}:${GENESISD_GROUP}" \
+	"${GENESISD_DATADIR}"
+
+	checkpath \
+	-d \
+	--mode 0755 \
+	--owner "${GENESISD_USER}:${GENESISD_GROUP}" \
+	"${GENESISD_PIDDIR}"
+
+	checkpath -f \
+	-o ${GENESISD_USER}:${GENESISD_GROUP} \
+	-m 0660 \
+	${GENESISD_CONFIGFILE}
+
+	checkconfig || return 1
+}
+
+checkconfig()
+{
+	if ! grep -qs '^rpcpassword=' "${GENESISD_CONFIGFILE}" ; then
+		eerror ""
+		eerror "ERROR: You must set a secure rpcpassword to run genesisd."
+		eerror "The setting must appear in ${GENESISD_CONFIGFILE}"
+		eerror ""
+		eerror "This password is security critical to securing wallets "
+		eerror "and must not be the same as the rpcuser setting."
+		eerror "You can generate a suitable random password using the following "
+		eerror "command from the shell:"
+		eerror ""
+		eerror "bash -c 'tr -dc a-zA-Z0-9 < /dev/urandom | head -c32 && echo'"
+		eerror ""
+		eerror "It is recommended that you also set alertnotify so you are "
+		eerror "notified of problems:"
+		eerror ""
+		eerror "ie: alertnotify=echo %%s | mail -s \"Genesis Alert\"" \
+			"admin@foo.com"
+		eerror ""
+		return 1
+	fi
+}

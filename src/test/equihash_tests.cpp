@@ -4,13 +4,13 @@
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #if defined(HAVE_CONFIG_H)
-#include "config/safecash-config.h"
+#include "config/genesis-config.h"
 #endif
 
 #include <arith_uint256.h>
 #include <crypto/sha256.h>
 #include <crypto/equihash/equihash.h>
-#include <test/test_safecash.h>
+#include <test/test_genesis.h>
 #include <uint256.h>
 
 #include <sodium.h>

@@ -44,7 +44,7 @@
 
 //////////////////////////////////////////////////////////////////////////////
 //
-// SafeCashMiner
+// GenesisMiner
 //
 
 //
@@ -310,7 +310,7 @@ bool BlockAssembler::ProcessBlockFound(CBlock* pblock, CWallet& wallet, CReserve
     {
         LOCK(cs_main);
         if (pblock->hashPrevBlock != chainActive.Tip()->GetBlockHash())
-            return error("SafeCash Miner: generated block is stale");
+            return error("Genesis Miner: generated block is stale");
     }
 
     if (gArgs.GetArg("-mineraddress", "").empty()) {
@@ -328,7 +328,7 @@ bool BlockAssembler::ProcessBlockFound(CBlock* pblock, CWallet& wallet, CReserve
     //CValidationState state;
     std::shared_ptr<const CBlock> shared_pblock = std::make_shared<const CBlock>(*pblock);    
     if (!ProcessNewBlock(chainparams, shared_pblock, true, NULL))
-        return error("SafeCash Miner: ProcessNewBlock, block not accepted");
+        return error("Genesis Miner: ProcessNewBlock, block not accepted");
 
     //TrackMinedBlock(pblock->GetHash());
 
@@ -618,11 +618,11 @@ void IncrementExtraNonce(CBlock* pblock, const CBlockIndex* pindexPrev, unsigned
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void static SafeCashMiner(CWallet *pwallet)
+void static GenesisMiner(CWallet *pwallet)
 {
-    LogPrintf("SafeCash Miner started\n");
+    LogPrintf("Genesis Miner started\n");
     //SetThreadPriority(THREAD_PRIORITY_LOWEST);
-    RenameThread("safecash-miner");
+    RenameThread("genesis-miner");
     const CChainParams& chainparams = Params();
 
     // Each thread has its own key
@@ -693,19 +693,19 @@ void static SafeCashMiner(CWallet *pwallet)
             {
                 if (gArgs.GetArg("-mineraddress", "").empty()) 
                 {
-                    LogPrintf("Error in SafeCash Miner: Keypool ran out, please call keypoolrefill before restarting the mining thread\n");
+                    LogPrintf("Error in Genesis Miner: Keypool ran out, please call keypoolrefill before restarting the mining thread\n");
                 } 
                 else 
                 {
                     // Should never reach here, because -mineraddress validity is checked in init.cpp
-                    LogPrintf("Error in SafeCash Miner: Invalid -mineraddress\n");
+                    LogPrintf("Error in Genesis Miner: Invalid -mineraddress\n");
                 }
                 return;
             }
             CBlock *pblock = &pblocktemplate->block;
             IncrementExtraNonce(pblock, pindexPrev, nExtraNonce);
 
-            //LogPrintf("Running SafeCash Miner with %u transactions in block (%u bytes)\n", pblock->vtx.size(), ::GetSerializeSize(*pblock, SER_NETWORK, PROTOCOL_VERSION));
+            //LogPrintf("Running Genesis Miner with %u transactions in block (%u bytes)\n", pblock->vtx.size(), ::GetSerializeSize(*pblock, SER_NETWORK, PROTOCOL_VERSION));
 
             //
             // Search
@@ -751,7 +751,7 @@ void static SafeCashMiner(CWallet *pwallet)
 
                     // Found a solution
                     //SetThreadPriority(THREAD_PRIORITY_NORMAL);
-                    //LogPrintf("SafeCash Miner:\n");
+                    //LogPrintf("Genesis Miner:\n");
                     //LogPrintf("proof-of-work found  \n  hash: %s  \ntarget: %s\n", pblock->GetHash().GetHex(), hashTarget.GetHex());
                     if (blockassembler.ProcessBlockFound(pblock, *pwallet, reservekey)) 
                     {
@@ -870,21 +870,21 @@ void static SafeCashMiner(CWallet *pwallet)
     {
         //miningTimer.stop();
         //c.disconnect();
-        LogPrintf("SafeCash Miner thread terminated\n");
+        LogPrintf("Genesis Miner thread terminated\n");
         throw;
     }
     catch (const std::runtime_error &e)
     {
         //miningTimer.stop();
         //c.disconnect();
-        LogPrintf("SafeCash Miner runtime error: %s\n", e.what());
+        LogPrintf("Genesis Miner runtime error: %s\n", e.what());
         return;
     }
     //miningTimer.stop();
     //c.disconnect();
 }
 
-void GenerateSafeCash(bool fGenerate, CWallet* pwallet, int nThreads)
+void GenerateGenesis(bool fGenerate, CWallet* pwallet, int nThreads)
 {
     static boost::thread_group* minerThreads = NULL;
 
@@ -904,6 +904,6 @@ void GenerateSafeCash(bool fGenerate, CWallet* pwallet, int nThreads)
     minerThreads = new boost::thread_group();
     for (int i = 0; i < nThreads; i++)
     {
-        minerThreads->create_thread(boost::bind(&SafeCashMiner, boost::cref(pwallet)));
+        minerThreads->create_thread(boost::bind(&GenesisMiner, boost::cref(pwallet)));
     }
 }

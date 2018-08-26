@@ -24,7 +24,7 @@ from test_framework.mininode import (
     network_thread_join,
     network_thread_start,
 )
-from test_framework.test_framework import SafeCashTestFramework
+from test_framework.test_framework import GenesisTestFramework
 from test_framework.util import (
     assert_equal,
     connect_nodes,
@@ -66,11 +66,11 @@ def custom_function():
 
     If this function is more generally useful for other tests, consider
     moving it to a module in test_framework."""
-    # self.log.info("running custom_function")  # Oops! Can't run self.log outside the SafeCashTestFramework
+    # self.log.info("running custom_function")  # Oops! Can't run self.log outside the GenesisTestFramework
     pass
 
-class ExampleTest(SafeCashTestFramework):
-    # Each functional test is a subclass of the SafeCashTestFramework class.
+class ExampleTest(GenesisTestFramework):
+    # Each functional test is a subclass of the GenesisTestFramework class.
 
     # Override the set_test_params(), add_options(), setup_chain(), setup_network()
     # and setup_nodes() methods to customize the test setup as required.
@@ -125,7 +125,7 @@ class ExampleTest(SafeCashTestFramework):
 
         Define it in a method here because you're going to use it repeatedly.
         If you think it's useful in general, consider moving it to the base
-        SafeCashTestFramework class so other tests can use it."""
+        GenesisTestFramework class so other tests can use it."""
 
         self.log.info("Running custom_method")
 

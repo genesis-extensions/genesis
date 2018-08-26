@@ -3,8 +3,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_TEST_SCRIPTNUM10_H
-#define SAFECASH_TEST_SCRIPTNUM10_H
+#ifndef GENESIS_TEST_SCRIPTNUM10_H
+#define GENESIS_TEST_SCRIPTNUM10_H
 
 #include <algorithm>
 #include <limits>
@@ -180,4 +180,4 @@ private:
 };
 
 
-#endif // SAFECASH_TEST_BIGNUM_H
+#endif // GENESIS_TEST_BIGNUM_H

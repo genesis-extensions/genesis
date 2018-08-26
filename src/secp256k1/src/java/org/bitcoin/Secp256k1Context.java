@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.safecash;
+package io.genesis;
 
 /**
  * This class holds the context reference used in native methods 

@@ -2,16 +2,16 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_CLIENTVERSION_H
-#define SAFECASH_CLIENTVERSION_H
+#ifndef GENESIS_CLIENTVERSION_H
+#define GENESIS_CLIENTVERSION_H
 
 #if defined(HAVE_CONFIG_H)
-#include <config/safecash-config.h>
+#include <config/genesis-config.h>
 #endif //HAVE_CONFIG_H
 
 // Check that required client information is defined
 #if !defined(CLIENT_VERSION_MAJOR) || !defined(CLIENT_VERSION_MINOR) || !defined(CLIENT_VERSION_REVISION) || !defined(CLIENT_VERSION_BUILD) || !defined(CLIENT_VERSION_IS_RELEASE) || !defined(COPYRIGHT_YEAR)
-#error Client version information missing: version is not defined by safecash-config.h or in any other way
+#error Client version information missing: version is not defined by genesis-config.h or in any other way
 #endif
 
 /**
@@ -22,10 +22,10 @@
 #define DO_STRINGIZE(X) #X
 
 //! Copyright string used in Windows .rc files
-#define COPYRIGHT_STR "2009-2018 Bitcoin Core & 2018 SafeCash Official developers"
+#define COPYRIGHT_STR "2009-2018 Bitcoin Core & 2018 Genesis Official developers"
 
 /**
- * safecashd-res.rc includes this file, but it cannot cope with real c++ code.
+ * genesisd-res.rc includes this file, but it cannot cope with real c++ code.
  * WINDRES_PREPROC is defined to indicate that its pre-processor is running.
  * Anything other than a define should be guarded below.
  */
@@ -50,4 +50,4 @@ std::string FormatSubVersion(const std::string& name, int nClientVersion, const 
 
 #endif // WINDRES_PREPROC
 
-#endif // SAFECASH_CLIENTVERSION_H
+#endif // GENESIS_CLIENTVERSION_H

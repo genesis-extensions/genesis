@@ -3,8 +3,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_TXMEMPOOL_H
-#define SAFECASH_TXMEMPOOL_H
+#ifndef GENESIS_TXMEMPOOL_H
+#define GENESIS_TXMEMPOOL_H
 
 #include <memory>
 #include <set>
@@ -797,4 +797,4 @@ struct DisconnectedBlockTransactions {
     }
 };
 
-#endif // SAFECASH_TXMEMPOOL_H
+#endif // GENESIS_TXMEMPOOL_H

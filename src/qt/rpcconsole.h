@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_QT_RPCCONSOLE_H
-#define SAFECASH_QT_RPCCONSOLE_H
+#ifndef GENESIS_QT_RPCCONSOLE_H
+#define GENESIS_QT_RPCCONSOLE_H
 
 #include <qt/guiutil.h>
 #include <qt/peertablemodel.h>
@@ -27,7 +27,7 @@ class QMenu;
 class QItemSelection;
 QT_END_NAMESPACE
 
-/** Local SafeCash RPC console. */
+/** Local Genesis RPC console. */
 class RPCConsole: public QWidget
 {
     Q_OBJECT
@@ -156,4 +156,4 @@ private:
     void updateNetworkState();
 };
 
-#endif // SAFECASH_QT_RPCCONSOLE_H
+#endif // GENESIS_QT_RPCCONSOLE_H

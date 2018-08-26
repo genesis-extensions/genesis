@@ -6,7 +6,7 @@
 set -e
 
 ROOTDIR=dist
-BUNDLE="${ROOTDIR}/SafeCash-Qt.app"
+BUNDLE="${ROOTDIR}/genesis-qt.app"
 CODESIGN=codesign
 TEMPDIR=sign.temp
 TEMPLIST=${TEMPDIR}/signatures.txt

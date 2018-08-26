@@ -2,19 +2,19 @@
 # Copyright (c) 2014-2017 The Bitcoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
-"""Test running safecashd with -reindex and -reindex-chainstate options.
+"""Test running genesisd with -reindex and -reindex-chainstate options.
 
 - Start a single node and generate 3 blocks.
 - Stop the node and restart it with -reindex. Verify that the node has reindexed up to block 3.
 - Stop the node and restart it with -reindex-chainstate. Verify that the node has reindexed up to block 3.
 """
 
-from test_framework.test_framework import SafeCashTestFramework
+from test_framework.test_framework import GenesisTestFramework
 from test_framework.util import assert_equal
 from test_framework.util import wait_until
 import time
 
-class ReindexTest(SafeCashTestFramework):
+class ReindexTest(GenesisTestFramework):
 
     def set_test_params(self):
         self.setup_clean_chain = True

@@ -5,7 +5,7 @@
 #include <serialize.h>
 #include <streams.h>
 #include <hash.h>
-#include <test/test_safecash.h>
+#include <test/test_genesis.h>
 
 #include <stdint.h>
 

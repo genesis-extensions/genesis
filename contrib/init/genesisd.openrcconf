@@ -1,0 +1,33 @@
+# /etc/conf.d/genesisd: config file for /etc/init.d/genesisd
+
+# Config file location
+#GENESISD_CONFIGFILE="/etc/genesis/genesis.conf"
+
+# What directory to write pidfile to?  (created and owned by $GENESISD_USER)
+#GENESISD_PIDDIR="/var/run/genesisd"
+
+# What filename to give the pidfile
+#GENESISD_PIDFILE="${GENESISD_PIDDIR}/genesisd.pid"
+
+# Where to write genesisd data (be mindful that the blockchain is large)
+#GENESISD_DATADIR="/var/lib/genesisd"
+
+# User and group to own genesisd process
+#GENESISD_USER="genesis"
+#GENESISD_GROUP="genesis"
+
+# Path to genesisd executable
+#GENESISD_BIN="/usr/bin/genesisd"
+
+# Nice value to run genesisd under
+#GENESISD_NICE=0
+
+# Additional options (avoid -conf and -datadir, use flags above)
+#GENESISD_OPTS=""
+
+# The timeout in seconds OpenRC will wait for genesisd to terminate
+# after a SIGTERM has been raised.
+# Note that this will be mapped as argument to start-stop-daemon's
+# '--retry' option, which means you can specify a retry schedule
+# here. For more information see man 8 start-stop-daemon.
+GENESISD_SIGTERM_TIMEOUT=60

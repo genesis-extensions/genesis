@@ -3,8 +3,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_SCRIPT_SCRIPT_H
-#define SAFECASH_SCRIPT_SCRIPT_H
+#ifndef GENESIS_SCRIPT_SCRIPT_H
+#define GENESIS_SCRIPT_SCRIPT_H
 
 #include <crypto/common.h>
 #include <prevector.h>
@@ -694,4 +694,4 @@ public:
     virtual ~CReserveScript() {}
 };
 
-#endif // SAFECASH_SCRIPT_SCRIPT_H
+#endif // GENESIS_SCRIPT_SCRIPT_H

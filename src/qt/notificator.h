@@ -2,11 +2,11 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_QT_NOTIFICATOR_H
-#define SAFECASH_QT_NOTIFICATOR_H
+#ifndef GENESIS_QT_NOTIFICATOR_H
+#define GENESIS_QT_NOTIFICATOR_H
 
 #if defined(HAVE_CONFIG_H)
-#include <config/safecash-config.h>
+#include <config/genesis-config.h>
 #endif
 
 #include <QIcon>
@@ -74,4 +74,4 @@ private:
 #endif
 };
 
-#endif // SAFECASH_QT_NOTIFICATOR_H
+#endif // GENESIS_QT_NOTIFICATOR_H

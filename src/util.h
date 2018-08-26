@@ -7,11 +7,11 @@
  * Server/client environment: argument handling, config file parsing,
  * logging, thread wrappers, startup time
  */
-#ifndef SAFECASH_UTIL_H
-#define SAFECASH_UTIL_H
+#ifndef GENESIS_UTIL_H
+#define GENESIS_UTIL_H
 
 #if defined(HAVE_CONFIG_H)
-#include <config/safecash-config.h>
+#include <config/genesis-config.h>
 #endif
 
 #include <compat.h>
@@ -56,8 +56,8 @@ extern bool fLogIPs;
 extern std::atomic<bool> fReopenDebugLog;
 extern CTranslationInterface translationInterface;
 
-extern const char * const SAFECASH_CONF_FILENAME;
-extern const char * const SAFECASH_PID_FILENAME;
+extern const char * const GENESIS_CONF_FILENAME;
+extern const char * const GENESIS_PID_FILENAME;
 
 extern std::atomic<uint32_t> logCategories;
 
@@ -317,7 +317,7 @@ void RenameThread(const char* name);
  */
 template <typename Callable> void TraceThread(const char* name,  Callable func)
 {
-    std::string s = strprintf("safecash-%s", name);
+    std::string s = strprintf("genesis-%s", name);
     RenameThread(s.c_str());
     try
     {
@@ -349,4 +349,4 @@ std::unique_ptr<T> MakeUnique(Args&&... args)
     return std::unique_ptr<T>(new T(std::forward<Args>(args)...));
 }
 
-#endif // SAFECASH_UTIL_H
+#endif // GENESIS_UTIL_H

@@ -3,8 +3,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_RPCCLIENT_H
-#define SAFECASH_RPCCLIENT_H
+#ifndef GENESIS_RPCCLIENT_H
+#define GENESIS_RPCCLIENT_H
 
 #include <univalue.h>
 
@@ -19,4 +19,4 @@ UniValue RPCConvertNamedValues(const std::string& strMethod, const std::vector<s
  */
 UniValue ParseNonRFCJSONValue(const std::string& strVal);
 
-#endif // SAFECASH_RPCCLIENT_H
+#endif // GENESIS_RPCCLIENT_H

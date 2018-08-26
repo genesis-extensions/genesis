@@ -40,17 +40,17 @@ from the root of the repository. **Source code must be cloned first**
 
 **Note**: You only need Berkeley DB if the wallet is enabled (see the section *Disable-Wallet mode* below).
 
-Build SafeCash Official
+Build Genesis Official
 ------------------------
 
-1. Clone the SafeCash Official source code and cd into `safecash`
+1. Clone the Genesis Official source code and cd into `genesis`
 
-        git clone https://github.com/safecashofficial/safecash
-        cd safecash
+        git clone https://github.com/genesisofficial/genesis
+        cd genesis
 
-2.  Build SafeCash Official:
+2.  Build Genesis Official:
 
-    Configure and build the headless SafeCash Official binaries as well as the GUI (if Qt is found).
+    Configure and build the headless Genesis Official binaries as well as the GUI (if Qt is found).
 
     You can disable the GUI build by passing `--without-gui` to configure.
 
@@ -65,37 +65,37 @@ Build SafeCash Official
 Running
 -------
 
-SafeCash is now available at `./src/safecashd`
+Genesis is now available at `./src/genesisd`
 
 Before running, it's recommended that you create an RPC configuration file.
 
-    echo -e "rpcuser=safecashrpc\nrpcpassword=$(xxd -l 16 -p /dev/urandom)" > "/Users/${USER}/Library/Application Support/SafeCash/safecash.conf"
+    echo -e "rpcuser=genesisrpc\nrpcpassword=$(xxd -l 16 -p /dev/urandom)" > "/Users/${USER}/Library/Application Support/Genesis/genesis.conf"
 
-    chmod 600 "/Users/${USER}/Library/Application Support/SafeCash/safecash.conf"
+    chmod 600 "/Users/${USER}/Library/Application Support/Genesis/genesis.conf"
 
-The first time you run safecashd, it will start downloading the blockchain. This process could take several hours depending on how long the blockchain has been active.
+The first time you run genesisd, it will start downloading the blockchain. This process could take several hours depending on how long the blockchain has been active.
 
 You can monitor the download process by looking at the debug.log file:
 
-    tail -f $HOME/Library/Application\ Support/SafeCash/debug.log
+    tail -f $HOME/Library/Application\ Support/Genesis/debug.log
 
 Other commands:
 -------
 
-    ./src/safecashd -daemon # Starts the safecash daemon.
-    ./src/safecash-cli --help # Outputs a list of command-line options.
-    ./src/safecash-cli help # Outputs a list of RPC commands when the daemon is running.
+    ./src/genesisd -daemon # Starts the genesis daemon.
+    ./src/genesis-cli --help # Outputs a list of command-line options.
+    ./src/genesis-cli help # Outputs a list of RPC commands when the daemon is running.
 
 Using Qt Creator as IDE
 ------------------------
-You can use Qt Creator as an IDE, for safecash development.
+You can use Qt Creator as an IDE, for genesis development.
 Download and install the community edition of [Qt Creator](https://www.qt.io/download/).
 Uncheck everything except Qt Creator during the installation process.
 
 1. Make sure you installed everything through Homebrew mentioned above
 2. Do a proper ./configure --enable-debug
 3. In Qt Creator do "New Project" -> Import Project -> Import Existing Project
-4. Enter "safecash-qt" as project name, enter src/qt as location
+4. Enter "genesis-qt" as project name, enter src/qt as location
 5. Leave the file selection as it is
 6. Confirm the "summary page"
 7. In the "Projects" tab select "Manage Kits..."

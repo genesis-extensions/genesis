@@ -2,13 +2,13 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_QT_WALLETFRAME_H
-#define SAFECASH_QT_WALLETFRAME_H
+#ifndef GENESIS_QT_WALLETFRAME_H
+#define GENESIS_QT_WALLETFRAME_H
 
 #include <QFrame>
 #include <QMap>
 
-class SafeCashGUI;
+class GenesisGUI;
 class ClientModel;
 class PlatformStyle;
 class SendCoinsRecipient;
@@ -21,9 +21,9 @@ QT_END_NAMESPACE
 
 /**
  * A container for embedding all wallet-related
- * controls into SafeCashGUI. The purpose of this class is to allow future
+ * controls into GenesisGUI. The purpose of this class is to allow future
  * refinements of the wallet controls with minimal need for further
- * modifications to SafeCashGUI, thus greatly simplifying merges while
+ * modifications to GenesisGUI, thus greatly simplifying merges while
  * reducing the risk of breaking top-level stuff.
  */
 class WalletFrame : public QFrame
@@ -31,7 +31,7 @@ class WalletFrame : public QFrame
     Q_OBJECT
 
 public:
-    explicit WalletFrame(const PlatformStyle *platformStyle, SafeCashGUI *_gui = 0);
+    explicit WalletFrame(const PlatformStyle *platformStyle, GenesisGUI *_gui = 0);
     ~WalletFrame();
 
     void setClientModel(ClientModel *clientModel);
@@ -51,7 +51,7 @@ Q_SIGNALS:
 
 private:
     QStackedWidget *walletStack;
-    SafeCashGUI *gui;
+    GenesisGUI *gui;
     ClientModel *clientModel;
     QMap<QString, WalletView*> mapWalletViews;
 
@@ -93,4 +93,4 @@ public Q_SLOTS:
     void outOfSyncWarningClicked();
 };
 
-#endif // SAFECASH_QT_WALLETFRAME_H
+#endif // GENESIS_QT_WALLETFRAME_H

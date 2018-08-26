@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_HTTPSERVER_H
-#define SAFECASH_HTTPSERVER_H
+#ifndef GENESIS_HTTPSERVER_H
+#define GENESIS_HTTPSERVER_H
 
 #include <string>
 #include <stdint.h>
@@ -150,4 +150,4 @@ private:
 
 std::string urlDecode(const std::string &urlEncoded);
 
-#endif // SAFECASH_HTTPSERVER_H
+#endif // GENESIS_HTTPSERVER_H

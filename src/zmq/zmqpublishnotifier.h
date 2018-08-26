@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_ZMQ_ZMQPUBLISHNOTIFIER_H
-#define SAFECASH_ZMQ_ZMQPUBLISHNOTIFIER_H
+#ifndef GENESIS_ZMQ_ZMQPUBLISHNOTIFIER_H
+#define GENESIS_ZMQ_ZMQPUBLISHNOTIFIER_H
 
 #include <zmq/zmqabstractnotifier.h>
 
@@ -52,4 +52,4 @@ public:
     bool NotifyTransaction(const CTransaction &transaction) override;
 };
 
-#endif // SAFECASH_ZMQ_ZMQPUBLISHNOTIFIER_H
+#endif // GENESIS_ZMQ_ZMQPUBLISHNOTIFIER_H

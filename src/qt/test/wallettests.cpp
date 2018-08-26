@@ -1,6 +1,6 @@
 #include <qt/test/wallettests.h>
 
-#include <qt/safecashamountfield.h>
+#include <qt/genesisamountfield.h>
 #include <qt/callback.h>
 #include <qt/optionsmodel.h>
 #include <qt/platformstyle.h>
@@ -10,7 +10,7 @@
 #include <qt/transactiontablemodel.h>
 #include <qt/transactionview.h>
 #include <qt/walletmodel.h>
-#include <test/test_safecash.h>
+#include <test/test_genesis.h>
 #include <validation.h>
 #include <wallet/wallet.h>
 #include <qt/overviewpage.h>
@@ -71,7 +71,7 @@ uint256 SendCoins(CWallet& wallet, SendCoinsDialog& sendCoinsDialog, const CTxDe
     QVBoxLayout* entries = sendCoinsDialog.findChild<QVBoxLayout*>("entries");
     SendCoinsEntry* entry = qobject_cast<SendCoinsEntry*>(entries->itemAt(0)->widget());
     entry->findChild<QValidatedLineEdit*>("payTo")->setText(QString::fromStdString(EncodeDestination(address)));
-    entry->findChild<SafeCashAmountField*>("payAmount")->setValue(amount);
+    entry->findChild<GenesisAmountField*>("payAmount")->setValue(amount);
     sendCoinsDialog.findChild<QFrame*>("frameFee")
         ->findChild<QFrame*>("frameFeeSelection")
         ->findChild<QCheckBox*>("optInRBF")
@@ -146,9 +146,9 @@ void BumpFee(TransactionView& view, const uint256& txid, bool expectDisabled, st
 //
 // This also requires overriding the default minimal Qt platform:
 //
-//     src/qt/test/test_safecash-qt -platform xcb      # Linux
-//     src/qt/test/test_safecash-qt -platform windows  # Windows
-//     src/qt/test/test_safecash-qt -platform cocoa    # macOS
+//     src/qt/test/test_genesis-qt -platform xcb      # Linux
+//     src/qt/test/test_genesis-qt -platform windows  # Windows
+//     src/qt/test/test_genesis-qt -platform cocoa    # macOS
 void TestGUI()
 {
     g_address_type = OUTPUT_TYPE_P2SH_SEGWIT;
@@ -208,7 +208,7 @@ void TestGUI()
     QString balanceText = balanceLabel->text();
     int unit = walletModel.getOptionsModel()->getDisplayUnit();
     CAmount balance = walletModel.getBalance();
-    QString balanceComparison = SafeCashUnits::formatWithUnit(unit, balance, false, SafeCashUnits::separatorAlways);
+    QString balanceComparison = GenesisUnits::formatWithUnit(unit, balance, false, GenesisUnits::separatorAlways);
     QCOMPARE(balanceText, balanceComparison);
 
     // Check Request Payment button
@@ -221,7 +221,7 @@ void TestGUI()
     labelInput->setText("TEST_LABEL_1");
 
     // Amount input
-    SafeCashAmountField* amountInput = receiveCoinsDialog.findChild<SafeCashAmountField*>("reqAmount");
+    GenesisAmountField* amountInput = receiveCoinsDialog.findChild<GenesisAmountField*>("reqAmount");
     amountInput->setValue(1);
 
     // Message input
@@ -237,7 +237,7 @@ void TestGUI()
             QString paymentText = rlist->toPlainText();
             QStringList paymentTextList = paymentText.split('\n');
             QCOMPARE(paymentTextList.at(0), QString("Payment information"));
-            QVERIFY(paymentTextList.at(1).indexOf(QString("URI: safecash:")) != -1);
+            QVERIFY(paymentTextList.at(1).indexOf(QString("URI: genesis:")) != -1);
             QVERIFY(paymentTextList.at(2).indexOf(QString("Address:")) != -1);
             QCOMPARE(paymentTextList.at(3), QString("Amount: 0.00000001 ") + QString::fromStdString(CURRENCY_UNIT));
             QCOMPARE(paymentTextList.at(4), QString("Label: TEST_LABEL_1"));

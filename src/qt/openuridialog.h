@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_QT_OPENURIDIALOG_H
-#define SAFECASH_QT_OPENURIDIALOG_H
+#ifndef GENESIS_QT_OPENURIDIALOG_H
+#define GENESIS_QT_OPENURIDIALOG_H
 
 #include <QDialog>
 
@@ -31,4 +31,4 @@ private:
     Ui::OpenURIDialog *ui;
 };
 
-#endif // SAFECASH_QT_OPENURIDIALOG_H
+#endif // GENESIS_QT_OPENURIDIALOG_H

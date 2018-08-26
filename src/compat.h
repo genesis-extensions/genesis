@@ -3,11 +3,11 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_COMPAT_H
-#define SAFECASH_COMPAT_H
+#ifndef GENESIS_COMPAT_H
+#define GENESIS_COMPAT_H
 
 #if defined(HAVE_CONFIG_H)
-#include <config/safecash-config.h>
+#include <config/genesis-config.h>
 #endif
 
 #ifdef WIN32
@@ -94,4 +94,4 @@ bool static inline IsSelectableSocket(const SOCKET& s) {
 #endif
 }
 
-#endif // SAFECASH_COMPAT_H
+#endif // GENESIS_COMPAT_H

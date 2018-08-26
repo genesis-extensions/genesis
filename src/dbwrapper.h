@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_DBWRAPPER_H
-#define SAFECASH_DBWRAPPER_H
+#ifndef GENESIS_DBWRAPPER_H
+#define GENESIS_DBWRAPPER_H
 
 #include <clientversion.h>
 #include <fs.h>
@@ -340,4 +340,4 @@ public:
 
 };
 
-#endif // SAFECASH_DBWRAPPER_H
+#endif // GENESIS_DBWRAPPER_H

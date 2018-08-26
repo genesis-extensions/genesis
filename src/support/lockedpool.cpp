@@ -6,7 +6,7 @@
 #include <support/cleanse.h>
 
 #if defined(HAVE_CONFIG_H)
-#include <config/safecash-config.h>
+#include <config/genesis-config.h>
 #endif
 
 #ifdef WIN32

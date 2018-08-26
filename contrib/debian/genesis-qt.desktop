@@ -1,0 +1,14 @@
+[Desktop Entry]
+Version=1.0
+Name=Genesis Core
+Comment=Connect to the Genesis P2P Network
+Comment[de]=Verbinde mit dem Genesis peer-to-peer Netzwerk
+Comment[fr]=Genesis, monnaie virtuelle cryptographique pair à pair
+Comment[tr]=Genesis, eşten eşe kriptografik sanal para birimi
+Exec=genesis-qt %u
+Terminal=false
+Type=Application
+Icon=genesis128
+MimeType=x-scheme-handler/genesis;
+Categories=Office;Finance;
+StartupWMClass=genesis-qt

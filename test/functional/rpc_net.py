@@ -9,7 +9,7 @@ Tests correspond to code in rpc/net.cpp.
 
 import time
 
-from test_framework.test_framework import SafeCashTestFramework
+from test_framework.test_framework import GenesisTestFramework
 from test_framework.util import (
     assert_equal,
     assert_greater_than_or_equal,
@@ -19,7 +19,7 @@ from test_framework.util import (
     wait_until,
 )
 
-class NetTest(SafeCashTestFramework):
+class NetTest(GenesisTestFramework):
     def set_test_params(self):
         self.setup_clean_chain = True
         self.num_nodes = 2

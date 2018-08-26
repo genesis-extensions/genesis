@@ -1,4 +1,4 @@
-Source: safecash
+Source: genesis
 Section: utils
 Priority: optional
 Maintainer: Loki Taljaard <loki@swarm.technology>
@@ -26,45 +26,45 @@ Build-Depends: debhelper,
  python,
  libzmq3-dev, libsodium-dev
 Standards-Version: 3.9.2
-Homepage: https://safecash.io/
-Vcs-Git: git://github.com/SafeCashOfficial/SafeCash.git
-Vcs-Browser: https://github.com/SafeCashOfficial/SafeCash
+Homepage: https://genesisnetwork.io/
+Vcs-Git: git://github.com/genesisofficial/genesis.git
+Vcs-Browser: https://github.com/genesisofficial/genesis
 
-Package: safecashd
+Package: genesisd
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: peer-to-peer network based digital currency - daemon
- SafeCash is a free open source peer-to-peer electronic cash system that
+ Genesis is a free open source peer-to-peer electronic cash system that
  is completely decentralized, without the need for a central server or
  trusted parties.  Users hold the crypto keys to their own money and
  transact directly with each other, with the help of a P2P network to
  check for double-spending.
  .
- This package provides the daemon, safecashd, and the CLI tool
- safecash-cli to interact with the daemon.
+ This package provides the daemon, genesisd, and the CLI tool
+ genesis-cli to interact with the daemon.
 
-Package: safecash-qt
+Package: genesis-qt
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: peer-to-peer network based digital currency - Qt GUI
- SafeCash is a free open source peer-to-peer electronic cash system that
+ Genesis is a free open source peer-to-peer electronic cash system that
  is completely decentralized, without the need for a central server or
  trusted parties.  Users hold the crypto keys to their own money and
  transact directly with each other, with the help of a P2P network to
  check for double-spending.
  .
- This package provides SafeCash-Qt, a GUI for SafeCash based on Qt.
+ This package provides genesis-qt, a GUI for Genesis based on Qt.
 
-Package: safecash-tx
+Package: genesis-tx
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: peer-to-peer digital currency - standalone transaction tool
- SafeCash is a free open source peer-to-peer electronic cash system that
+ Genesis is a free open source peer-to-peer electronic cash system that
  is completely decentralized, without the need for a central server or
  trusted parties.  Users hold the crypto keys to their own money and
  transact directly with each other, with the help of a P2P network to
  check for double-spending.
  .
- This package provides safecash-tx, a command-line transaction creation
- tool which can be used without a safecash daemon.  Some means of
+ This package provides genesis-tx, a command-line transaction creation
+ tool which can be used without a genesis daemon.  Some means of
  exchanging minimal transaction data with peers is still required.

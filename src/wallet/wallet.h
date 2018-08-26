@@ -3,8 +3,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_WALLET_WALLET_H
-#define SAFECASH_WALLET_WALLET_H
+#ifndef GENESIS_WALLET_WALLET_H
+#define GENESIS_WALLET_WALLET_H
 
 #include <amount.h>
 #include <policy/feerate.h>
@@ -321,7 +321,7 @@ public:
     unsigned int nTimeSmart;
     /**
      * From me flag is set to 1 for transactions that were created by the wallet
-     * on this SafeCash node, and set to 0 for transactions that were created
+     * on this Genesis node, and set to 0 for transactions that were created
      * externally and came in through the network or sendrawtransaction RPC.
      */
     char fFromMe;
@@ -1294,4 +1294,4 @@ public:
     }
 };
 
-#endif // SAFECASH_WALLET_WALLET_H
+#endif // GENESIS_WALLET_WALLET_H

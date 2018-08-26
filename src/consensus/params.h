@@ -3,15 +3,15 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_CONSENSUS_PARAMS_H
-#define SAFECASH_CONSENSUS_PARAMS_H
+#ifndef GENESIS_CONSENSUS_PARAMS_H
+#define GENESIS_CONSENSUS_PARAMS_H
 
 #include <uint256.h>
 #include <limits>
 #include <map>
 #include <string>
 
-/** SafeCash Values */
+/** Genesis Values */
 static const int BLOCK_REWARD_MAX = 1000;
 static const int BLOCK_REWARD_MIN = 20;
 static const int HOURS_IN_DAY = 24;
@@ -95,7 +95,7 @@ struct Params {
     int64_t AveragingWindowTimespan() const { return nPowAveragingWindow * nPowTargetSpacing; }
     int64_t MinActualTimespan() const { return (AveragingWindowTimespan() * (100 - nPowMaxAdjustUp  )) / 100; }
     int64_t MaxActualTimespan() const { return (AveragingWindowTimespan() * (100 + nPowMaxAdjustDown)) / 100; }
-    // SafeCash PoW
+    // Genesis PoW
     int nSuperBlockInterval;
     // Big Block Interval Calculation
     int GetUltraBlockInterval() const 
@@ -139,4 +139,4 @@ struct Params {
 };
 } // namespace Consensus
 
-#endif // SAFECASH_CONSENSUS_PARAMS_H
+#endif // GENESIS_CONSENSUS_PARAMS_H

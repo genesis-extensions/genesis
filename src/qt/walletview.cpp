@@ -6,7 +6,7 @@
 
 #include <qt/addressbookpage.h>
 #include <qt/askpassphrasedialog.h>
-#include <qt/safecashgui.h>
+#include <qt/genesisgui.h>
 #include <qt/clientmodel.h>
 #include <qt/guiutil.h>
 #include <qt/optionsmodel.h>
@@ -84,7 +84,7 @@ WalletView::~WalletView()
 {
 }
 
-void WalletView::setSafeCashGUI(SafeCashGUI *gui)
+void WalletView::setGenesisGUI(GenesisGUI *gui)
 {
     if (gui)
     {

@@ -63,7 +63,7 @@ static CBlock CreateGenesisBlock(const char* pszTimestamp, const CScript& genesi
  *   vMerkleTree: 4a5e1e
  */
 
-// "SafeCash was bootstrapped on Fri 17 Aug 2018 at 12:55:30 UTC BTC#537037 0000000000000000000b3e0d43c120e5b2f841500dffc89a4c2fc6027261b15a ZEC#377019 00000000053833a50c63d02a71581c668a800a5921b6086d068cc64f16ff32b6"
+// "Genesis was bootstrapped on Fri 17 Aug 2018 at 12:55:30 UTC BTC#537037 0000000000000000000b3e0d43c120e5b2f841500dffc89a4c2fc6027261b15a ZEC#377019 00000000053833a50c63d02a71581c668a800a5921b6086d068cc64f16ff32b6"
 static CBlock CreateGenesisBlock(uint32_t nTime, const uint256& nNonce, const std::vector<unsigned char>& nSolution, uint32_t nBits, int32_t nVersion, const CAmount& genesisReward)
 {
     const char* pszTimestamp = "SafeCashe317c686ae26fbaee438e3ae5a78f58409e22da083841c907be34c36977219ca";
@@ -150,7 +150,7 @@ public:
         assert(maxUint/UintToArith256(consensus.powLimit) >= consensus.nPowAveragingWindow);
         consensus.nPowMaxAdjustDown = 32; // 32% adjustment down
         consensus.nPowMaxAdjustUp = 16; // 16% adjustment up
-        // SafeCash PoW
+        // Genesis PoW
         consensus.nSuperBlockInterval = 1440; // Once a day
 
         genesis = CreateGenesisBlock(
@@ -185,13 +185,13 @@ public:
         base58Prefixes[EXT_PUBLIC_KEY] = { 0x53, 0x41, 0x46, 0x45 };// 
         base58Prefixes[EXT_SECRET_KEY] = { 0x53, 0x61, 0x66, 0x65 };// 
 
-        bech32_hrp = "scash";
+        bech32_hrp = "genx";
 
         vFixedSeeds = std::vector<SeedSpec6>(pnSeed6_main, pnSeed6_main + ARRAYLEN(pnSeed6_main));
-        vSeeds.emplace_back("mainnet1.safecash.io", true);
-        vSeeds.emplace_back("mainnet2.safecash.io", true);
-        vSeeds.emplace_back("mainnet3.safecash.io", true);
-        vSeeds.emplace_back("mainnet4.safecash.io", true);
+        vSeeds.emplace_back("mainnet1.genesisnetwork.io", true);
+        vSeeds.emplace_back("mainnet2.genesisnetwork.io", true);
+        vSeeds.emplace_back("mainnet3.genesisnetwork.io", true);
+        vSeeds.emplace_back("mainnet4.genesisnetwork.io", true);
 
         fDefaultConsistencyChecks = false;
         fRequireStandard = true;
@@ -294,7 +294,7 @@ public:
         //assert(maxUint/UintToArith256(consensus.powLimit) >= consensus.nPowAveragingWindow);
         consensus.nPowMaxAdjustDown = 32; // 32% adjustment down
         consensus.nPowMaxAdjustUp = 16; // 16% adjustment up
-        // SafeCash PoW
+        // Genesis PoW
         consensus.nSuperBlockInterval = 10; 
 
         genesis = CreateGenesisBlock(
@@ -319,8 +319,8 @@ public:
         vFixedSeeds.clear();
         vSeeds.clear();
         // nodes with support for servicebits filtering should be at the top
-        vSeeds.emplace_back("testnet1.safecash.io", true);
-        vSeeds.emplace_back("testnet2.safecash.io", true);
+        vSeeds.emplace_back("testnet1.genesisnetwork.io", true);
+        vSeeds.emplace_back("testnet2.genesisnetwork.io", true);
 
 
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1, 125);// 
@@ -329,7 +329,7 @@ public:
         base58Prefixes[EXT_PUBLIC_KEY] = { 0x53, 0x4e, 0x55, 0x4c };// 
         base58Prefixes[EXT_SECRET_KEY] = { 0x53, 0x6f, 0x75, 0x6c };// 
 
-        bech32_hrp = "scasht";
+        bech32_hrp = "genxt";
 
         vFixedSeeds = std::vector<SeedSpec6>(pnSeed6_test, pnSeed6_test + ARRAYLEN(pnSeed6_test));
 
@@ -430,7 +430,7 @@ public:
         assert(maxUint/UintToArith256(consensus.powLimit) >= consensus.nPowAveragingWindow);
         consensus.nPowMaxAdjustDown = 0; // Turn off adjustment down
         consensus.nPowMaxAdjustUp = 0; // Turn off adjustment up
-        // SafeCash PoW
+        // Genesis PoW
         consensus.nSuperBlockInterval = 10; 
 
         genesis = CreateGenesisBlock(
@@ -478,7 +478,7 @@ public:
         base58Prefixes[EXT_PUBLIC_KEY] = { 0x53, 0x4e, 0x55, 0x4c };// 
         base58Prefixes[EXT_SECRET_KEY] = { 0x53, 0x6f, 0x75, 0x6c };// 
         
-        bech32_hrp = "scashrt";
+        bech32_hrp = "genxrt";
 
         // Founders Addresses: A vector of 2-of-3 multisig addresses
         vFounderAddress = 

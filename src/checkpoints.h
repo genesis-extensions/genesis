@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_CHECKPOINTS_H
-#define SAFECASH_CHECKPOINTS_H
+#ifndef GENESIS_CHECKPOINTS_H
+#define GENESIS_CHECKPOINTS_H
 
 #include <uint256.h>
 
@@ -24,4 +24,4 @@ CBlockIndex* GetLastCheckpoint(const CCheckpointData& data);
 
 } //namespace Checkpoints
 
-#endif // SAFECASH_CHECKPOINTS_H
+#endif // GENESIS_CHECKPOINTS_H

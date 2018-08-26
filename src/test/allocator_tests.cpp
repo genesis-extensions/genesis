@@ -5,7 +5,7 @@
 #include <util.h>
 
 #include <support/allocators/secure.h>
-#include <test/test_safecash.h>
+#include <test/test_genesis.h>
 
 #include <memory>
 

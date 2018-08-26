@@ -12,7 +12,7 @@
 
 #include <support/events.h>
 
-#include <test/test_safecash.h>
+#include <test/test_genesis.h>
 
 #include <vector>
 

@@ -3,8 +3,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_HASH_H
-#define SAFECASH_HASH_H
+#ifndef GENESIS_HASH_H
+#define GENESIS_HASH_H
 
 #include <crypto/ripemd160.h>
 #include <crypto/sha256.h>
@@ -17,7 +17,7 @@
 
 typedef uint256 ChainCode;
 
-/** A hasher class for SafeCash's 256-bit hash (double SHA-256). */
+/** A hasher class for Genesis's 256-bit hash (double SHA-256). */
 class CHash256 {
 private:
     CSHA256 sha;
@@ -41,7 +41,7 @@ public:
     }
 };
 
-/** A hasher class for SafeCash's 160-bit hash (SHA-256 + RIPEMD-160). */
+/** A hasher class for Genesis's 160-bit hash (SHA-256 + RIPEMD-160). */
 class CHash160 {
 private:
     CSHA256 sha;
@@ -243,4 +243,4 @@ public:
 uint64_t SipHashUint256(uint64_t k0, uint64_t k1, const uint256& val);
 uint64_t SipHashUint256Extra(uint64_t k0, uint64_t k1, const uint256& val, uint32_t extra);
 
-#endif // SAFECASH_HASH_H
+#endif // GENESIS_HASH_H

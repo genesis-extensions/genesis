@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_VERSION_H
-#define SAFECASH_VERSION_H
+#ifndef GENESIS_VERSION_H
+#define GENESIS_VERSION_H
 
 /**
  * network protocol versioning
@@ -48,4 +48,4 @@ static const int TESTNET_REBUILD_BETA2 = 70017;
 static const int TESTNET_REBUILD_PRE_LWMA = 70018;
 static const int TESTNET_PRELAUNCH_FINAL = 70019;
 
-#endif // SAFECASH_VERSION_H
+#endif // GENESIS_VERSION_H

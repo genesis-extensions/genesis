@@ -3,12 +3,12 @@
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #if defined(HAVE_CONFIG_H)
-#include <config/safecash-config.h>
+#include <config/genesis-config.h>
 #endif
 
 #include <qt/optionsmodel.h>
 
-#include <qt/safecashunits.h>
+#include <qt/genesisunits.h>
 #include <qt/guiutil.h>
 
 #include <init.h>
@@ -73,7 +73,7 @@ void OptionsModel::Init(bool resetSettings)
 
     // Display
     if (!settings.contains("nDisplayUnit"))
-        settings.setValue("nDisplayUnit", SafeCashUnits::SCASH);
+        settings.setValue("nDisplayUnit", GenesisUnits::GENX);
     nDisplayUnit = settings.value("nDisplayUnit").toInt();
 
     if (!settings.contains("strThirdPartyTxUrls"))

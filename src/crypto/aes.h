@@ -4,8 +4,8 @@
 //
 // C++ wrapper around ctaes, a constant-time AES implementation
 
-#ifndef SAFECASH_CRYPTO_AES_H
-#define SAFECASH_CRYPTO_AES_H
+#ifndef GENESIS_CRYPTO_AES_H
+#define GENESIS_CRYPTO_AES_H
 
 extern "C" {
 #include <crypto/ctaes/ctaes.h>
@@ -115,4 +115,4 @@ private:
     unsigned char iv[AES_BLOCKSIZE];
 };
 
-#endif // SAFECASH_CRYPTO_AES_H
+#endif // GENESIS_CRYPTO_AES_H

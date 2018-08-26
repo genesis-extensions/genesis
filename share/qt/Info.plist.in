@@ -11,7 +11,7 @@
   </array>
 
   <key>CFBundleIconFile</key>
-  <string>safecash.icns</string>
+  <string>genesis.icns</string>
 
   <key>CFBundlePackageType</key>
   <string>APPL</string>
@@ -29,16 +29,16 @@
   <string>????</string>
 
   <key>CFBundleExecutable</key>
-  <string>SafeCash-Qt</string>
+  <string>genesis-qt</string>
   
   <key>CFBundleName</key>
-  <string>SafeCash-Qt</string>
+  <string>genesis-qt</string>
 
   <key>LSHasLocalizedDisplayName</key>
   <true/>
 
   <key>CFBundleIdentifier</key>
-  <string>io.safecash.SafeCash-Qt</string>
+  <string>io.genesis.genesis-qt</string>
 
   <key>CFBundleURLTypes</key>
   <array>
@@ -46,10 +46,10 @@
       <key>CFBundleTypeRole</key>
       <string>Editor</string>
       <key>CFBundleURLName</key>
-      <string>io.safecash.SafeCashPayment</string>
+      <string>io.genesis.GenesisPayment</string>
       <key>CFBundleURLSchemes</key>
       <array>
-        <string>safecash</string>
+        <string>genesis</string>
       </array>
     </dict>
   </array>
@@ -58,9 +58,9 @@
   <array>
     <dict>
       <key>UTTypeIdentifier</key>
-      <string>io.safecash.paymentrequest</string>
+      <string>io.genesis.paymentrequest</string>
       <key>UTTypeDescription</key>
-      <string>SafeCash payment request</string>
+      <string>Genesis payment request</string>
       <key>UTTypeConformsTo</key>
       <array>
         <string>public.data</string>
@@ -68,10 +68,10 @@
       <key>UTTypeTagSpecification</key>
       <dict>
         <key>public.mime-type</key>
-        <string>application/x-safecash-payment-request</string>
+        <string>application/x-genesis-payment-request</string>
         <key>public.filename-extension</key>
         <array>
-          <string>safecashpaymentrequest</string>
+          <string>genesispaymentrequest</string>
         </array>
       </dict>
     </dict>
@@ -84,7 +84,7 @@
       <string>Editor</string>
       <key>LSItemContentTypes</key>
       <array>
-        <string>io.safecash.paymentrequest</string>
+        <string>io.genesis.paymentrequest</string>
       </array>
       <key>LSHandlerRank</key>
       <string>Owner</string>

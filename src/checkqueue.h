@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_CHECKQUEUE_H
-#define SAFECASH_CHECKQUEUE_H
+#ifndef GENESIS_CHECKQUEUE_H
+#define GENESIS_CHECKQUEUE_H
 
 #include <sync.h>
 
@@ -211,4 +211,4 @@ public:
     }
 };
 
-#endif // SAFECASH_CHECKQUEUE_H
+#endif // GENESIS_CHECKQUEUE_H

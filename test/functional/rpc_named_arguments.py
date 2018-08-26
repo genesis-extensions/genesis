@@ -4,13 +4,13 @@
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 """Test using named arguments for RPCs."""
 
-from test_framework.test_framework import SafeCashTestFramework
+from test_framework.test_framework import GenesisTestFramework
 from test_framework.util import (
     assert_equal,
     assert_raises_rpc_error,
 )
 
-class NamedArgumentTest(SafeCashTestFramework):
+class NamedArgumentTest(GenesisTestFramework):
     def set_test_params(self):
         self.num_nodes = 1
 

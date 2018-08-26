@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_QT_MODALOVERLAY_H
-#define SAFECASH_QT_MODALOVERLAY_H
+#ifndef GENESIS_QT_MODALOVERLAY_H
+#define GENESIS_QT_MODALOVERLAY_H
 
 #include <QDateTime>
 #include <QWidget>
@@ -47,4 +47,4 @@ private:
     bool userClosed;
 };
 
-#endif // SAFECASH_QT_MODALOVERLAY_H
+#endif // GENESIS_QT_MODALOVERLAY_H

@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_WALLET_CRYPTER_H
-#define SAFECASH_WALLET_CRYPTER_H
+#ifndef GENESIS_WALLET_CRYPTER_H
+#define GENESIS_WALLET_CRYPTER_H
 
 #include <keystore.h>
 #include <serialize.h>
@@ -157,4 +157,4 @@ public:
     boost::signals2::signal<void (CCryptoKeyStore* wallet)> NotifyStatusChanged;
 };
 
-#endif // SAFECASH_WALLET_CRYPTER_H
+#endif // GENESIS_WALLET_CRYPTER_H

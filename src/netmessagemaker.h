@@ -3,8 +3,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_NETMESSAGEMAKER_H
-#define SAFECASH_NETMESSAGEMAKER_H
+#ifndef GENESIS_NETMESSAGEMAKER_H
+#define GENESIS_NETMESSAGEMAKER_H
 
 #include <net.h>
 #include <serialize.h>
@@ -33,4 +33,4 @@ private:
     const int nVersion;
 };
 
-#endif // SAFECASH_NETMESSAGEMAKER_H
+#endif // GENESIS_NETMESSAGEMAKER_H

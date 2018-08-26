@@ -3,8 +3,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_STREAMS_H
-#define SAFECASH_STREAMS_H
+#ifndef GENESIS_STREAMS_H
+#define GENESIS_STREAMS_H
 
 #include <support/allocators/zeroafterfree.h>
 #include <serialize.h>
@@ -704,4 +704,4 @@ public:
     }
 };
 
-#endif // SAFECASH_STREAMS_H
+#endif // GENESIS_STREAMS_H

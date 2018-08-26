@@ -2,13 +2,13 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_QT_UTILITYDIALOG_H
-#define SAFECASH_QT_UTILITYDIALOG_H
+#ifndef GENESIS_QT_UTILITYDIALOG_H
+#define GENESIS_QT_UTILITYDIALOG_H
 
 #include <QDialog>
 #include <QObject>
 
-class SafeCashGUI;
+class GenesisGUI;
 
 namespace Ui {
     class HelpMessageDialog;
@@ -42,10 +42,10 @@ class ShutdownWindow : public QWidget
 
 public:
     explicit ShutdownWindow(QWidget *parent=0, Qt::WindowFlags f=0);
-    static QWidget *showShutdownWindow(SafeCashGUI *window);
+    static QWidget *showShutdownWindow(GenesisGUI *window);
 
 protected:
     void closeEvent(QCloseEvent *event);
 };
 
-#endif // SAFECASH_QT_UTILITYDIALOG_H
+#endif // GENESIS_QT_UTILITYDIALOG_H

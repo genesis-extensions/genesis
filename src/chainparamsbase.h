@@ -2,16 +2,16 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_CHAINPARAMSBASE_H
-#define SAFECASH_CHAINPARAMSBASE_H
+#ifndef GENESIS_CHAINPARAMSBASE_H
+#define GENESIS_CHAINPARAMSBASE_H
 
 #include <memory>
 #include <string>
 #include <vector>
 
 /**
- * CBaseChainParams defines the base parameters (shared between safecash-cli and safecashd)
- * of a given instance of the SafeCash system.
+ * CBaseChainParams defines the base parameters (shared between genesis-cli and genesisd)
+ * of a given instance of the Genesis system.
  */
 class CBaseChainParams
 {
@@ -59,4 +59,4 @@ void SelectBaseParams(const std::string& chain);
  */
 std::string ChainNameFromCommandLine();
 
-#endif // SAFECASH_CHAINPARAMSBASE_H
+#endif // GENESIS_CHAINPARAMSBASE_H

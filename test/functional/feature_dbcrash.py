@@ -33,7 +33,7 @@ import time
 
 from test_framework.mininode import *
 from test_framework.script import *
-from test_framework.test_framework import SafeCashTestFramework
+from test_framework.test_framework import GenesisTestFramework
 from test_framework.util import *
 
 HTTP_DISCONNECT_ERRORS = [http.client.CannotSendRequest]
@@ -42,7 +42,7 @@ try:
 except AttributeError:
     pass
 
-class ChainstateWriteCrashTest(SafeCashTestFramework):
+class ChainstateWriteCrashTest(GenesisTestFramework):
     def set_test_params(self):
         self.num_nodes = 4
         self.setup_clean_chain = False
@@ -84,14 +84,14 @@ class ChainstateWriteCrashTest(SafeCashTestFramework):
                 return utxo_hash
             except:
                 # An exception here should mean the node is about to crash.
-                # If safecashd exits, then try again.  wait_for_node_exit()
-                # should raise an exception if safecashd doesn't exit.
+                # If genesisd exits, then try again.  wait_for_node_exit()
+                # should raise an exception if genesisd doesn't exit.
                 self.wait_for_node_exit(node_index, timeout=10)
             self.crashed_on_restart += 1
             time.sleep(1)
 
-        # If we got here, safecashd isn't coming back up on restart.  Could be a
-        # bug in safecashd, or we've gotten unlucky with our dbcrash ratio --
+        # If we got here, genesisd isn't coming back up on restart.  Could be a
+        # bug in genesisd, or we've gotten unlucky with our dbcrash ratio --
         # perhaps we generated a test case that blew up our cache?
         # TODO: If this happens a lot, we should try to restart without -dbcrashratio
         # and make sure that recovery happens.

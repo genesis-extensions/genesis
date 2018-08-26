@@ -3,8 +3,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SAFECASH_ADDRDB_H
-#define SAFECASH_ADDRDB_H
+#ifndef GENESIS_ADDRDB_H
+#define GENESIS_ADDRDB_H
 
 #include <fs.h>
 #include <serialize.h>
@@ -99,4 +99,4 @@ public:
     bool Read(banmap_t& banSet);
 };
 
-#endif // SAFECASH_ADDRDB_H
+#endif // GENESIS_ADDRDB_H

@@ -6,7 +6,7 @@
 #include <txmempool.h>
 #include <util.h>
 
-#include <test/test_safecash.h>
+#include <test/test_genesis.h>
 
 #include <boost/test/unit_test.hpp>
 #include <list>
