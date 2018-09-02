@@ -53,7 +53,7 @@ Dependency Build Instructions:
 
 Build requirements:
 
-    sudo apt-get install build-essential libtool autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils python3 libsodium-dev git
+    sudo apt-get install build-essential libtool autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils python3 libsodium-dev git curl
     sudo apt-get install libboost-all-dev
 
 BerkeleyDB is required for the wallet.
@@ -78,29 +78,11 @@ Optional: ZMQ dependencies (provides ZMQ API 4.x)
 
     sudo apt-get install libzmq3-dev
 
-On Ubuntu 16.04 you need to install the newest libsodium (at least 1.0.13) or you'll see the following:
-
-    configure: error: Wrong libsodium: version >= 1.0.13 required
-
-```
-$ wget https://download.libsodium.org/libsodium/releases/libsodium-1.0.16.tar.gz
-$ tar -xzf libsodium-1.0.16.tar.gz
-$ cd libsodium-1.0.16
-$ ./configure
-$ make
-$ make install
-```
-    
 Building Genesis Official (w/out QT)
 --------------------
-
-Optional: When performing './configure', you can speed the process of making up by adding the disable-bench and test flags
-
-    $ ./configure --disable-bench --disable-test
-   
-Now build   
+  
 ```
-$ git https://github.com/genesisofficial/genesis.git
+$ git clone https://github.com/genesisofficial/genesis.git
 $ cd genesis/depends
 $ make
 $ cd ..
@@ -122,7 +104,7 @@ Optional: libqrencode
     
 Now build
 ```
-$ git https://github.com/genesisofficial/genesis.git
+$ git clone https://github.com/genesisofficial/genesis.git
 $ cd genesis/depends
 $ make
 $ cd ..
@@ -132,13 +114,36 @@ $ make
 $ make install
 ```
 
-The command `make install` installs the executables in the `./depends/x86_64-pc-linux-gnu/bin/` directory.
+The command `make install` installs the executables in the `./depends/x86_64-pc-linux-gnu/bin/` directory. Make sure you define absolute path.
 
 Notes
 -----
 The release is built with GCC and then "strip genesisd" to strip the debug
 symbols, which reduces the executable size by about 90%.
 
+Ubuntu 16.04 may encounter the following error. Here's how to remedy:
+
+    configure: error: Wrong libsodium: version >= 1.0.13 required
+
+```
+$ wget https://download.libsodium.org/libsodium/releases/libsodium-1.0.16.tar.gz
+$ tar -xzf libsodium-1.0.16.tar.gz
+$ cd libsodium-1.0.16
+$ ./configure
+$ make
+$ make install
+```
+
+Also on Ubuntu 16.04, running the daemon might cause a "Core Aborted" error. Here's the work around
+
+```
+wget http://de.archive.ubuntu.com/ubuntu/pool/universe/libs/libsodium/libsodium-dev_1.0.13-1_amd64.deb
+wget http://de.archive.ubuntu.com/ubuntu/pool/universe/libs/libsodium/libsodium18_1.0.13-1_amd64.deb
+sudo dpkg -i libsodium*deb
+```
+Then perform the build again. (configure, make)
+
+In case of errors asking to ```recompile with fPIC``` add ```--with-pic``` to your ./configure command and make again
 
 miniupnpc
 ---------
@@ -241,25 +246,5 @@ Additional Configure Flags
 A list of additional configure flags can be displayed with:
 
     ./configure --help
-
-ARM Cross-compilation
--------------------
-These steps can be performed on, for example, an Ubuntu VM. The depends system
-will also work on other Linux distributions, however the commands for
-installing the toolchain will be different.
-
-Make sure you install the build requirements mentioned above.
-Then, install the toolchain and curl:
-
-    sudo apt-get install g++-arm-linux-gnueabihf curl
-
-To build executables for ARM:
-
-    cd depends
-    make HOST=arm-linux-gnueabihf NO_QT=1
-    cd ..
-    ./configure --prefix=$PWD/depends/arm-linux-gnueabihf --enable-glibc-back-compat --enable-reduce-exports LDFLAGS=-static-libstdc++
-    make
-
 
 For further documentation on the depends system see [README.md](../depends/README.md) in the depends directory.
