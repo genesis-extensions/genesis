@@ -124,10 +124,10 @@ public:
         consensus.vDeployments[Consensus::DEPLOYMENT_SEGWIT].nTimeout = Consensus::BIP9Deployment::NO_TIMEOUT;
 
         // The best chain should have at least this much work.
-        consensus.nMinimumChainWork = uint256S("0x000000000000000000000000000000000000000000000000000000000000001f");
+        consensus.nMinimumChainWork = uint256S("0x0000000000000000000000000000000000000000000000000000000ac2050bc0");
 
         // By default assume that the signatures in ancestors of this block are valid.
-        consensus.defaultAssumeValid = uint256S("0x00"); 
+        consensus.defaultAssumeValid = uint256S("0x00000d375549a032c60f9a857da1cbe260dcb53c1d718216f06e897fb2fe3501"); 
 
         /**
          * The message start string is designed to be unlikely to occur in normal data.
@@ -202,13 +202,20 @@ public:
                 {
                     0, consensus.hashGenesisBlock
                 },
+                {
+                    10000, uint256S("0x000002a7e0ce0fec9117d68137819a4cfb7fa4f46408384340c9f652e7029b49")
+                },
+                {
+                    20000, uint256S("0x00000d375549a032c60f9a857da1cbe260dcb53c1d718216f06e897fb2fe3501")
+                }
             }
         };
 
         chainTxData = ChainTxData{
-            0,
-            0,
-            0
+            // Data from rpc: getchaintxstats 4096 00000d375549a032c60f9a857da1cbe260dcb53c1d718216f06e897fb2fe3501
+            /* nTime    */ 1532884444,
+            /* nTxCount */ 43002,
+            /* dTxRate  */ 0.05389735186421477
         };
 
         // Switch at block
