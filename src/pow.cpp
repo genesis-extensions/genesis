@@ -96,7 +96,7 @@ bool CheckEquihashSolution(const CBlockHeader *pblock, const CChainParams& param
 
     // Hash state
     crypto_generichash_blake2b_state state;
-    EhInitialiseState(n, k, state);
+    EhInitialiseState(n, k, state, params.IsAfterSwitch(pblock->nHeight));
 
     // I = the block header minus nonce and solution.
     CEquihashInput I{*pblock};

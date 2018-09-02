@@ -92,6 +92,11 @@ public:
     std::string GetGiveawayAddressAtIndex(int i) const;
     /* Convenience Functions*/
     CScript AddressToScript(std::string inAddress) const;
+    bool IsAfterSwitch(int nHeight) const
+    {
+        return nHeight >= fGenX_SwitchAtBlock;
+    }    
+
 protected:
     CChainParams() {}
 
@@ -111,6 +116,8 @@ protected:
     bool fDefaultConsistencyChecks;
     bool fRequireStandard;
     bool fMineBlocksOnDemand;
+    // Switch from SafeCash values to Genesis values at this block
+    bool fGenX_SwitchAtBlock;
     CCheckpointData checkpointData;
     ChainTxData chainTxData;
     std::vector<std::string> vFounderAddress;

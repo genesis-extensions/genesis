@@ -1193,7 +1193,6 @@ CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams)
             // Get a sum of the significant bytes
             // 7 23 3 2 27 4
             unsigned int total = 0;
-            // Dialpad digits of genesis... from the literal hex of the hash
             total += confirmedHash.GetUint64Char(7); 
             total += confirmedHash.GetUint64Char(23);
             total += confirmedHash.GetUint64Char(3); 

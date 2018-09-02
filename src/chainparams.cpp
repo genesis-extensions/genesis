@@ -211,6 +211,9 @@ public:
             0
         };
 
+        // Switch at block
+        fGenX_SwitchAtBlock = 30000;
+
         // Founders Addresses: A vector of addresses
         vFounderAddress = 
         {
@@ -350,6 +353,9 @@ public:
             0
         };
 
+        // Switch at block
+        fGenX_SwitchAtBlock = 3;
+
         // Founders Addresses: 
         vFounderAddress = 
         {
@@ -479,6 +485,9 @@ public:
         base58Prefixes[EXT_SECRET_KEY] = { 0x53, 0x6f, 0x75, 0x6c };// 
         
         bech32_hrp = "genxrt";
+
+        // Switch at block
+        fGenX_SwitchAtBlock = 3;
 
         // Founders Addresses: A vector of 2-of-3 multisig addresses
         vFounderAddress = 
