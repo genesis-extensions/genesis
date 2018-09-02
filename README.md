@@ -1,10 +1,10 @@
-![SC Logo](https://image.ibb.co/h82JEy/SC.png "SafeCa$h")
-SafeCa$h Official
+![GenX Logo](https://i.imgur.com/DAh8pFI.png "Genesis")
+Genesis Official
 &middot;
 [![Github License](https://img.shields.io/npm/l/express.svg)](https://github.com/genesisofficial/genesis/blob/master/COPYING)
 =====================================
 
-* Genesis (GENX) is a fair-launch, decentralized cryptocurrency built upon the latest 0.16 BTC codebase focused on speed, security and stability
+* Genesis (GENX) is a fair-launch, decentralized cryptocurrency built upon the latest 0.16.2 BTC codebase focused on speed, security and stability
 * Genesis utilizes Equihash 192.7 Proof-of-Work with randomized block rewards. Proof-of-Stake and Masternodes will be implemented over time
 * Genesis provides the building blocks to be the first true Point-of-Sale cryptocurrency that non-technical consumers can adopt anywhere.
 
@@ -12,7 +12,7 @@ SafeCa$h Official
 
 | Specification         | Descriptor                                    |
 |-----------------------|-----------------------------------------------|
-| Ticker                | GENX                                         |
+| Ticker                | GENX                                          |
 | Algorithm             | Equihash 192.7                                |
 | RPC Port              | 7423                                          |
 | P2P Port              | 7233                                          |
@@ -30,7 +30,7 @@ SafeCa$h Official
 * [Website](https://genesisnetwork.io/)
 * [Forums](https://genesisnetwork.io/forum/)
 * [Discord](https://discord.gg/8hSjExc)
-* [Twitter](https://twitter.com/Genesis_IO)
+* [Twitter](https://twitter.com/genesis_network)
 
 
 ## Development Process
