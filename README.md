@@ -30,7 +30,7 @@ Genesis Official
 * [Website](https://genesisnetwork.io/)
 * [Forums](https://genesisnetwork.io/forum/)
 * [Discord](https://discord.gg/8hSjExc)
-* [Twitter](https://twitter.com/genesis_network)
+* [Twitter](https://twitter.com/genx_network)
 
 
 ## Development Process
