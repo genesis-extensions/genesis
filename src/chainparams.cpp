@@ -220,6 +220,7 @@ public:
 
         // Switch at block
         fGenX_SwitchAtBlock = 30000;
+        fGenX_EnforceAtBlock = 35000;
 
         // Founders Addresses: A vector of addresses
         vFounderAddress = 
@@ -362,6 +363,7 @@ public:
 
         // Switch at block
         fGenX_SwitchAtBlock = 3;
+        fGenX_EnforceAtBlock = 1;
 
         // Founders Addresses: 
         vFounderAddress = 
@@ -495,6 +497,7 @@ public:
 
         // Switch at block
         fGenX_SwitchAtBlock = 3;
+        fGenX_EnforceAtBlock = 3;
 
         // Founders Addresses: A vector of 2-of-3 multisig addresses
         vFounderAddress = 

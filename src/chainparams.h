@@ -96,6 +96,10 @@ public:
     {
         return nHeight >= fGenX_SwitchAtBlock;
     }    
+    bool EnforceSwitch(int nHeight) const
+    {
+        return nHeight >= fGenX_EnforceAtBlock;
+    }    
 
 protected:
     CChainParams() {}
@@ -117,7 +121,8 @@ protected:
     bool fRequireStandard;
     bool fMineBlocksOnDemand;
     // Switch from SafeCash values to Genesis values at this block
-    bool fGenX_SwitchAtBlock;
+    int fGenX_SwitchAtBlock;
+    int fGenX_EnforceAtBlock;
     CCheckpointData checkpointData;
     ChainTxData chainTxData;
     std::vector<std::string> vFounderAddress;
