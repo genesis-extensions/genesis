@@ -717,7 +717,14 @@ void static GenesisMiner(CWallet *pwallet)
             {
                 // Hash state
                 crypto_generichash_blake2b_state state;
-                EhInitialiseState(n, k, state, Params().IsAfterSwitch(pblock->nHeight));
+                if (Params().IsAfterSwitch(pblock->nHeight))
+                {
+                    EhInitialiseState(n, k, state, "GENX_PoW");
+                }
+                else
+                {
+                    EhInitialiseState(n, k, state, "SafeCash");
+                }
 
                 // I = the block header minus nonce and solution.
                 CEquihashInput I{*pblock};

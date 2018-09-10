@@ -3054,6 +3054,29 @@ static bool FindUndoPos(CValidationState &state, int nFile, CDiskBlockPos &pos, 
 
 static bool CheckBlockHeader(const CBlockHeader& block, CValidationState& state, const Consensus::Params& consensusParams, bool fCheckPOW = true)
 {
+    // Check Equihash solution is valid
+    if (fCheckPOW)
+    {
+        if (CheckEquihashSolution(&block, Params(), "GENX_PoW"))
+        {
+            // LogPrintf("CheckBlockHeader(): Found solution using GENX_PoW at height: %d\n", block.nHeight);
+        }
+        else if (IsInitialBlockDownload && CheckEquihashSolution(&block, Params(), "SafeCash"))
+        {
+            // LogPrintf("CheckBlockHeader(): Found solution using SafeCash at height: %d\n", block.nHeight);
+        }
+        else if (block.GetHash() == Params().GetConsensus().hashGenesisBlock)
+        {
+            // LogPrintf("Skipping genesis block\n");
+        }
+        else
+        {
+            // Nothing worked... bugger.
+            LogPrintf("CheckBlockHeader(): Equihash solution invalid at height %d\n", block.nHeight);
+            return state.DoS(100, error("CheckBlockHeader(): Equihash solution invalid"),
+                    REJECT_INVALID, "invalid-solution");
+        }
+    }
     // Check proof of work matches claimed amount
     if (fCheckPOW && !CheckProofOfWork(block.GetHash(), block.nBits, consensusParams))
         return state.DoS(50, false, REJECT_INVALID, "high-hash", false, "proof of work failed");
@@ -3267,6 +3290,7 @@ static bool ContextualCheckBlock(const CBlock& block, CValidationState& state, c
         CScript expect = CScript() << nHeight;
         if (block.vtx[0]->vin[0].scriptSig.size() < expect.size() ||
             !std::equal(expect.begin(), expect.end(), block.vtx[0]->vin[0].scriptSig.begin())) {
+            LogPrintf("BIP34 Height Validation failed at: %d\n", nHeight);
             return state.DoS(100, false, REJECT_INVALID, "bad-cb-height", false, "block height mismatch in coinbase");
         }
     }

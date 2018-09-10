@@ -33,19 +33,13 @@
 EhSolverCancelledException solver_cancelled;
 
 template<unsigned int N, unsigned int K>
-int Equihash<N,K>::InitialiseState(eh_HashState& base_state, bool afterswitch)
+int Equihash<N,K>::InitialiseState(eh_HashState& base_state, const std::string personalizationString)
 {
     uint32_t le_N = htole32(N);
     uint32_t le_K = htole32(K);
     unsigned char personalization[crypto_generichash_blake2b_PERSONALBYTES] = {};
-    if (afterswitch)
-    {
-        memcpy(personalization, "GENX_PoW", 8);
-    }
-    else
-    {
-        memcpy(personalization, "SafeCash", 8);
-    }
+    //LogPrintf("Equihash InitialiseState called with %s\n", personalizationString);
+    memcpy(personalization, personalizationString.c_str(), 8);
     memcpy(personalization+8,  &le_N, 4);
     memcpy(personalization+12, &le_K, 4);
     return crypto_generichash_blake2b_init_salt_personal(&base_state,
@@ -751,9 +745,10 @@ bool Equihash<N,K>::IsValidSolution(const eh_HashState& base_state, std::vector<
         std::vector<FullStepRow<FinalFullWidth>> Xc;
         for (size_t i = 0; i < X.size(); i += 2) {
             if (!HasCollision(X[i], X[i+1], CollisionByteLength)) {
-                LogPrintf("Invalid solution: invalid collision length between StepRows\n");
-                LogPrintf("X[i]   = %s\n", X[i].GetHex(hashLen));
-                LogPrintf("X[i+1] = %s\n", X[i+1].GetHex(hashLen));
+                // Most likely means that they are using the wrong pers string....
+                // LogPrintf("Invalid solution: invalid collision length between StepRows\n");
+                // LogPrintf("X[i]   = %s\n", X[i].GetHex(hashLen));
+                // LogPrintf("X[i+1] = %s\n", X[i+1].GetHex(hashLen));
                 return false;
             }
             if (X[i+1].IndicesBefore(X[i], hashLen, lenIndices)) {
@@ -776,7 +771,7 @@ bool Equihash<N,K>::IsValidSolution(const eh_HashState& base_state, std::vector<
 }
 
 // Explicit instantiations for Equihash<96,3>
-template int Equihash<96,3>::InitialiseState(eh_HashState& base_state, bool afterswitch);
+template int Equihash<96,3>::InitialiseState(eh_HashState& base_state, const std::string personalizationString);
 template bool Equihash<96,3>::BasicSolve(const eh_HashState& base_state,
                                          const std::function<bool(std::vector<unsigned char>)> validBlock,
                                          const std::function<bool(EhSolverCancelCheck)> cancelled);
@@ -786,7 +781,7 @@ template bool Equihash<96,3>::OptimisedSolve(const eh_HashState& base_state,
 template bool Equihash<96,3>::IsValidSolution(const eh_HashState& base_state, std::vector<unsigned char> soln);
 
 // Explicit instantiations for Equihash<200,9>
-template int Equihash<200,9>::InitialiseState(eh_HashState& base_state, bool afterswitch);
+template int Equihash<200,9>::InitialiseState(eh_HashState& base_state, const std::string personalizationString);
 template bool Equihash<200,9>::BasicSolve(const eh_HashState& base_state,
                                           const std::function<bool(std::vector<unsigned char>)> validBlock,
                                           const std::function<bool(EhSolverCancelCheck)> cancelled);
@@ -796,7 +791,7 @@ template bool Equihash<200,9>::OptimisedSolve(const eh_HashState& base_state,
 template bool Equihash<200,9>::IsValidSolution(const eh_HashState& base_state, std::vector<unsigned char> soln);
 
 // Explicit instantiations for Equihash<96,5>
-template int Equihash<96,5>::InitialiseState(eh_HashState& base_state, bool afterswitch);
+template int Equihash<96,5>::InitialiseState(eh_HashState& base_state, const std::string personalizationString);
 template bool Equihash<96,5>::BasicSolve(const eh_HashState& base_state,
                                          const std::function<bool(std::vector<unsigned char>)> validBlock,
                                          const std::function<bool(EhSolverCancelCheck)> cancelled);
@@ -806,7 +801,7 @@ template bool Equihash<96,5>::OptimisedSolve(const eh_HashState& base_state,
 template bool Equihash<96,5>::IsValidSolution(const eh_HashState& base_state, std::vector<unsigned char> soln);
 
 // Explicit instantiations for Equihash<48,5>
-template int Equihash<48,5>::InitialiseState(eh_HashState& base_state, bool afterswitch);
+template int Equihash<48,5>::InitialiseState(eh_HashState& base_state, const std::string personalizationString);
 template bool Equihash<48,5>::BasicSolve(const eh_HashState& base_state,
                                          const std::function<bool(std::vector<unsigned char>)> validBlock,
                                          const std::function<bool(EhSolverCancelCheck)> cancelled);
@@ -815,7 +810,7 @@ template bool Equihash<48,5>::OptimisedSolve(const eh_HashState& base_state,
                                              const std::function<bool(EhSolverCancelCheck)> cancelled);
 template bool Equihash<48,5>::IsValidSolution(const eh_HashState& base_state, std::vector<unsigned char> soln);
 // Explicit instantiations for Equihash<192,7>
-template int Equihash<192,7>::InitialiseState(eh_HashState& base_state, bool afterswitch);
+template int Equihash<192,7>::InitialiseState(eh_HashState& base_state, const std::string personalizationString);
 template bool Equihash<192,7>::BasicSolve(const eh_HashState& base_state,
                                          const std::function<bool(std::vector<unsigned char>)> validBlock,
                                          const std::function<bool(EhSolverCancelCheck)> cancelled);

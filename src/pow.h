@@ -24,7 +24,7 @@ unsigned int LwmaCalculateNextWorkRequired(const CBlockIndex* pindexLast, const 
 
 
 /** Check whether the Equihash solution in a block header is valid */
-bool CheckEquihashSolution(const CBlockHeader *pblock, const CChainParams&);
+bool CheckEquihashSolution(const CBlockHeader *pblock, const CChainParams&, const std::string personalizationString);
 
 /** Check whether a block hash satisfies the proof-of-work requirement specified by nBits */
 bool CheckProofOfWork(uint256 hash, unsigned int nBits, const Consensus::Params&);

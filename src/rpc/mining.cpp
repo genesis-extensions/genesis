@@ -135,7 +135,15 @@ UniValue generateBlocks(std::shared_ptr<CReserveScript> coinbaseScript, int nGen
         }
 	// Solve Equihash.
 	crypto_generichash_blake2b_state eh_state;
-    EhInitialiseState(n, k, eh_state, Params().IsAfterSwitch(nHeight));
+    // EhInitialiseState(n, k, eh_state, Params().IsAfterSwitch(nHeight));
+    if (Params().IsAfterSwitch(nHeight))
+    {
+        EhInitialiseState(n, k, eh_state, "GENX_PoW");
+    }
+    else
+    {
+        EhInitialiseState(n, k, eh_state, "SafeCash");
+    }
 
 	// I = the block header minus nonce and solution.
 	CEquihashInput I{*pblock};

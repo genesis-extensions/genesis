@@ -182,7 +182,7 @@ public:
 
     Equihash() { }
 
-    int InitialiseState(eh_HashState& base_state, bool afterswitch);
+    int InitialiseState(eh_HashState& base_state, const std::string personalizationString);
     bool BasicSolve(const eh_HashState& base_state,
                     const std::function<bool(std::vector<unsigned char>)> validBlock,
                     const std::function<bool(EhSolverCancelCheck)> cancelled);
@@ -200,17 +200,17 @@ static Equihash<96,5> Eh96_5;
 static Equihash<48,5> Eh48_5;
 static Equihash<192,7> Eh192_7;
 
-#define EhInitialiseState(n, k, base_state, afterswitch)  \
+#define EhInitialiseState(n, k, base_state, personalizationString)  \
     if (n == 96 && k == 3) {                 \
-        Eh96_3.InitialiseState(base_state, afterswitch);  \
+        Eh96_3.InitialiseState(base_state, personalizationString);  \
     } else if (n == 200 && k == 9) {         \
-        Eh200_9.InitialiseState(base_state, afterswitch); \
+        Eh200_9.InitialiseState(base_state, personalizationString); \
     } else if (n == 96 && k == 5) {          \
-        Eh96_5.InitialiseState(base_state, afterswitch);  \
+        Eh96_5.InitialiseState(base_state, personalizationString);  \
     } else if (n == 48 && k == 5) {          \
-        Eh48_5.InitialiseState(base_state, afterswitch);  \
+        Eh48_5.InitialiseState(base_state, personalizationString);  \
     } else if (n == 192 && k == 7) {         \
-        Eh192_7.InitialiseState(base_state, afterswitch); \
+        Eh192_7.InitialiseState(base_state, personalizationString); \
     } else {                                 \
         throw std::invalid_argument("Unsupported Equihash parameters"); \
     }

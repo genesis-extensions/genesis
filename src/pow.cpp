@@ -89,14 +89,14 @@ unsigned int LwmaCalculateNextWorkRequired(const CBlockIndex* pindexLast, const 
     return next_target.GetCompact();
 }
 
-bool CheckEquihashSolution(const CBlockHeader *pblock, const CChainParams& params)
+bool CheckEquihashSolution(const CBlockHeader *pblock, const CChainParams& params, std::string personalizationString)
 {
     unsigned int n = params.EquihashN();
     unsigned int k = params.EquihashK();
 
     // Hash state
     crypto_generichash_blake2b_state state;
-    EhInitialiseState(n, k, state, params.IsAfterSwitch(pblock->nHeight));
+    EhInitialiseState(n, k, state, personalizationString);
 
     // I = the block header minus nonce and solution.
     CEquihashInput I{*pblock};
@@ -111,7 +111,7 @@ bool CheckEquihashSolution(const CBlockHeader *pblock, const CChainParams& param
     bool isValid;
     EhIsValidSolution(n, k, state, pblock->nSolution, isValid);
     if (!isValid)
-        return error("CheckEquihashSolution(): invalid solution");
+        return false;
 
     return true;
 }
