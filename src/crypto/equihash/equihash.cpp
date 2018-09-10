@@ -732,8 +732,7 @@ template<unsigned int N, unsigned int K>
 bool Equihash<N,K>::IsValidSolution(const eh_HashState& base_state, std::vector<unsigned char> soln)
 {
     if (soln.size() != SolutionWidth) {
-        //LogPrint(BCLog::POW, "Invalid solution length: %d (expected %d)\n",
-                 //soln.size(), SolutionWidth);
+        LogPrintf("Invalid solution length: %d (expected %d)\n", soln.size(), SolutionWidth);
         return false;
     }
 
@@ -752,17 +751,17 @@ bool Equihash<N,K>::IsValidSolution(const eh_HashState& base_state, std::vector<
         std::vector<FullStepRow<FinalFullWidth>> Xc;
         for (size_t i = 0; i < X.size(); i += 2) {
             if (!HasCollision(X[i], X[i+1], CollisionByteLength)) {
-                //LogPrint(BCLog::POW, "Invalid solution: invalid collision length between StepRows\n");
-                //LogPrint(BCLog::POW, "X[i]   = %s\n", X[i].GetHex(hashLen));
-                //LogPrint(BCLog::POW, "X[i+1] = %s\n", X[i+1].GetHex(hashLen));
+                LogPrintf("Invalid solution: invalid collision length between StepRows\n");
+                LogPrintf("X[i]   = %s\n", X[i].GetHex(hashLen));
+                LogPrintf("X[i+1] = %s\n", X[i+1].GetHex(hashLen));
                 return false;
             }
             if (X[i+1].IndicesBefore(X[i], hashLen, lenIndices)) {
-                //LogPrint(BCLog::POW, "Invalid solution: Index tree incorrectly ordered\n");
+                LogPrintf("Invalid solution: Index tree incorrectly ordered\n");
                 return false;
             }
             if (!DistinctIndices(X[i], X[i+1], hashLen, lenIndices)) {
-                //LogPrint(BCLog::POW, "Invalid solution: duplicate indices\n");
+                LogPrintf("Invalid solution: duplicate indices\n");
                 return false;
             }
             Xc.emplace_back(X[i], X[i+1], hashLen, lenIndices, CollisionByteLength);
