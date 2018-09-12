@@ -726,7 +726,7 @@ template<unsigned int N, unsigned int K>
 bool Equihash<N,K>::IsValidSolution(const eh_HashState& base_state, std::vector<unsigned char> soln)
 {
     if (soln.size() != SolutionWidth) {
-        LogPrintf("Invalid solution length: %d (expected %d)\n", soln.size(), SolutionWidth);
+        // LogPrintf("Invalid solution length: %d (expected %d)\n", soln.size(), SolutionWidth);
         return false;
     }
 
@@ -752,11 +752,11 @@ bool Equihash<N,K>::IsValidSolution(const eh_HashState& base_state, std::vector<
                 return false;
             }
             if (X[i+1].IndicesBefore(X[i], hashLen, lenIndices)) {
-                LogPrintf("Invalid solution: Index tree incorrectly ordered\n");
+                // LogPrintf("Invalid solution: Index tree incorrectly ordered\n");
                 return false;
             }
             if (!DistinctIndices(X[i], X[i+1], hashLen, lenIndices)) {
-                LogPrintf("Invalid solution: duplicate indices\n");
+                // LogPrintf("Invalid solution: duplicate indices\n");
                 return false;
             }
             Xc.emplace_back(X[i], X[i+1], hashLen, lenIndices, CollisionByteLength);
