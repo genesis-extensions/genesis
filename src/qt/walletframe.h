@@ -84,7 +84,7 @@ public Q_SLOTS:
     void changePassphrase();
     /** Ask for passphrase to unlock wallet temporarily */
     void unlockWallet();
-	/** Lock wallet */
+    /** Lock wallet */
     void lockWallet();
 
     /** Show used sending addresses */
