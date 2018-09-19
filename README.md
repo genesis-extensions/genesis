@@ -1,8 +1,3 @@
-![GenX Logo](https://i.imgur.com/DAh8pFI.png "Genesis")
-Genesis Official
-&middot;
-[![Github License](https://img.shields.io/npm/l/express.svg)](https://github.com/genesisofficial/genesis/blob/master/COPYING)
-=====================================
 
 * Genesis (GENX) is a fair-launch, decentralized cryptocurrency built upon the latest 0.16.2 BTC codebase focused on speed, security and stability
 * Genesis utilizes Equihash 192.7 Proof-of-Work with randomized block rewards. Proof-of-Stake and Masternodes will be implemented over time
@@ -36,3 +31,8 @@ Genesis Official
 ## Development Process
 
 The `master` branch is regularly built and tested, but is not guaranteed to be completely stable. Developers typically work on their own branches then create pull requests.
+=======
+## Legacy Repository. Rebranded to GENESIS $GENX - No Longer Updated
+
+## https://github.com/genesisofficial/ 
+## https://genesisnetwork.io/
