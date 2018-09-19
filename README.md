@@ -1,13 +1,18 @@
+![SC Logo](https://image.ibb.co/h82JEy/SC.png "SafeCa$h")
+SafeCa$h Official
+&middot;
+[![Github License](https://img.shields.io/npm/l/express.svg)](https://github.com/SafeCashOfficial/SafeCash/blob/master/COPYING)
+=====================================
 
-* Genesis (GENX) is a fair-launch, decentralized cryptocurrency built upon the latest 0.16.2 BTC codebase focused on speed, security and stability
-* Genesis utilizes Equihash 192.7 Proof-of-Work with randomized block rewards. Proof-of-Stake and Masternodes will be implemented over time
-* Genesis provides the building blocks to be the first true Point-of-Sale cryptocurrency that non-technical consumers can adopt anywhere.
+* SafeCash (SCASH) is a fair-launch, decentralized cryptocurrency built upon the latest 0.16 BTC codebase focused on speed, security and stability
+* SafeCash utilizes Equihash 192.7 Proof-of-Work with randomized block rewards. Proof-of-Stake and Masternodes will be implemented over time
+* SafeCash provides the building blocks to be the first true Point-of-Sale cryptocurrency that non-technical consumers can adopt anywhere.
 
 ## Specifications
 
 | Specification         | Descriptor                                    |
 |-----------------------|-----------------------------------------------|
-| Ticker                | GENX                                          |
+| Ticker                | SCASH                                         |
 | Algorithm             | Equihash 192.7                                |
 | RPC Port              | 7423                                          |
 | P2P Port              | 7233                                          |
@@ -22,17 +27,12 @@
 
 ## Resources
 
-* [Website](https://genesisnetwork.io/)
-* [Forums](https://genesisnetwork.io/forum/)
+* [Website](https://safecash.io/)
+* [Forums](https://safecash.io/forum/)
 * [Discord](https://discord.gg/8hSjExc)
-* [Twitter](https://twitter.com/genx_network)
+* [Twitter](https://twitter.com/SafeCash_IO)
 
 
 ## Development Process
 
 The `master` branch is regularly built and tested, but is not guaranteed to be completely stable. Developers typically work on their own branches then create pull requests.
-=======
-## Legacy Repository. Rebranded to GENESIS $GENX - No Longer Updated
-
-## https://github.com/genesisofficial/ 
-## https://genesisnetwork.io/
